@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+        <html lang="en">
+          <head>
+            <meta charset="utf-8">
+            <meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no' />
+            <title>Хмельницький</title>
+
+            <!-- Leaflet -->
+
+            <link rel="stylesheet" href="libs/leaflet.css" />
+            <script src="libs/leaflet.js"></script>
+            <script src="libs/leaflet.ajax.min.js"></script>
+
+
+              <style>
+                body { margin:0; padding:0; }
+                body, table, tr, td, th, div, h1, h2, input {  font-size: 11pt; }
+
+                #nav {
+                    width: 30%;
+                    display: flex;
+                    justify-content: space-between;
+                }
+
+                #nav p {
+                    cursor: pointer;
+                }
+
+                #map-wrapper {
+                    width: 100%;
+                    min-height: 100vh;
+                    position:relative;
+                }
+
+                #map { position:absolute; top:0; bottom:0; width:100%; } /* full size */
+                .ctl {
+                    padding: 2px 10px 2px 10px;
+                    background: white;
+                    background: rgba(255,255,255,0.9);
+                    box-shadow: 0 0 15px rgba(0,0,0,0.2);
+                    border-radius: 5px;
+                    text-align: right;
+                }
+                .title {
+                    font-size: 18pt;
+                    font-weight: bold;
+                }
+                .src {
+                    font-size: 10pt;
+                }
+
+            </style>
+
+        </head>
+        <body>
+
+        <div id="nav">
+            <p id="step_1" class="show_plan">1800-1850(1)</p>
+            <p id="step_2" class="show_plan">1800-1850(2)</p>
+            <p id="step_3" class="show_plan">1850-1900(1)</p>
+            <p id="step_4" class="show_plan">1900-1921(1)</p>
+            <p id="step_5" class="show_plan">step 5</p>
+            <p id="step_6" class="show_plan">step 6</p>
+        </div>
+
+        <div id="map-wrapper">
+            <div id="map"></div>
+        </div>
+
+
+        <script>
+        /* **** Leaflet **** */
+
+
+        var buildingsColor = "red";
+
+        var attrib = 'Map tiles by <a href="http://stamen.com">Stamen Design</a>, under <a href="http://creativecommons.org/licenses/by/3.0">CC BY 3.0</a>. Data by <a href="http://openstreetmap.org">OpenStreetMap</a>, under <a href="http://www.openstreetmap.org/copyright">ODbL</a>.'
+
+
+        // Map
+        var map = L.map('map', {
+            center: [49.4183008183, 26.9870752526],
+            zoom: 14,
+            minZoom: 5,
+            maxZoom: 17,
+            //autoZIndex: false,
+            scrollWheelZoom: false
+        });
+
+
+        //set layers order (оце, мабуть, вже не треба, бо відмовились від старих карт
+        map.createPane('oldmaps');
+        map.createPane('builgings');
+
+        //add canvas renderer to builgings pane
+        var buildingsRenderer = L.canvas({ padding: 0.5, pane: 'builgings' });
+
+        var basemap = L.tileLayer('http://{s}.tile.stamen.com/toner-lite/{z}/{x}/{y}.png', {
+            attribution: attrib}).addTo(map);
+
+
+        /*створюємо шари на всі scrolling steps */
+        var step_800_850_1 = new L.LayerGroup();
+        var step_800_850_2 = new L.LayerGroup();
+        var step_800_850_3 = new L.LayerGroup();
+
+        var step_850_900_1 = new L.LayerGroup();
+        var step_850_900_2 = new L.LayerGroup();
+        var step_850_900_3 = new L.LayerGroup();
+
+        var step_900_921_1 = new L.LayerGroup();
+        var step_900_921_2 = new L.LayerGroup();
+        var step_900_921_3 = new L.LayerGroup();
+
+        var step_921_940_1 = new L.LayerGroup();
+        var step_921_940_2 = new L.LayerGroup();
+        var step_921_940_3 = new L.LayerGroup();
+
+        var step_940_960_1 = new L.LayerGroup();
+        var step_940_960_2 = new L.LayerGroup();
+        var step_940_960_3 = new L.LayerGroup();
+
+        var step_960_970_1 = new L.LayerGroup();
+        var step_960_970_2 = new L.LayerGroup();
+        var step_960_970_3 = new L.LayerGroup();
+
+        var step_970_980_1 = new L.LayerGroup();
+        var step_970_980_2 = new L.LayerGroup();
+        var step_970_980_3 = new L.LayerGroup();
+
+        var step_980_990_1 = new L.LayerGroup();
+        var step_980_990_2 = new L.LayerGroup();
+        var step_980_990_3 = new L.LayerGroup();
+
+        var step_991_1 = new L.LayerGroup();
+        var step_991_2 = new L.LayerGroup();
+        var step_991_3 = new L.LayerGroup();
+
+
+        //новий стиль, задаємо для шарів, які зараз неактивні
+        var pastStyle = {
+            opacity: 0.3,
+            fillOpacity: 0.3
+        };
+
+        var mouseoverStyle = { color: "grey", weight: 3 };
+        var mouseleaveStyle = { color: "transparent" };
+
+        //це якщо треба додати можливість вмикати/вимикати шари
+        //var layerControl = L.control.layers().addTo(map);
+        //layerControl.addOverlay(buldings_900_921, "buldings_900_921");
+
+
+        // плани різних років з тайлів (поки не треба)
+//        var p_800 = L.tileLayer('./tiles/plan_1800/{z}/{x}/{y}.png', {tms: true, opacity: 0.9, attribution: "",  pane: 'oldmaps'});
+//        var p_944 = L.tileLayer('./tiles/plan_1944/{z}/{x}/{y}.png', {tms: true, opacity: 0.9, attribution: "",  pane: 'oldmaps'});
+//        var p_888 = L.tileLayer('./tiles/plan_1888/{z}/{x}/{y}.png', {tms: true, opacity: 0.9, attribution: "",  pane: 'oldmaps'});
+
+        var polygonsFillStyle = {
+            weight: 1,
+            fillOpacity: 0.7,
+            opacity: 1,
+            fillColor:"orange",
+            color: 'orange'
+        };
+
+        var polygonsColorStyle = {
+            weight: 2,
+            opacity: 1,
+            fillColor:"transparent",
+            color: 'darkred',
+            dashArray: '5, 5',
+            dashOffset: '0'
+        };
+
+        fetch("data/polygonsData_4326_fill.geojson")
+                .then(function (response) { return response.json() })
+                .then(function (data) {
+
+
+                    var polygons_800_850 = L.geoJson(data, {
+                        filter: function(feat) { return  feat.properties["Data polygonsData_period"] === "-1800"  },
+                        renderer: buildingsRenderer,
+                        style: function(){ return  polygonsFillStyle }
+
+                    }).bindPopup("polygon");
+
+
+                    var polygons_850_900 = L.geoJson(data, {
+                        filter: function(feat) { return  feat.properties["Data polygonsData_period"] === "1850-1900"  },
+                        renderer: buildingsRenderer,
+                        style: function(){ return  polygonsFillStyle }
+
+                    }).bindPopup("polygon");
+
+                    polygons_800_850.addTo(step_800_850_1);
+                    polygons_850_900.addTo(step_850_900_1);
+                });
+
+
+        fetch("data/polygonsData_4326_color.geojson")
+                .then(function (response) { return response.json() })
+                .then(function (data) {
+
+
+                    var polygons_800_850 = L.geoJson(data, {
+                        filter: function(feat) { return  feat.properties["Data polygonsData_period"] === "-1800"  },
+                        renderer: buildingsRenderer,
+                        style: function(){ return  polygonsColorStyle }
+
+                    }).bindPopup("polygon");
+
+
+                    var polygons_850_900 = L.geoJson(data, {
+                        filter: function(feat) { return  feat.properties["Data polygonsData_period"] === "1850-1900"  },
+                        renderer: buildingsRenderer,
+                        style: function(){ return  polygonsColorStyle }
+
+                    }).bindPopup("polygon");
+
+                    polygons_800_850.addTo(step_800_850_1);
+                    polygons_850_900.addTo(step_850_900_1);
+                });
+
+
+
+
+
+        var buildingsStyle = {
+            weight: 1,
+            fillColor: buildingsColor,
+            fillOpacity: 0.6,
+            color: buildingsColor,
+            opacity: 1
+        };
+
+        //читаємо кожен датасет і розкидуємо його на різні шари
+        fetch("data/osmData_4326.geojson")
+                .then(function (response) { return response.json() })
+                .then(function (data) {
+
+
+                    var buldings_800_850 = L.geoJson(data, {
+                        filter: function(feat) { return feat.properties["Data osmData_period"] == "1800-1850"},
+                        renderer: buildingsRenderer,
+                        style: function(){ return  buildingsStyle },
+                        className: "buldings_850_900",
+                        onEachFeature: onEachFeatureClosure(buildingsColor)
+                        /* etc */
+                    }).bindPopup("bulding");
+
+
+                    var buldings_850_900 = L.geoJson(data, {
+                        filter: function(feat) { return feat.properties["Data osmData_period"] == "1850-1900"},
+                        renderer: buildingsRenderer,
+                        style: function(){ return  buildingsStyle },
+                        onEachFeature: onEachFeatureClosure(buildingsColor)
+                        /* etc */
+                    }).bindPopup("bulding");
+
+
+                    var buldings_900_921 = L.geoJson(data, {
+                        filter: function(feat) { return feat.properties["Data osmData_period"] == "1900-1921"},
+                        renderer: buildingsRenderer,
+                        style: function(){ return  buildingsStyle },
+                        onEachFeature: onEachFeatureClosure(buildingsColor)
+                        /* etc */
+                    }).bindPopup("bulding");
+
+
+                    buldings_800_850.addTo(step_800_850_1);
+                    buldings_850_900.addTo(step_850_900_1);
+                    buldings_900_921.addTo(step_900_921_1);
+                    //layerControl.addOverlay(buldings_900_921, "buldings_900_921");
+//                    buldings_850_900.addTo(map);
+//                    buldings_900_921.addTo(map);
+                });
+
+
+        fetch("data/linesData_4326.geojson")
+                .then(function (response) { return response.json() })
+                .then(function (data) {
+
+
+                    var lines_1 = L.geoJson(data, {
+                        filter: function(feat) { return   ["Шлях на Кам'янець", "Шлях на Летичів"].includes(feat.properties["name"])  },
+                        renderer: buildingsRenderer,
+                        style: function(){ return  { "color": "blue", 'opacity': 1 }}
+
+                    }).bindPopup("line");
+
+
+                    var lines_2 = L.geoJson(data, {
+                        filter: function(feat) { return   ["Вул. Кам'янецька", "вул. Ремісницька", "вул. Соборна",
+                            "вул. Набережна", "вул. Аптекарська", "вул. Старобульварна", "вул. Коммерційна", "вул. Купецька", "Вул. Дворянська"].includes(feat.properties["name"])  },
+                        renderer: buildingsRenderer,
+                        style: function(){ return  { "color": "blue", 'opacity': 1 }}
+
+                    }).bindPopup("line");
+
+                    lines_1.addTo(step_800_850_1);
+                    lines_2.addTo(step_800_850_2);
+
+
+
+                });
+
+
+
+
+
+
+
+
+        //        var buildingsLayer = new L.GeoJSON.AJAX("data/osmData_4326.geojson", {
+//            style: buildingsStyle,
+//            renderer: buildingsRenderer,
+//            filter: buildingsFilter,
+//            onEachFeature: onEachFeature
+//        });
+
+
+
+//        function assignStyle(leafletLayer, newStyle) {
+//            leafletLayer.setStyle(newStyle);
+//            leafletLayer._recordedStyle = newStyle;
+//        }
+//
+//        // When desired, apply the style that has been previously recorded.
+//        function reassignStyle(leafletLayer) {
+//            leafletLayer.setStyle(leafletLayer._recordedStyle);
+//        }
+//
+//        document.getElementById('button').addEventListener('click', function(event) {
+//            event.preventDefault();
+//
+//            // Either use the wrapper function that records the new style…
+//            //assignStyle(point, newStyle);
+//
+//            // Or simply modify the group's style option, if it is acceptable affecting all child layers.
+//            point.setStyle(newStyle);
+//            group.options.style = newStyle;
+//        });
+
+
+
+
+
+
+
+
+
+        var polygonsLayer = new L.GeoJSON.AJAX("data/polygonsData_4326.geojson", {
+            //style: polygonsStyle,
+            renderer: buildingsRenderer,
+            onEachFeature: onEachFeature
+        });
+
+        var streetsLayer = new L.GeoJSON.AJAX("data/linesData_4326.geojson", {
+            renderer: buildingsRenderer,
+            onEachFeature: onEachFeature
+        });
+
+
+        var pointsLayer = new L.GeoJSON.AJAX("data/pointsData_4326.geojson", {
+            pointToLayer: function (feature, latlng) {
+                return L.circleMarker(latlng, geojsonMarkerOptions);
+            },
+            renderer: buildingsRenderer,
+            onEachFeature: onEachFeature
+        });
+
+        var geojsonMarkerOptions = {
+            radius: 8,
+            fillColor: "#ff7800",
+            color: "#000",
+            weight: 1,
+            opacity: 1,
+            fillOpacity: 0.8
+        };
+
+
+
+        //buildingsLayer.addTo(map);
+        //polygonsLayer.addTo(map);
+        //streetsLayer.addTo(map);
+        //pointsLayer.addTo(map);
+
+
+
+        function buildingsFilter(feature) {
+                if(feature.properties["Data osmData_period"] == "1850-1900") {
+                    return true
+                }
+        }
+
+
+        function getColor(d) {
+            let year = +d;
+            return 'blue';
+//            year > 1980 ? 'green' :
+//                    year > 1950  ? 'red' :
+//                           'blue';
+        }
+
+
+
+
+            // якщо треба будинки різних кольорів
+//        function buildingsStyle(feature) {
+//            return {
+//                fillColor: getColor(feature.properties["Data osmData_StartYear"]),
+//                weight: 1,
+//                color: getColor(feature.properties["Data osmData_StartYear"]),
+//                fillOpacity: 0.5
+//            };
+//        }
+
+
+//
+//        function polygonsStyle(feature) {
+//            return {
+//                fillColor: "blue",
+//                weight: 1,
+//                color: "blue",
+//                fillOpacity: 0.5
+//            };
+//        }
+
+
+
+        function onEachFeatureClosure(defaultColor) {
+            return function onEachFeature(feature, layer) {
+                layer.on('mouseover', function (e) {  e.target.setStyle(mouseoverStyle); });
+                layer.on('mouseout', function (e) {  e.target.setStyle({ color: defaultColor, weight: 1 }); });
+            }
+        }
+        step_800_850_1.addTo(map)
+
+
+        function onEachFeature(feature, layer) {
+            layer.on('mouseover', function (e) {  e.target.setStyle(mouseoverStyle); });
+            layer.on('mouseout', function (e) {  e.target.setStyle(mouseleaveStyle); });
+        }
+
+
+
+            document.getElementById("step_1").addEventListener("click", function(){
+                step_800_850_1.addTo(map)
+            });
+
+
+            document.getElementById("step_2").addEventListener("click", function(){
+                step_800_850_2.addTo(map);
+
+                //для кожного шару у групі міняємо стиль
+                step_800_850_1.eachLayer(function(layer) {
+                     layer.setStyle(pastStyle);
+                 });
+            });
+
+            document.getElementById("step_3").addEventListener("click", function(){
+                step_850_900_1.addTo(map);
+
+                //для кожного шару у групі міняємо стиль
+                step_800_850_2.eachLayer(function(layer) {
+                    layer.setStyle(pastStyle);
+                });
+            });
+
+
+            document.getElementById("step_4").addEventListener("click", function(){
+                step_900_921_1.addTo(map);
+
+                //для кожного шару у групі міняємо стиль
+                step_850_900_1.eachLayer(function(layer) {
+                    layer.setStyle(pastStyle);
+                });
+            })
+
+
+
+
+
+
+        </script>
+
+        </body>
+        </html>
+
+        
