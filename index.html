@@ -10,6 +10,8 @@
             <link rel="stylesheet" href="libs/leaflet.css" />
             <script src="libs/leaflet.js"></script>
             <script src="libs/leaflet.ajax.min.js"></script>
+            <script src="libs/jquery-3.3.1.js"></script>
+
 
 
               <style>
@@ -17,7 +19,7 @@
                 body, table, tr, td, th, div, h1, h2, input {  font-size: 11pt; }
 
                 #nav {
-                    width: 30%;
+                    width: 100%;
                     display: flex;
                     justify-content: space-between;
                 }
@@ -27,7 +29,7 @@
                 }
 
                 #map-wrapper {
-                    width: 100%;
+                    width: 60%;
                     min-height: 100vh;
                     position:relative;
                 }
@@ -55,12 +57,16 @@
         <body>
 
         <div id="nav">
-            <p id="step_1" class="show_plan">1800-1850(1)</p>
-            <p id="step_2" class="show_plan">1800-1850(2)</p>
-            <p id="step_3" class="show_plan">1850-1900(1)</p>
-            <p id="step_4" class="show_plan">1900-1921(1)</p>
-            <p id="step_5" class="show_plan">step 5</p>
-            <p id="step_6" class="show_plan">step 6</p>
+            <p id="step_1" data-stuff='["step_800_850_1", "none"]' class="change_period">1800-1850(1)</p>
+            <p id="step_2" data-stuff='["step_800_850_2", "step_800_850_1"]' class="change_period">1800-1850(2)</p>
+            <p id="step_3" data-stuff='["step_850_900_1", "step_800_850_2"]' class="change_period">1850-1900(1)</p>
+            <p id="step_4" data-stuff='["step_900_921_1", "step_850_900_1"]' class="change_period">1900-1921(1)</p>
+            <p id="step_5" data-stuff='["step_921_940_1", "step_900_921_1"]' class="change_period">1921-1945(1)</p>
+            <p id="step_6" data-stuff='["step_940_960_1", "step_921_940_1"]' class="change_period">1945-1960(1)</p>
+            <p id="step_7" data-stuff='["step_960_970_1", "step_940_960_1"]' class="change_period">1960-1970(1)</p>
+            <p id="step_8" data-stuff='["step_970_980_1", "step_960_970_1"]' class="change_period">1970-1980(1)</p>
+            <p id="step_9" data-stuff='["step_980_990_1", "step_970_980_1"]' class="change_period">1980-1990(1)</p>
+            <p id="step_10" data-stuff='["step_991_1", "step_980_990_1"]' class="change_period">1990+(1)</p>
         </div>
 
         <div id="map-wrapper">
@@ -202,7 +208,6 @@
                 .then(function (response) { return response.json() })
                 .then(function (data) {
 
-
                     var polygons_800_850 = L.geoJson(data, {
                         filter: function(feat) { return  feat.properties["Data polygonsData_period"] === "-1800"  },
                         renderer: buildingsRenderer,
@@ -225,7 +230,7 @@
 
 
 
-
+        // будівлі
         var buildingsStyle = {
             weight: 1,
             fillColor: buildingsColor,
@@ -234,47 +239,33 @@
             opacity: 1
         };
 
-        //читаємо кожен датасет і розкидуємо його на різні шари
+        function filterBuildingByPeriod(data, period){
+            return L.geoJson(data, {
+                filter: function(feat) { return feat.properties["Data osmData_period"] == period},
+                renderer: buildingsRenderer,
+                style: function(){ return  buildingsStyle },
+                onEachFeature: onEachFeatureClosure(buildingsColor)
+            }).bindPopup("bulding");
+        }
+
         fetch("data/osmData_4326.geojson")
-                .then(function (response) { return response.json() })
-                .then(function (data) {
+            .then(function (response) { return response.json() })
+            .then(function (data) {
+                filterBuildingByPeriod(data, "1800-1850").addTo(step_800_850_1);
+                filterBuildingByPeriod(data, "1850-1900").addTo(step_850_900_1);
+                filterBuildingByPeriod(data, "1900-1921").addTo(step_900_921_1);
+                filterBuildingByPeriod(data, "1921-1940").addTo(step_921_940_1);
+                filterBuildingByPeriod(data, "1940-1960").addTo(step_940_960_1);
+                filterBuildingByPeriod(data, "1960-1970").addTo(step_960_970_1);
+                filterBuildingByPeriod(data, "1970-1980").addTo(step_970_980_1);
+                filterBuildingByPeriod(data, "1980-1990").addTo(step_980_990_1);
+                filterBuildingByPeriod(data, "1991-").addTo(step_991_1);
+            });
 
 
-                    var buldings_800_850 = L.geoJson(data, {
-                        filter: function(feat) { return feat.properties["Data osmData_period"] == "1800-1850"},
-                        renderer: buildingsRenderer,
-                        style: function(){ return  buildingsStyle },
-                        className: "buldings_850_900",
-                        onEachFeature: onEachFeatureClosure(buildingsColor)
-                        /* etc */
-                    }).bindPopup("bulding");
 
 
-                    var buldings_850_900 = L.geoJson(data, {
-                        filter: function(feat) { return feat.properties["Data osmData_period"] == "1850-1900"},
-                        renderer: buildingsRenderer,
-                        style: function(){ return  buildingsStyle },
-                        onEachFeature: onEachFeatureClosure(buildingsColor)
-                        /* etc */
-                    }).bindPopup("bulding");
 
-
-                    var buldings_900_921 = L.geoJson(data, {
-                        filter: function(feat) { return feat.properties["Data osmData_period"] == "1900-1921"},
-                        renderer: buildingsRenderer,
-                        style: function(){ return  buildingsStyle },
-                        onEachFeature: onEachFeatureClosure(buildingsColor)
-                        /* etc */
-                    }).bindPopup("bulding");
-
-
-                    buldings_800_850.addTo(step_800_850_1);
-                    buldings_850_900.addTo(step_850_900_1);
-                    buldings_900_921.addTo(step_900_921_1);
-                    //layerControl.addOverlay(buldings_900_921, "buldings_900_921");
-//                    buldings_850_900.addTo(map);
-//                    buldings_900_921.addTo(map);
-                });
 
 
         fetch("data/linesData_4326.geojson")
@@ -304,48 +295,6 @@
 
 
                 });
-
-
-
-
-
-
-
-
-        //        var buildingsLayer = new L.GeoJSON.AJAX("data/osmData_4326.geojson", {
-//            style: buildingsStyle,
-//            renderer: buildingsRenderer,
-//            filter: buildingsFilter,
-//            onEachFeature: onEachFeature
-//        });
-
-
-
-//        function assignStyle(leafletLayer, newStyle) {
-//            leafletLayer.setStyle(newStyle);
-//            leafletLayer._recordedStyle = newStyle;
-//        }
-//
-//        // When desired, apply the style that has been previously recorded.
-//        function reassignStyle(leafletLayer) {
-//            leafletLayer.setStyle(leafletLayer._recordedStyle);
-//        }
-//
-//        document.getElementById('button').addEventListener('click', function(event) {
-//            event.preventDefault();
-//
-//            // Either use the wrapper function that records the new style…
-//            //assignStyle(point, newStyle);
-//
-//            // Or simply modify the group's style option, if it is acceptable affecting all child layers.
-//            point.setStyle(newStyle);
-//            group.options.style = newStyle;
-//        });
-
-
-
-
-
 
 
 
@@ -388,13 +337,6 @@
 
 
 
-        function buildingsFilter(feature) {
-                if(feature.properties["Data osmData_period"] == "1850-1900") {
-                    return true
-                }
-        }
-
-
         function getColor(d) {
             let year = +d;
             return 'blue';
@@ -428,14 +370,15 @@
 //        }
 
 
-
+        //щоб передати змнну у кожен клік
         function onEachFeatureClosure(defaultColor) {
             return function onEachFeature(feature, layer) {
                 layer.on('mouseover', function (e) {  e.target.setStyle(mouseoverStyle); });
                 layer.on('mouseout', function (e) {  e.target.setStyle({ color: defaultColor, weight: 1 }); });
             }
         }
-        step_800_850_1.addTo(map)
+        step_800_850_1.addTo(map);
+
 
 
         function onEachFeature(feature, layer) {
@@ -445,38 +388,22 @@
 
 
 
-            document.getElementById("step_1").addEventListener("click", function(){
-                step_800_850_1.addTo(map)
-            });
 
 
-            document.getElementById("step_2").addEventListener("click", function(){
-                step_800_850_2.addTo(map);
 
-                //для кожного шару у групі міняємо стиль
-                step_800_850_1.eachLayer(function(layer) {
-                     layer.setStyle(pastStyle);
-                 });
-            });
+       // міняємо періоди по кліку
+        $(".change_period").on("click", function(){
+            let myarray = $(this).data('stuff');
+            console.log(myarray[0]);
+            eval(myarray[0]).addTo(map);
 
-            document.getElementById("step_3").addEventListener("click", function(){
-                step_850_900_1.addTo(map);
-
-                //для кожного шару у групі міняємо стиль
-                step_800_850_2.eachLayer(function(layer) {
+            if(myarray[1] != "none"){
+                eval(myarray[1]).eachLayer(function(layer) {
                     layer.setStyle(pastStyle);
                 });
-            });
+            }
+        });
 
-
-            document.getElementById("step_4").addEventListener("click", function(){
-                step_900_921_1.addTo(map);
-
-                //для кожного шару у групі міняємо стиль
-                step_850_900_1.eachLayer(function(layer) {
-                    layer.setStyle(pastStyle);
-                });
-            })
 
 
 
