@@ -37,7 +37,7 @@
 
                 .change_period.active {
                     font-weight: bold;
-                    color: red;
+                    color: #CE4066;
                 }
 
                 #map-wrapper {
@@ -95,7 +95,7 @@
         /* **** Leaflet **** */
 
 
-        var buildingsColor = "red";
+
 
         var attrib = 'Map tiles by <a href="http://stamen.com">Stamen Design</a>, under <a href="http://creativecommons.org/licenses/by/3.0">CC BY 3.0</a>. Data by <a href="http://openstreetmap.org">OpenStreetMap</a>, under <a href="http://www.openstreetmap.org/copyright">ODbL</a>.'
 
@@ -138,7 +138,7 @@
 
         //новий стиль, задаємо для шарів, які зараз неактивні
         var pastStyle = {
-            opacity: 0.3,
+            opacity: 0.5,
             fillOpacity: 0.3
         };
 
@@ -155,19 +155,26 @@
 //        var p_944 = L.tileLayer('./tiles/plan_1944/{z}/{x}/{y}.png', {tms: true, opacity: 0.9, attribution: "",  pane: 'oldmaps'});
 //        var p_888 = L.tileLayer('./tiles/plan_1888/{z}/{x}/{y}.png', {tms: true, opacity: 0.9, attribution: "",  pane: 'oldmaps'});
 
+
+        var buildingsColor = "#9d2f32", //"#f14633", //"#9d2f32",
+                polygonsFillColor = "#D1E7E0", //"#899e91", //"#bbcda9", // "#fce0bc", //"#899e91", //"#a79d70",
+                linesColor = "#0062A6", //'#4783fe',
+                pointsColor = "#ff9d04"; //'#D7A319';
+
+
         var polygonsFillStyle = {
             weight: 1,
             fillOpacity: 0.7,
             opacity: 1,
-            fillColor:"orange",
-            color: 'orange'
+            fillColor: polygonsFillColor,
+            color: polygonsFillColor
         };
 
         var polygonsColorStyle = {
             weight: 2,
             opacity: 1,
             fillColor:"transparent",
-            color: 'darkred',
+            color: '#374969',
             dashArray: '5, 5',
             dashOffset: '0'
         };
@@ -183,19 +190,28 @@
 
         var geojsonMarkerOptions = {
             radius: 4,
-            fillColor: "green",
+            fillColor: pointsColor,
             color: "#000",
             weight: 1,
             opacity: 1,
             fillOpacity: 0.8
         };
 
-        function filterByPeriod(data, property, period, popup, style){
+        function filterBuildingsByPeriod(data, property, period, popup, style){
             return L.geoJson(data, {
                 filter: function(feat) { return feat.properties[property] == period},
                 renderer: buildingsRenderer,
                 style: function(){ return  style },
-                onEachFeature: onEachFeatureClosure(buildingsColor)
+                onEachFeature: onEachFeatureClosure(buildingsColor, 1)
+            }).bindPopup(popup);
+        }
+
+        function filterPoligonsByPeriod(data, property, period, popup, style){
+            return L.geoJson(data, {
+                filter: function(feat) { return feat.properties[property] == period},
+                renderer: buildingsRenderer,
+                style: function(){ return  style }
+               // onEachFeature: onEachFeatureClosure(buildingsColor, 1)
             }).bindPopup(popup);
         }
 
@@ -204,8 +220,8 @@
             return L.geoJson(data, {
                 filter: function(feat) { return  streetlist.includes(feat.properties["name"]) },
                 renderer: buildingsRenderer,
-                style: function(){ return  { "color": "blue", 'opacity': 1 } },
-                onEachFeature: onEachFeatureClosure(buildingsColor)
+                style: function(){ return  { "color": linesColor, 'opacity': 1 } },
+                onEachFeature: onEachFeatureClosure("blue", 3)
             }).bindPopup(popup);
         }
 
@@ -214,7 +230,7 @@
             return L.geoJson(data, {
                 filter: function(feat) { return feat.properties[property] == period},
                 renderer: buildingsRenderer,
-                onEachFeature: onEachFeatureClosure(buildingsColor),
+                onEachFeature: onEachFeatureClosure("green", 1),
                 pointToLayer: function (feature, latlng) {
                     return L.circleMarker(latlng, geojsonMarkerOptions);
                 }
@@ -224,45 +240,45 @@
         fetch("data/polygonsData_4326_fill.geojson")
                 .then(function (response) { return response.json() })
                 .then(function (data) {
-                    filterByPeriod(data, "Data polygonsData_period", "-1800", "polygon", polygonsFillStyle).addTo(step_800_850_1);
-                    filterByPeriod(data, "Data polygonsData_period", "1850-1900", "polygon", polygonsFillStyle).addTo(step_850_900_1);
-                    filterByPeriod(data, "Data polygonsData_period", "1900-1921", "polygon", polygonsFillStyle).addTo(step_900_921_1);
-                    filterByPeriod(data, "Data polygonsData_period", "1921-1940", "polygon", polygonsFillStyle).addTo(step_921_940_1);
-                    filterByPeriod(data, "Data polygonsData_period", "1940-1960", "polygon", polygonsFillStyle).addTo(step_940_960_1);
-                    filterByPeriod(data, "Data polygonsData_period", "1960-1970", "polygon", polygonsFillStyle).addTo(step_960_970_1);
-                    filterByPeriod(data, "Data polygonsData_period", "1970-1980", "polygon", polygonsFillStyle).addTo(step_970_980_1);
-                    filterByPeriod(data, "Data polygonsData_period", "1980-1990", "polygon", polygonsFillStyle).addTo(step_980_990_1);
-                    filterByPeriod(data, "Data polygonsData_period", "1980-1990", "polygon", polygonsFillStyle).addTo(step_980_990_1);
+                    filterPoligonsByPeriod(data, "Data polygonsData_period", "-1800", "polygon", polygonsFillStyle).addTo(step_800_850_1);
+                    filterPoligonsByPeriod(data, "Data polygonsData_period", "1850-1900", "polygon", polygonsFillStyle).addTo(step_850_900_1);
+                    filterPoligonsByPeriod(data, "Data polygonsData_period", "1900-1921", "polygon", polygonsFillStyle).addTo(step_900_921_1);
+                    filterPoligonsByPeriod(data, "Data polygonsData_period", "1921-1940", "polygon", polygonsFillStyle).addTo(step_921_940_1);
+                    filterPoligonsByPeriod(data, "Data polygonsData_period", "1940-1960", "polygon", polygonsFillStyle).addTo(step_940_960_1);
+                    filterPoligonsByPeriod(data, "Data polygonsData_period", "1960-1970", "polygon", polygonsFillStyle).addTo(step_960_970_1);
+                    filterPoligonsByPeriod(data, "Data polygonsData_period", "1970-1980", "polygon", polygonsFillStyle).addTo(step_970_980_1);
+                    filterPoligonsByPeriod(data, "Data polygonsData_period", "1980-1990", "polygon", polygonsFillStyle).addTo(step_980_990_1);
+                    filterPoligonsByPeriod(data, "Data polygonsData_period", "1980-1990", "polygon", polygonsFillStyle).addTo(step_980_990_1);
                 });
 
 
         fetch("data/polygonsData_4326_color.geojson")
                 .then(function (response) { return response.json() })
                 .then(function (data) {
-                    filterByPeriod(data, "Data polygonsData_period", "-1800", "polygon", polygonsColorStyle).addTo(step_800_850_1);
-                    filterByPeriod(data, "Data polygonsData_period", "1850-1900", "polygon", polygonsColorStyle).addTo(step_850_900_1);
-                    filterByPeriod(data, "Data polygonsData_period", "1900-1921", "polygon", polygonsColorStyle).addTo(step_900_921_1);
-                    filterByPeriod(data, "Data polygonsData_period", "1921-1940", "polygon", polygonsColorStyle).addTo(step_921_940_1);
-                    filterByPeriod(data, "Data polygonsData_period", "1940-1960", "polygon", polygonsColorStyle).addTo(step_940_960_1);
-                    filterByPeriod(data, "Data polygonsData_period", "1960-1970", "polygon", polygonsColorStyle).addTo(step_960_970_1);
-                    filterByPeriod(data, "Data polygonsData_period", "1970-1980", "polygon", polygonsColorStyle).addTo(step_970_980_1);
-                    filterByPeriod(data, "Data polygonsData_period", "1980-1990", "polygon", polygonsColorStyle).addTo(step_980_990_1);
-                    filterByPeriod(data, "Data polygonsData_period", "1980-1990", "polygon", polygonsColorStyle).addTo(step_980_990_1);
+                    filterPoligonsByPeriod(data, "Data polygonsData_period", "-1800", "polygon", polygonsColorStyle).addTo(step_800_850_1);
+                    filterPoligonsByPeriod(data, "Data polygonsData_period", "1850-1900", "polygon", polygonsColorStyle).addTo(step_850_900_1);
+                    filterPoligonsByPeriod(data, "Data polygonsData_period", "1900-1921", "polygon", polygonsColorStyle).addTo(step_900_921_1);
+                    filterPoligonsByPeriod(data, "Data polygonsData_period", "1921-1940", "polygon", polygonsColorStyle).addTo(step_921_940_1);
+                    filterPoligonsByPeriod(data, "Data polygonsData_period", "1940-1960", "polygon", polygonsColorStyle).addTo(step_940_960_1);
+                    filterPoligonsByPeriod(data, "Data polygonsData_period", "1960-1970", "polygon", polygonsColorStyle).addTo(step_960_970_1);
+                    filterPoligonsByPeriod(data, "Data polygonsData_period", "1970-1980", "polygon", polygonsColorStyle).addTo(step_970_980_1);
+                    filterPoligonsByPeriod(data, "Data polygonsData_period", "1980-1990", "polygon", polygonsColorStyle).addTo(step_980_990_1);
+                    filterPoligonsByPeriod(data, "Data polygonsData_period", "1980-1990", "polygon", polygonsColorStyle).addTo(step_980_990_1);
                 });
 
 
         fetch("data/osmData_4326.geojson")
             .then(function (response) { return response.json() })
             .then(function (data) {
-                filterByPeriod(data, "Data osmData_period", "1800-1850", "bulding", buildingsStyle).addTo(step_800_850_1);
-                filterByPeriod(data, "Data osmData_period", "1850-1900", "bulding", buildingsStyle).addTo(step_850_900_1);
-                filterByPeriod(data, "Data osmData_period", "1900-1921", "bulding", buildingsStyle).addTo(step_900_921_1);
-                filterByPeriod(data, "Data osmData_period", "1921-1940", "bulding", buildingsStyle).addTo(step_921_940_1);
-                filterByPeriod(data, "Data osmData_period", "1940-1960", "bulding", buildingsStyle).addTo(step_940_960_1);
-                filterByPeriod(data, "Data osmData_period", "1960-1970", "bulding", buildingsStyle).addTo(step_960_970_1);
-                filterByPeriod(data, "Data osmData_period", "1970-1980", "bulding", buildingsStyle).addTo(step_970_980_1);
-                filterByPeriod(data, "Data osmData_period", "1980-1990", "bulding", buildingsStyle).addTo(step_980_990_1);
-                filterByPeriod(data, "Data osmData_period", "1991-", "bulding", buildingsStyle).addTo(step_991_1);
+                filterBuildingsByPeriod(data, "Data osmData_period", "1800-1850", "bulding", buildingsStyle).addTo(step_800_850_1);
+                filterBuildingsByPeriod(data, "Data osmData_period", "1850-1900", "bulding", buildingsStyle).addTo(step_850_900_1);
+                filterBuildingsByPeriod(data, "Data osmData_period", "1900-1921", "bulding", buildingsStyle).addTo(step_900_921_1);
+                filterBuildingsByPeriod(data, "Data osmData_period", "1921-1940", "bulding", buildingsStyle).addTo(step_921_940_1);
+                filterBuildingsByPeriod(data, "Data osmData_period", "1940-1960", "bulding", buildingsStyle).addTo(step_940_960_1);
+                filterBuildingsByPeriod(data, "Data osmData_period", "1960-1970", "bulding", buildingsStyle).addTo(step_960_970_1);
+                filterBuildingsByPeriod(data, "Data osmData_period", "1970-1980", "bulding", buildingsStyle).addTo(step_970_980_1);
+                filterBuildingsByPeriod(data, "Data osmData_period", "1980-1990", "bulding", buildingsStyle).addTo(step_980_990_1);
+                filterBuildingsByPeriod(data, "Data osmData_period", "1991-", "bulding", buildingsStyle).addTo(step_991_1);
             });
 
 
@@ -303,10 +319,10 @@
 
 
         //щоб передати змнну у кожен клік
-        function onEachFeatureClosure(defaultColor) {
+        function onEachFeatureClosure(defaultColor, weightValue) {
             return function onEachFeature(feature, layer) {
                 layer.on('mouseover', function (e) {  e.target.setStyle(mouseoverStyle); });
-                layer.on('mouseout', function (e) {  e.target.setStyle({ color: defaultColor, weight: 1 }); });
+                layer.on('mouseout', function (e) {  e.target.setStyle({ color: defaultColor, weight: weightValue }); });
             }
         }
 
