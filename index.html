@@ -18,18 +18,30 @@
                 body { margin:0; padding:0; }
                 body, table, tr, td, th, div, h1, h2, input {  font-size: 11pt; }
 
+                #viz {
+                    display: grid;
+                    grid-template-columns: 60% 40%;
+                }
+
                 #nav {
                     width: 100%;
-                    display: flex;
-                    justify-content: space-between;
+                    /*display: flex;*/
+                    /*justify-content: space-between;*/
                 }
 
                 #nav p {
                     cursor: pointer;
+                    font-size:22px;
+                    margin-left: 50px;
+                }
+
+                .change_period.active {
+                    font-weight: bold;
+                    color: red;
                 }
 
                 #map-wrapper {
-                    width: 60%;
+                    width: 100%;
                     min-height: 100vh;
                     position:relative;
                 }
@@ -56,23 +68,28 @@
         </head>
         <body>
 
-        <div id="nav">
-            <p id="step_1" data-stuff='["step_800_850_1", "none"]' class="change_period">1800-1850(1)</p>
-            <p id="step_2" data-stuff='["step_800_850_2", "step_800_850_1"]' class="change_period">1800-1850(2)</p>
-            <p id="step_3" data-stuff='["step_850_900_1", "step_800_850_2"]' class="change_period">1850-1900(1)</p>
-            <p id="step_4" data-stuff='["step_900_921_1", "step_850_900_1"]' class="change_period">1900-1921(1)</p>
-            <p id="step_5" data-stuff='["step_921_940_1", "step_900_921_1"]' class="change_period">1921-1945(1)</p>
-            <p id="step_6" data-stuff='["step_940_960_1", "step_921_940_1"]' class="change_period">1945-1960(1)</p>
-            <p id="step_7" data-stuff='["step_960_970_1", "step_940_960_1"]' class="change_period">1960-1970(1)</p>
-            <p id="step_8" data-stuff='["step_970_980_1", "step_960_970_1"]' class="change_period">1970-1980(1)</p>
-            <p id="step_9" data-stuff='["step_980_990_1", "step_970_980_1"]' class="change_period">1980-1990(1)</p>
-            <p id="step_10" data-stuff='["step_991_1", "step_980_990_1"]' class="change_period">1990+(1)</p>
-        </div>
 
-        <div id="map-wrapper">
-            <div id="map"></div>
-        </div>
+        <div id="viz">
 
+            <div id="map-wrapper">
+                <div id="map"></div>
+            </div>
+
+            <div id="nav">
+                <p id="step_1" data-stuff='["step_800_850_1", "none"]' class="change_period active">1800-1850(1)</p>
+                <p id="step_2" data-stuff='["step_800_850_2", "step_800_850_1"]' class="change_period">1800-1850(2)</p>
+                <p id="step_3" data-stuff='["step_850_900_1", "step_800_850_2"]' class="change_period">1850-1900(1)</p>
+                <p id="step_4" data-stuff='["step_900_921_1", "step_850_900_1"]' class="change_period">1900-1921(1)</p>
+                <p id="step_5" data-stuff='["step_921_940_1", "step_900_921_1"]' class="change_period">1921-1945(1)</p>
+                <p id="step_6" data-stuff='["step_940_960_1", "step_921_940_1"]' class="change_period">1945-1960(1)</p>
+                <p id="step_7" data-stuff='["step_960_970_1", "step_940_960_1"]' class="change_period">1960-1970(1)</p>
+                <p id="step_8" data-stuff='["step_970_980_1", "step_960_970_1"]' class="change_period">1970-1980(1)</p>
+                <p id="step_9" data-stuff='["step_980_990_1", "step_970_980_1"]' class="change_period">1980-1990(1)</p>
+                <p id="step_10" data-stuff='["step_991_1", "step_980_990_1"]' class="change_period">1990+(1)</p>
+            </div>
+
+
+        </div>
 
         <script>
         /* **** Leaflet **** */
@@ -98,49 +115,25 @@
         map.createPane('oldmaps');
         map.createPane('builgings');
 
+
         //add canvas renderer to builgings pane
         var buildingsRenderer = L.canvas({ padding: 0.5, pane: 'builgings' });
+
 
         var basemap = L.tileLayer('http://{s}.tile.stamen.com/toner-lite/{z}/{x}/{y}.png', {
             attribution: attrib}).addTo(map);
 
 
         /*створюємо шари на всі scrolling steps */
-        var step_800_850_1 = new L.LayerGroup();
-        var step_800_850_2 = new L.LayerGroup();
-        var step_800_850_3 = new L.LayerGroup();
-
-        var step_850_900_1 = new L.LayerGroup();
-        var step_850_900_2 = new L.LayerGroup();
-        var step_850_900_3 = new L.LayerGroup();
-
-        var step_900_921_1 = new L.LayerGroup();
-        var step_900_921_2 = new L.LayerGroup();
-        var step_900_921_3 = new L.LayerGroup();
-
-        var step_921_940_1 = new L.LayerGroup();
-        var step_921_940_2 = new L.LayerGroup();
-        var step_921_940_3 = new L.LayerGroup();
-
-        var step_940_960_1 = new L.LayerGroup();
-        var step_940_960_2 = new L.LayerGroup();
-        var step_940_960_3 = new L.LayerGroup();
-
-        var step_960_970_1 = new L.LayerGroup();
-        var step_960_970_2 = new L.LayerGroup();
-        var step_960_970_3 = new L.LayerGroup();
-
-        var step_970_980_1 = new L.LayerGroup();
-        var step_970_980_2 = new L.LayerGroup();
-        var step_970_980_3 = new L.LayerGroup();
-
-        var step_980_990_1 = new L.LayerGroup();
-        var step_980_990_2 = new L.LayerGroup();
-        var step_980_990_3 = new L.LayerGroup();
-
-        var step_991_1 = new L.LayerGroup();
-        var step_991_2 = new L.LayerGroup();
-        var step_991_3 = new L.LayerGroup();
+        var step_800_850_1 = new L.LayerGroup(), step_800_850_2 = new L.LayerGroup(), step_800_850_3 = new L.LayerGroup();
+        var step_850_900_1 = new L.LayerGroup(), step_850_900_2 = new L.LayerGroup(), step_850_900_3 = new L.LayerGroup();
+        var step_900_921_1 = new L.LayerGroup(), step_900_921_2 = new L.LayerGroup(), step_900_921_3 = new L.LayerGroup();
+        var step_921_940_1 = new L.LayerGroup(), step_921_940_2 = new L.LayerGroup(), step_921_940_3 = new L.LayerGroup();
+        var step_940_960_1 = new L.LayerGroup(), step_940_960_2 = new L.LayerGroup(), step_940_960_3 = new L.LayerGroup();
+        var step_960_970_1 = new L.LayerGroup(), step_960_970_2 = new L.LayerGroup(), step_960_970_3 = new L.LayerGroup();
+        var step_970_980_1 = new L.LayerGroup(), step_970_980_2 = new L.LayerGroup(), step_970_980_3 = new L.LayerGroup();
+        var step_980_990_1 = new L.LayerGroup(), step_980_990_2 = new L.LayerGroup(), step_980_990_3 = new L.LayerGroup();
+        var step_991_1 = new L.LayerGroup(), step_991_2 = new L.LayerGroup(), step_991_3 = new L.LayerGroup();
 
 
         //новий стиль, задаємо для шарів, які зараз неактивні
@@ -179,58 +172,6 @@
             dashOffset: '0'
         };
 
-        fetch("data/polygonsData_4326_fill.geojson")
-                .then(function (response) { return response.json() })
-                .then(function (data) {
-
-
-                    var polygons_800_850 = L.geoJson(data, {
-                        filter: function(feat) { return  feat.properties["Data polygonsData_period"] === "-1800"  },
-                        renderer: buildingsRenderer,
-                        style: function(){ return  polygonsFillStyle }
-
-                    }).bindPopup("polygon");
-
-
-                    var polygons_850_900 = L.geoJson(data, {
-                        filter: function(feat) { return  feat.properties["Data polygonsData_period"] === "1850-1900"  },
-                        renderer: buildingsRenderer,
-                        style: function(){ return  polygonsFillStyle }
-
-                    }).bindPopup("polygon");
-
-                    polygons_800_850.addTo(step_800_850_1);
-                    polygons_850_900.addTo(step_850_900_1);
-                });
-
-
-        fetch("data/polygonsData_4326_color.geojson")
-                .then(function (response) { return response.json() })
-                .then(function (data) {
-
-                    var polygons_800_850 = L.geoJson(data, {
-                        filter: function(feat) { return  feat.properties["Data polygonsData_period"] === "-1800"  },
-                        renderer: buildingsRenderer,
-                        style: function(){ return  polygonsColorStyle }
-
-                    }).bindPopup("polygon");
-
-
-                    var polygons_850_900 = L.geoJson(data, {
-                        filter: function(feat) { return  feat.properties["Data polygonsData_period"] === "1850-1900"  },
-                        renderer: buildingsRenderer,
-                        style: function(){ return  polygonsColorStyle }
-
-                    }).bindPopup("polygon");
-
-                    polygons_800_850.addTo(step_800_850_1);
-                    polygons_850_900.addTo(step_850_900_1);
-                });
-
-
-
-
-        // будівлі
         var buildingsStyle = {
             weight: 1,
             fillColor: buildingsColor,
@@ -239,58 +180,110 @@
             opacity: 1
         };
 
-        function filterBuildingByPeriod(data, period){
+
+        var geojsonMarkerOptions = {
+            radius: 4,
+            fillColor: "green",
+            color: "#000",
+            weight: 1,
+            opacity: 1,
+            fillOpacity: 0.8
+        };
+
+        function filterByPeriod(data, property, period, popup, style){
             return L.geoJson(data, {
-                filter: function(feat) { return feat.properties["Data osmData_period"] == period},
+                filter: function(feat) { return feat.properties[property] == period},
                 renderer: buildingsRenderer,
-                style: function(){ return  buildingsStyle },
+                style: function(){ return  style },
                 onEachFeature: onEachFeatureClosure(buildingsColor)
-            }).bindPopup("bulding");
+            }).bindPopup(popup);
         }
+
+
+        function filterLinesByPeriod(data, streetlist, popup){
+            return L.geoJson(data, {
+                filter: function(feat) { return  streetlist.includes(feat.properties["name"]) },
+                renderer: buildingsRenderer,
+                style: function(){ return  { "color": "blue", 'opacity': 1 } },
+                onEachFeature: onEachFeatureClosure(buildingsColor)
+            }).bindPopup(popup);
+        }
+
+
+        function filterPointsByPeriod(data, property, period, popup){
+            return L.geoJson(data, {
+                filter: function(feat) { return feat.properties[property] == period},
+                renderer: buildingsRenderer,
+                onEachFeature: onEachFeatureClosure(buildingsColor),
+                pointToLayer: function (feature, latlng) {
+                    return L.circleMarker(latlng, geojsonMarkerOptions);
+                }
+            }).bindPopup(popup);
+        }
+
+        fetch("data/polygonsData_4326_fill.geojson")
+                .then(function (response) { return response.json() })
+                .then(function (data) {
+                    filterByPeriod(data, "Data polygonsData_period", "-1800", "polygon", polygonsFillStyle).addTo(step_800_850_1);
+                    filterByPeriod(data, "Data polygonsData_period", "1850-1900", "polygon", polygonsFillStyle).addTo(step_850_900_1);
+                    filterByPeriod(data, "Data polygonsData_period", "1900-1921", "polygon", polygonsFillStyle).addTo(step_900_921_1);
+                    filterByPeriod(data, "Data polygonsData_period", "1921-1940", "polygon", polygonsFillStyle).addTo(step_921_940_1);
+                    filterByPeriod(data, "Data polygonsData_period", "1940-1960", "polygon", polygonsFillStyle).addTo(step_940_960_1);
+                    filterByPeriod(data, "Data polygonsData_period", "1960-1970", "polygon", polygonsFillStyle).addTo(step_960_970_1);
+                    filterByPeriod(data, "Data polygonsData_period", "1970-1980", "polygon", polygonsFillStyle).addTo(step_970_980_1);
+                    filterByPeriod(data, "Data polygonsData_period", "1980-1990", "polygon", polygonsFillStyle).addTo(step_980_990_1);
+                    filterByPeriod(data, "Data polygonsData_period", "1980-1990", "polygon", polygonsFillStyle).addTo(step_980_990_1);
+                });
+
+
+        fetch("data/polygonsData_4326_color.geojson")
+                .then(function (response) { return response.json() })
+                .then(function (data) {
+                    filterByPeriod(data, "Data polygonsData_period", "-1800", "polygon", polygonsColorStyle).addTo(step_800_850_1);
+                    filterByPeriod(data, "Data polygonsData_period", "1850-1900", "polygon", polygonsColorStyle).addTo(step_850_900_1);
+                    filterByPeriod(data, "Data polygonsData_period", "1900-1921", "polygon", polygonsColorStyle).addTo(step_900_921_1);
+                    filterByPeriod(data, "Data polygonsData_period", "1921-1940", "polygon", polygonsColorStyle).addTo(step_921_940_1);
+                    filterByPeriod(data, "Data polygonsData_period", "1940-1960", "polygon", polygonsColorStyle).addTo(step_940_960_1);
+                    filterByPeriod(data, "Data polygonsData_period", "1960-1970", "polygon", polygonsColorStyle).addTo(step_960_970_1);
+                    filterByPeriod(data, "Data polygonsData_period", "1970-1980", "polygon", polygonsColorStyle).addTo(step_970_980_1);
+                    filterByPeriod(data, "Data polygonsData_period", "1980-1990", "polygon", polygonsColorStyle).addTo(step_980_990_1);
+                    filterByPeriod(data, "Data polygonsData_period", "1980-1990", "polygon", polygonsColorStyle).addTo(step_980_990_1);
+                });
+
 
         fetch("data/osmData_4326.geojson")
             .then(function (response) { return response.json() })
             .then(function (data) {
-                filterBuildingByPeriod(data, "1800-1850").addTo(step_800_850_1);
-                filterBuildingByPeriod(data, "1850-1900").addTo(step_850_900_1);
-                filterBuildingByPeriod(data, "1900-1921").addTo(step_900_921_1);
-                filterBuildingByPeriod(data, "1921-1940").addTo(step_921_940_1);
-                filterBuildingByPeriod(data, "1940-1960").addTo(step_940_960_1);
-                filterBuildingByPeriod(data, "1960-1970").addTo(step_960_970_1);
-                filterBuildingByPeriod(data, "1970-1980").addTo(step_970_980_1);
-                filterBuildingByPeriod(data, "1980-1990").addTo(step_980_990_1);
-                filterBuildingByPeriod(data, "1991-").addTo(step_991_1);
+                filterByPeriod(data, "Data osmData_period", "1800-1850", "bulding", buildingsStyle).addTo(step_800_850_1);
+                filterByPeriod(data, "Data osmData_period", "1850-1900", "bulding", buildingsStyle).addTo(step_850_900_1);
+                filterByPeriod(data, "Data osmData_period", "1900-1921", "bulding", buildingsStyle).addTo(step_900_921_1);
+                filterByPeriod(data, "Data osmData_period", "1921-1940", "bulding", buildingsStyle).addTo(step_921_940_1);
+                filterByPeriod(data, "Data osmData_period", "1940-1960", "bulding", buildingsStyle).addTo(step_940_960_1);
+                filterByPeriod(data, "Data osmData_period", "1960-1970", "bulding", buildingsStyle).addTo(step_960_970_1);
+                filterByPeriod(data, "Data osmData_period", "1970-1980", "bulding", buildingsStyle).addTo(step_970_980_1);
+                filterByPeriod(data, "Data osmData_period", "1980-1990", "bulding", buildingsStyle).addTo(step_980_990_1);
+                filterByPeriod(data, "Data osmData_period", "1991-", "bulding", buildingsStyle).addTo(step_991_1);
             });
-
-
-
-
-
 
 
         fetch("data/linesData_4326.geojson")
                 .then(function (response) { return response.json() })
                 .then(function (data) {
+                    filterLinesByPeriod(data, ["Шлях на Кам'янець", "Шлях на Летичів"], "line").addTo(step_800_850_1);
+                    filterLinesByPeriod(data,["Вул. Кам'янецька", "вул. Ремісницька", "вул. Соборна", "вул. Набережна", "вул. Аптекарська", "вул. Старобульварна", "вул. Коммерційна", "вул. Купецька", "Вул. Дворянська"], "line").addTo(step_800_850_2);
+                });
 
 
-                    var lines_1 = L.geoJson(data, {
-                        filter: function(feat) { return   ["Шлях на Кам'янець", "Шлях на Летичів"].includes(feat.properties["name"])  },
-                        renderer: buildingsRenderer,
-                        style: function(){ return  { "color": "blue", 'opacity': 1 }}
+        fetch("data/pointsData_4326.geojson")
+                .then(function (response) { return response.json() })
+                .then(function (data) {
+                    filterPointsByPeriod(data, "Data pointsData_period", "-1800", "point").addTo(step_800_850_1);
+                    filterPointsByPeriod(data, "Data pointsData_period", "1800-1850", "point").addTo(step_800_850_1);
+                    filterPointsByPeriod(data, "Data pointsData_period", "1850-1900", "point").addTo(step_850_900_1);
+                    filterPointsByPeriod(data, "Data pointsData_period", "1900-1921", "point").addTo(step_900_921_1);
 
-                    }).bindPopup("line");
 
 
-                    var lines_2 = L.geoJson(data, {
-                        filter: function(feat) { return   ["Вул. Кам'янецька", "вул. Ремісницька", "вул. Соборна",
-                            "вул. Набережна", "вул. Аптекарська", "вул. Старобульварна", "вул. Коммерційна", "вул. Купецька", "Вул. Дворянська"].includes(feat.properties["name"])  },
-                        renderer: buildingsRenderer,
-                        style: function(){ return  { "color": "blue", 'opacity': 1 }}
-
-                    }).bindPopup("line");
-
-                    lines_1.addTo(step_800_850_1);
-                    lines_2.addTo(step_800_850_2);
 
 
 
@@ -298,75 +291,14 @@
 
 
 
-
-        var polygonsLayer = new L.GeoJSON.AJAX("data/polygonsData_4326.geojson", {
-            //style: polygonsStyle,
-            renderer: buildingsRenderer,
-            onEachFeature: onEachFeature
-        });
-
-        var streetsLayer = new L.GeoJSON.AJAX("data/linesData_4326.geojson", {
-            renderer: buildingsRenderer,
-            onEachFeature: onEachFeature
-        });
-
-
-        var pointsLayer = new L.GeoJSON.AJAX("data/pointsData_4326.geojson", {
-            pointToLayer: function (feature, latlng) {
-                return L.circleMarker(latlng, geojsonMarkerOptions);
-            },
-            renderer: buildingsRenderer,
-            onEachFeature: onEachFeature
-        });
-
-        var geojsonMarkerOptions = {
-            radius: 8,
-            fillColor: "#ff7800",
-            color: "#000",
-            weight: 1,
-            opacity: 1,
-            fillOpacity: 0.8
-        };
-
-
-
-        //buildingsLayer.addTo(map);
-        //polygonsLayer.addTo(map);
-        //streetsLayer.addTo(map);
-        //pointsLayer.addTo(map);
-
-
-
-        function getColor(d) {
-            let year = +d;
-            return 'blue';
-//            year > 1980 ? 'green' :
-//                    year > 1950  ? 'red' :
-//                           'blue';
-        }
-
-
-
-
-            // якщо треба будинки різних кольорів
-//        function buildingsStyle(feature) {
-//            return {
-//                fillColor: getColor(feature.properties["Data osmData_StartYear"]),
-//                weight: 1,
-//                color: getColor(feature.properties["Data osmData_StartYear"]),
-//                fillOpacity: 0.5
-//            };
-//        }
-
-
+//        function getColor(d) { return d > 1980 ? 'green' :  d > 1950  ? 'red' :  'blue'; }
 //
-//        function polygonsStyle(feature) {
-//            return {
-//                fillColor: "blue",
-//                weight: 1,
-//                color: "blue",
-//                fillOpacity: 0.5
-//            };
+//        function buildingsStyle(feature) {
+//           return {
+//               fillColor: getColor(feature.properties["Data osmData_StartYear"]),
+//               weight: 1,
+//               color: getColor(feature.properties["Data osmData_StartYear"]),
+//               fillOpacity: 0.5  };
 //        }
 
 
@@ -377,24 +309,17 @@
                 layer.on('mouseout', function (e) {  e.target.setStyle({ color: defaultColor, weight: 1 }); });
             }
         }
+
+
+
         step_800_850_1.addTo(map);
-
-
-
-        function onEachFeature(feature, layer) {
-            layer.on('mouseover', function (e) {  e.target.setStyle(mouseoverStyle); });
-            layer.on('mouseout', function (e) {  e.target.setStyle(mouseleaveStyle); });
-        }
-
-
-
-
 
 
        // міняємо періоди по кліку
         $(".change_period").on("click", function(){
+            $(".change_period").removeClass("active");
+            $(this).addClass("active");
             let myarray = $(this).data('stuff');
-            console.log(myarray[0]);
             eval(myarray[0]).addTo(map);
 
             if(myarray[1] != "none"){
@@ -410,9 +335,8 @@
 
 
 
-        </script>
-
-        </body>
-        </html>
+     </script>
+  </body>
+</html>
 
         
