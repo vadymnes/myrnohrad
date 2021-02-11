@@ -1,0 +1,110 @@
+body {
+  margin: 0;
+  padding: 0; }
+
+body, table, tr, td, th, div, h1, h2, input {
+  font-size: 11pt; }
+
+#viz {
+  display: grid;
+  grid-template-columns: 60% 40%; }
+
+#nav {
+  width: 100%;
+  /*display: flex;*/
+  /*justify-content: space-between;*/ }
+
+#nav p {
+  cursor: pointer;
+  font-size: 22px;
+  margin-left: 50px; }
+
+.change_period.active {
+  font-weight: bold;
+  color: #CE4066; }
+
+#map-wrapper {
+  width: 100%;
+  min-height: 100vh;
+  position: relative; }
+
+#map {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 100%; }
+
+/* full size */
+.ctl {
+  padding: 2px 10px 2px 10px;
+  background: white;
+  background: rgba(255, 255, 255, 0.9);
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+  border-radius: 5px;
+  text-align: right; }
+
+.title {
+  font-size: 18pt;
+  font-weight: bold; }
+
+.src {
+  font-size: 10pt; }
+
+#scroll {
+  position: relative;
+  width: 100%;
+  margin: 0 0 50px auto;
+  display: grid;
+  grid-template-columns: 60% 40%; }
+  #scroll .buttons {
+    min-height: 30px;
+    margin: 10px auto;
+    max-width: max-content;
+    width: auto;
+    display: flex; }
+
+.scroll__graphic {
+  grid-column: 1/2;
+  grid-row: 1/2;
+  width: 100% !important;
+  position: -webkit-sticky;
+  position: sticky;
+  top: 0;
+  left: 0;
+  max-height: 100vh;
+  z-index: 10; }
+  @media (hover: none), (max-width: 812px) {
+    .scroll__graphic {
+      height: 70vh;
+      top: 50px;
+      z-index: 1; } }
+  .scroll__graphic canvas {
+    width: 100%; }
+  .scroll__graphic #scene {
+    height: 1vh; }
+  .scroll__graphic #chart {
+    height: 100%;
+    width: 100%; }
+
+.scroll__text {
+  grid-column: 2/3;
+  width: 50%;
+  margin: auto;
+  grid-row: 1/2;
+  pointer-events: none;
+  z-index: 100; }
+  .scroll__text .step {
+    margin-top: 80vh;
+    margin-bottom: 50vh; }
+  .scroll__text .step#last {
+    margin-top: 0;
+    margin-bottom: 0;
+    height: 100vh; }
+  .scroll__text .step div {
+    padding: 20px;
+    line-height: 1.6; }
+    .scroll__text .step div p {
+      font-size: 25px;
+      text-align: center; }
+
+/*# sourceMappingURL=styles.css.map */

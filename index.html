@@ -5,63 +5,20 @@
             <meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no' />
             <title>Хмельницький</title>
 
-            <!-- Leaflet -->
 
-            <link rel="stylesheet" href="libs/leaflet.css" />
-            <script src="libs/leaflet.js"></script>
-            <script src="libs/leaflet.ajax.min.js"></script>
-            <script src="libs/jquery-3.3.1.js"></script>
+              <link rel="stylesheet" href="libs/leaflet.css" />
+              <link rel="stylesheet" href="css/styles.css" />
+
+
+              <script src="libs/leaflet.js"></script>
+              <script src="libs/leaflet.ajax.min.js"></script>
+              <script src="libs/jquery-3.3.1.js"></script>
+              <script src="libs/scrollama.min.js"></script>
 
 
 
               <style>
-                body { margin:0; padding:0; }
-                body, table, tr, td, th, div, h1, h2, input {  font-size: 11pt; }
 
-                #viz {
-                    display: grid;
-                    grid-template-columns: 60% 40%;
-                }
-
-                #nav {
-                    width: 100%;
-                    /*display: flex;*/
-                    /*justify-content: space-between;*/
-                }
-
-                #nav p {
-                    cursor: pointer;
-                    font-size:22px;
-                    margin-left: 50px;
-                }
-
-                .change_period.active {
-                    font-weight: bold;
-                    color: #CE4066;
-                }
-
-                #map-wrapper {
-                    width: 100%;
-                    min-height: 100vh;
-                    position:relative;
-                }
-
-                #map { position:absolute; top:0; bottom:0; width:100%; } /* full size */
-                .ctl {
-                    padding: 2px 10px 2px 10px;
-                    background: white;
-                    background: rgba(255,255,255,0.9);
-                    box-shadow: 0 0 15px rgba(0,0,0,0.2);
-                    border-radius: 5px;
-                    text-align: right;
-                }
-                .title {
-                    font-size: 18pt;
-                    font-weight: bold;
-                }
-                .src {
-                    font-size: 10pt;
-                }
 
             </style>
 
@@ -69,27 +26,91 @@
         <body>
 
 
-        <div id="viz">
 
-            <div id="map-wrapper">
-                <div id="map"></div>
-            </div>
 
-            <div id="nav">
-                <p id="step_1" data-stuff='["step_800_850_1", "none"]' class="change_period active">1800-1850(1)</p>
-                <p id="step_2" data-stuff='["step_800_850_2", "step_800_850_1"]' class="change_period">1800-1850(2)</p>
-                <p id="step_3" data-stuff='["step_850_900_1", "step_800_850_2"]' class="change_period">1850-1900(1)</p>
-                <p id="step_4" data-stuff='["step_900_921_1", "step_850_900_1"]' class="change_period">1900-1921(1)</p>
-                <p id="step_5" data-stuff='["step_921_940_1", "step_900_921_1"]' class="change_period">1921-1945(1)</p>
-                <p id="step_6" data-stuff='["step_940_960_1", "step_921_940_1"]' class="change_period">1945-1960(1)</p>
-                <p id="step_7" data-stuff='["step_960_970_1", "step_940_960_1"]' class="change_period">1960-1970(1)</p>
-                <p id="step_8" data-stuff='["step_970_980_1", "step_960_970_1"]' class="change_period">1970-1980(1)</p>
-                <p id="step_9" data-stuff='["step_980_990_1", "step_970_980_1"]' class="change_period">1980-1990(1)</p>
-                <p id="step_10" data-stuff='["step_991_1", "step_980_990_1"]' class="change_period">1990+(1)</p>
+        <section id='scroll' class="desktop-only">
+            <div class='scroll__graphic sticky'>
+                <div id="map-wrapper">
+                    <div id="map"></div>
+                </div>
             </div>
 
 
-        </div>
+
+            <div class='scroll__text'>
+                <div class='step' data-step='0' data-scrollama-index="0">
+                    <div>
+                    </div>
+                </div>
+
+                <div class='step' data-step='1' data-scrollama-index="1">
+                    <div>
+                        <p id="step_1" data-stuff='["step_800_850_1", "none"]' class="change_period active">1800-1850(1)</p>
+                    </div>
+                </div>
+
+                <div class='step' data-step='2' data-scrollama-index="2">
+                    <div>
+                        <p id="step_2" data-stuff='["step_800_850_2", "step_800_850_1"]' class="change_period">1800-1850(2)</p>
+                    </div>
+                </div>
+
+                <div class='step' data-step='3' data-scrollama-index="3">
+                    <div>
+                        <p id="step_3" data-stuff='["step_850_900_1", "step_800_850_2"]' class="change_period">1850-1900(1)</p>
+                    </div>
+                </div>
+
+                <div class='step' data-step='4' data-scrollama-index="4">
+                    <div>
+                        <p id="step_4" data-stuff='["step_900_921_1", "step_850_900_1"]' class="change_period">1900-1921(1)</p>
+                    </div>
+                </div>
+
+                <div class='step' data-step='5' data-scrollama-index="5">
+                    <div>
+                        <p id="step_5" data-stuff='["step_921_940_1", "step_900_921_1"]' class="change_period">1921-1945(1)</p>
+                    </div>
+                </div>
+
+                <div class='step' data-step='6' data-scrollama-index="6">
+                    <div>
+                        <p id="step_6" data-stuff='["step_940_960_1", "step_921_940_1"]' class="change_period">1945-1960(1)</p>
+                    </div>
+                </div>
+
+                <div class='step' data-step='7' data-scrollama-index="7">
+                    <div>
+                        <p id="step_7" data-stuff='["step_960_970_1", "step_940_960_1"]' class="change_period">1960-1970(1)</p>
+                    </div>
+                </div>
+
+                <div class='step' data-step='8' data-scrollama-index="8">
+                    <div>
+                        <p id="step_8" data-stuff='["step_970_980_1", "step_960_970_1"]' class="change_period">1970-1980(1)</p>
+
+                    </div>
+                </div>
+
+                <div class='step' data-step='9' data-scrollama-index="9">
+                    <div>
+                        <p id="step_9" data-stuff='["step_980_990_1", "step_970_980_1"]' class="change_period">1980-1990(1)</p>
+                    </div>
+                </div>
+
+                <div class='step' data-step='10' data-scrollama-index="10">
+                    <div>
+                        <p id="step_10" data-stuff='["step_991_1", "step_980_990_1"]' class="change_period">1990+(1)</p>
+                    </div>
+                </div>
+
+
+
+
+            </div>
+        </section>
+
+
 
         <script>
         /* **** Leaflet **** */
@@ -140,6 +161,11 @@
         var pastStyle = {
             opacity: 0.5,
             fillOpacity: 0.3
+        };
+
+        var newStyle = {
+            opacity: 1,
+            fillOpacity: 0.6
         };
 
         var mouseoverStyle = { color: "grey", weight: 3 };
@@ -328,7 +354,7 @@
 
 
 
-        step_800_850_1.addTo(map);
+        //step_800_850_1.addTo(map);
 
 
        // міняємо періоди по кліку
@@ -346,12 +372,140 @@
         });
 
 
+        var container = $('#scroll');
+        var graphic = $('#scroll > .scroll__graphic'); //container.select('.scroll__graphic');
+        var text = $('#scroll > .scroll__text'); //container.select('.scroll__text');
+        var step = $('#scroll > .scroll__text > .step'); // text.selectAll('.step');
+        var scroller = scrollama();
+
+
+//        function handleResize() {
+//            var stepHeight = Math.floor(window.innerHeight * 0.5);
+//            step.css('height', stepHeight + 'px');
+//            var bodyWidth = d3.select('body').node().offsetWidth;
+//            var textWidth = text.node().offsetWidth;
+//            var graphicWidth = bodyWidth - textWidth;
+//            var chartMargin = 32;
+//            var chartWidth = graphic.node().offsetWidth - chartMargin;
+//            scroller.resize();
+//        }
+
+        // scrollama event handlers
+        function handleStepEnter(r) {
+            if (r.index === 1 && r.direction === "down") {
+                step_800_850_1.addTo(map);
+            }
+            if (r.index === 1 && r.direction === "up") {
+                map.removeLayer(step_800_850_2);
+                step_800_850_1.eachLayer(function(layer) { layer.setStyle(newStyle); });
+            }
+            if (r.index === 2 && r.direction === "down") {
+                step_800_850_2.addTo(map);
+                step_800_850_1.eachLayer(function(layer) { layer.setStyle(pastStyle); });
+            }
+            if (r.index === 2 && r.direction === "up") {
+                map.removeLayer(step_850_900_1);
+                step_800_850_2.eachLayer(function(layer) { layer.setStyle(newStyle); });
+            }
+            if (r.index === 3 && r.direction === "down") {
+                step_850_900_1.addTo(map);
+                step_800_850_2.eachLayer(function(layer) { layer.setStyle(pastStyle); });
+            }
+            if (r.index === 3 && r.direction === "up") {
+                map.removeLayer( step_900_921_1);
+                step_850_900_1.eachLayer(function(layer) { layer.setStyle(newStyle); });
+            }
+            if (r.index === 4 && r.direction === "down") {
+                step_900_921_1.addTo(map);
+                step_850_900_1.eachLayer(function(layer) { layer.setStyle(pastStyle); });
+            }
+            if (r.index === 4 && r.direction === "up") {
+                map.removeLayer( step_921_940_1);
+                step_900_921_1.eachLayer(function(layer) { layer.setStyle(newStyle); });
+            }
+            if (r.index === 5 && r.direction === "down") {
+                step_921_940_1.addTo(map);
+                step_900_921_1.eachLayer(function(layer) { layer.setStyle(pastStyle); });
+            }
+            if (r.index === 5 && r.direction === "up") {
+                step_921_940_1.eachLayer(function(layer) { layer.setStyle(newStyle); });
+                map.removeLayer( step_940_960_1);
+            }
+            if (r.index === 6 && r.direction === "down") {
+                step_940_960_1.addTo(map);
+                step_921_940_1.eachLayer(function(layer) { layer.setStyle(pastStyle); });
+            }
+            if (r.index === 6 && r.direction === "up") {
+                step_940_960_1.eachLayer(function(layer) { layer.setStyle(newStyle); });
+                map.removeLayer( step_960_970_1);
+            }
+            if (r.index === 7 && r.direction === "down") {
+                step_960_970_1.addTo(map);
+                step_940_960_1.eachLayer(function(layer) { layer.setStyle(pastStyle); });
+            }
+            if (r.index === 7 && r.direction === "up") {
+                step_960_970_1.eachLayer(function(layer) { layer.setStyle(newStyle); });
+                map.removeLayer( step_970_980_1);
+            }
+            if (r.index === 8 && r.direction === "down") {
+                step_970_980_1.addTo(map);
+                step_960_970_1.eachLayer(function(layer) { layer.setStyle(pastStyle); });
+            }
+            if (r.index === 8 && r.direction === "up") {
+                step_960_970_1.eachLayer(function(layer) { layer.setStyle(newStyle); });
+                map.removeLayer( step_980_990_1);
+            }
+            if (r.index === 9 && r.direction === "down") {
+                step_980_990_1.addTo(map);
+                step_970_980_1.eachLayer(function(layer) { layer.setStyle(pastStyle); });
+            }
+            if (r.index === 9 && r.direction === "up") {
+                step_980_990_1.eachLayer(function(layer) { layer.setStyle(newStyle); });
+                map.removeLayer( step_991_1);
+            }
+            if (r.index === 10 && r.direction === "down") {
+                step_991_1.addTo(map);
+                step_980_990_1.eachLayer(function(layer) { layer.setStyle(pastStyle); });
+            }
+        }
+
+
+        function handleContainerEnter(response) {
+            // response = { direction }
+        }
+
+        function handleContainerExit(response) {
+            // response = { direction }
+        }
+
+
+
+        function init() {
+            //handleResize();
+            scroller.setup({
+                container: '#scroll',
+                graphic: '.scroll__graphic',
+                text: '.scroll__text',
+                step: '.scroll__text .step',
+                offset: 0.9,
+                debug: false
+            })
+                    .onStepEnter(handleStepEnter)
+                    .onContainerEnter(handleContainerEnter)
+                    .onContainerExit(handleContainerExit);
+            //window.addEventListener('resize', handleResize);
+        }
+        init();
 
 
 
 
 
-     </script>
+
+
+
+
+        </script>
   </body>
 </html>
 
