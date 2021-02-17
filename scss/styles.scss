@@ -2,18 +2,35 @@
 body { margin:0; padding:0; }
 body, table, tr, td, th, div, h1, h2, input {  font-size: 11pt; }
 
-
+$text-color: #CE4066;
 
 header {
   min-height: 50vh;
   display: flex;
 
+
+  div {
+    max-width: 60%;
+    margin: auto;
+  }
+
   h1 {
     font-size: 70px;
-    margin: auto;
     font-family: 'Pacifico', cursive;
     font-weight: normal;
-    color: #CE4066;
+    color: $text-color;
+    text-align: center;
+    margin: 0;
+  }
+
+  h3 {
+    font-size: 30px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: #574144;
+    text-align: center;
+    font-weight: normal;
+    margin: 0;
   }
 }
 
@@ -136,13 +153,11 @@ header {
   .step div {
     padding: 20px;
     line-height: 1.6;
-    //background-color: rgba(34, 34, 34, 1);
 
     p {
       font-size: 18px;
       font-weight: bold;
-      color: #CE4066;
-      //text-align: center;
+      color: $text-color;
     }
   }
 }
