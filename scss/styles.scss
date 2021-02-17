@@ -40,6 +40,15 @@ header {
 }
 
 
+p {
+  font-size: 20px;
+  //font-weight: bold;
+  color: #574144;
+  line-height: 1.6;
+  margin: 20px auto;
+}
+
+
 
 
 #viz {
@@ -92,7 +101,7 @@ header {
 #scroll {
   position: relative;
   width: 100%;
-  margin: 0 0 50px auto;
+  margin: 50px 0 50px auto;
   display: grid;
   grid-template-columns: 60% 40%;
 

@@ -1,6 +1,6 @@
 
 // Map
-var map = L.map('map').setView([49.422, 27.02], 13);
+var map = L.map('map').setView([49.422, 27.02], 14);
 
 
 var mapbox_url = 'https://api.mapbox.com/styles/v1/evgeshadrozdova/ckl1654or031r17mvc4wr7edc/tiles/256/{z}/{x}/{y}?access_token=pk.eyJ1IjoiZXZnZXNoYWRyb3pkb3ZhIiwiYSI6ImNqMjZuaGpkYTAwMXAzMm5zdGVvZ2c0OHYifQ.s8MMs2wW15ZyUfDhTS_cdQ';
@@ -275,7 +275,7 @@ var scroller = scrollama();
 
 // scrollama event handlers
 function handleStepEnter(r) {
-    if(r.index > 0) {
+    // if(r.index > 0) {
 
         if(r.index === 3){
             $("#pic-overlay").css("display", "flex").hide().fadeIn(1000)
@@ -283,7 +283,7 @@ function handleStepEnter(r) {
         else if(r.index != 3){
             $("#pic-overlay").fadeOut(1000);
         }
-        map.flyTo([49.422, 27.02], 14);
+        //map.flyTo([49.422, 27.02], 14);
         let layerToAdd = $(r.element).data("stuff")[0];
         let layerToRemove = $(r.element).data("stuff")[1];
         let layerToGrey = $(r.element).data("stuff")[2];
@@ -300,7 +300,7 @@ function handleStepEnter(r) {
                 returnPreviousStyle(layer)
             });
         }
-    } 
+    // }
 }
 
 
