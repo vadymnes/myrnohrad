@@ -2,6 +2,24 @@
 body { margin:0; padding:0; }
 body, table, tr, td, th, div, h1, h2, input {  font-size: 11pt; }
 
+
+
+header {
+  min-height: 50vh;
+  display: flex;
+
+  h1 {
+    font-size: 70px;
+    margin: auto;
+    font-family: 'Pacifico', cursive;
+    font-weight: normal;
+    color: #CE4066;
+  }
+}
+
+
+
+
 #viz {
   display: grid;
   grid-template-columns: 60% 40%;
