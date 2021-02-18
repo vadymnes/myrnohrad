@@ -2,17 +2,7 @@
 // Map
 var map = L.map('map').setView([49.422, 27.02], 14);
 
-
-var mapbox_url = 'https://api.mapbox.com/styles/v1/evgeshadrozdova/ckl1654or031r17mvc4wr7edc/tiles/256/{z}/{x}/{y}?access_token=pk.eyJ1IjoiZXZnZXNoYWRyb3pkb3ZhIiwiYSI6ImNqMjZuaGpkYTAwMXAzMm5zdGVvZ2c0OHYifQ.s8MMs2wW15ZyUfDhTS_cdQ';
-
-
-
-
 L.tileLayer(
-
-    // mapbox_url, {
-    //     id: 'mapbox.light',
-    //     maxZoom: 22
     'https://stamen-tiles-{s}.a.ssl.fastly.net/toner-lite/{z}/{x}/{y}{r}.{ext}', {
         attribution: 'Map tiles by <a href="http://stamen.com">Stamen Design</a>, <a href="http://creativecommons.org/licenses/by/3.0">CC BY 3.0</a> &mdash; Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
         subdomains: 'abcd',
@@ -36,19 +26,27 @@ var step_800_850_1 = new L.LayerGroup(),
 var step_850_900_1 = new L.LayerGroup(),
     step_850_900_2 = new L.LayerGroup(),
     step_850_900_3 = new L.LayerGroup();
-var step_900_921_1 = new L.LayerGroup(),
-    step_900_921_2 = new L.LayerGroup(),
-    step_900_921_3 = new L.LayerGroup();
-var step_921_940_1 = new L.LayerGroup(),
-    step_921_940_2 = new L.LayerGroup(),
-    step_921_940_3 = new L.LayerGroup();
-var step_940_960_1 = new L.LayerGroup(),
-    step_940_960_2 = new L.LayerGroup(),
-    step_940_960_3 = new L.LayerGroup();
-var step_960_970_1 = new L.LayerGroup();
-var step_970_980_1 = new L.LayerGroup();
-var step_980_990_1 = new L.LayerGroup();
-var step_991_1 = new L.LayerGroup();
+var step_900_920_1 = new L.LayerGroup(),
+    step_900_920_2 = new L.LayerGroup(),
+    step_900_920_3 = new L.LayerGroup();
+var step_920_945_1 = new L.LayerGroup(),
+    step_920_945_2 = new L.LayerGroup(),
+    step_920_945_3 = new L.LayerGroup();
+var step_945_960_1 = new L.LayerGroup(),
+    step_945_960_2 = new L.LayerGroup(),
+    step_945_960_3 = new L.LayerGroup();
+var step_960_970_1 = new L.LayerGroup(),
+    step_960_970_2 = new L.LayerGroup(),
+    step_960_970_3 = new L.LayerGroup();
+var step_970_980_1 = new L.LayerGroup(),
+    step_970_980_2 = new L.LayerGroup(),
+    step_970_980_3 = new L.LayerGroup();
+var step_980_990_1 = new L.LayerGroup(),
+    step_980_990_2 = new L.LayerGroup(),
+    step_980_990_3 = new L.LayerGroup();
+var step_991_1 = new L.LayerGroup(),
+    step_991_2 = new L.LayerGroup(),
+    step_991_3 = new L.LayerGroup();
 
 
 var buildingsColor = "#9d2f32", //"#f14633", //"#9d2f32",
@@ -112,119 +110,168 @@ var mouseoverStyle = { color: "grey", weight: 3 };
 
 //фільтруємо елементи на різні групи шарів за періодами
 
-function filterBuildingsByPeriod(data, filter_property, period, popup, style, id_value){
-    return L.geoJson(data, {
-        id: id_value,
-        filter: function(feat) { return feat.properties[filter_property] == period},
-        renderer: canvasRenderer,
-        style: function(){ return  style },
-        onEachFeature: onEachFeatureClosure(buildingsColor, 1)
-    }).bindPopup(popup);
-}
+function filterByPeriod(data, filter_property, period, popup, style, id_value){
+    if(id_value === "points"){
+        return L.geoJson(data, {
+            id: id_value,
+            filter: function (feat) {
+                return feat.properties[filter_property] == period
+            },
+            renderer: canvasRenderer,
+            onEachFeature: onEachFeatureClosure("green", 1),
+            pointToLayer: function (feature, latlng) {
+                return L.circleMarker(latlng, geojsonMarkerOptions);
+            }
+        }).bindPopup(popup);
 
-function filterPoligonsByPeriod_F(data, filter_property, period, popup, style, id_value){
-    return L.geoJson(data, {
-        id: id_value,
-        filter: function(feat) { return feat.properties[filter_property] == period},
-        renderer: canvasRenderer,
-        style: function(){ return  style }
-    }).bindPopup(popup);
-}
-
-function filterPoligonsByPeriod_C(data, filter_property, period, popup, style, id_value){
-    return L.geoJson(data, {
-        id: id_value,
-        filter: function(feat) { return feat.properties[filter_property] == period},
-        renderer: canvasRenderer,
-        style: function(){ return  style }
-    }).bindPopup(popup);
+    }  else {
+        return L.geoJson(data, {
+            id: id_value,
+            filter: function(feat) { return feat.properties[filter_property] == period},
+            renderer: canvasRenderer,
+            style: function(){ return  style }
+        }).bindPopup(popup);
+    }
 }
 
 
+function filterPointsByPeriod(data, filter_property, period, popup, id_value) {
+    if(id_value === "points"){
+        return L.geoJson(data, {
+            id: id_value,
+            filter: function (feat) {
+                return feat.properties[filter_property] == period
+            },
+            renderer: canvasRenderer,
+            onEachFeature: onEachFeatureClosure("green", 1),
+            pointToLayer: function (feature, latlng) {
+                return L.circleMarker(latlng, geojsonMarkerOptions);
+            }
+        }).bindPopup(popup);
 
-function filterLinesByPeriod(data, streetlist, popup, id_value){
-    return L.geoJson(data, {
-        id: id_value,
-        filter: function(feat) { return  streetlist.includes(feat.properties["name"]) },
-        renderer: canvasRenderer,
-        style: function(){ return  linesStyle },
-        onEachFeature: onEachFeatureClosure("blue", 3)
-    }).bindPopup(popup);
+    }  else {
+        return L.geoJson(data, {
+            id: id_value,
+            filter: function(feat) { return feat.properties[filter_property] == period},
+            renderer: canvasRenderer,
+            style: function(){ return  style }
+        }).bindPopup(popup);
+    }
 }
 
 
-function filterPointsByPeriod(data, filter_property, period, popup, id_value){
-    return L.geoJson(data, {
-        id: id_value,
-        filter: function(feat) { return feat.properties[filter_property] == period },
-        renderer: canvasRenderer,
-        onEachFeature: onEachFeatureClosure("green", 1),
-        pointToLayer: function (feature, latlng) {
-            return L.circleMarker(latlng, geojsonMarkerOptions);
-        }
-    }).bindPopup(popup);
+
+
+function scatterToLayers(df, stepColumn, popupColumn, style, layer_id){
+    filterByPeriod(df, stepColumn, "step_-1800_1", popupColumn, style, layer_id).addTo(step_800_1);
+    filterByPeriod(df, stepColumn, "step_-1800_2", popupColumn, style, layer_id).addTo(step_800_2);
+    filterByPeriod(df, stepColumn, "step_-1800_3", popupColumn, style, layer_id).addTo(step_800_3);
+    filterByPeriod(df, stepColumn, "step_-1800_4", popupColumn, style, layer_id).addTo(step_800_4);
+    filterByPeriod(df, stepColumn, "step_1800-1850_1", popupColumn, style, layer_id).addTo(step_800_850_1);
+    filterByPeriod(df, stepColumn, "step_1800-1850_2", popupColumn, style, layer_id).addTo(step_800_850_2);
+
+    filterByPeriod(df, stepColumn, "step_1850-1900_1", popupColumn, style, layer_id).addTo(step_850_900_1);
+    filterByPeriod(df, stepColumn, "step_1850-1900_2", popupColumn, style, layer_id).addTo(step_850_900_2);
+    filterByPeriod(df, stepColumn, "step_1850-1900_3", popupColumn, style, layer_id).addTo(step_850_900_3);
+
+    filterByPeriod(df, stepColumn, "step_1900-1920_1", popupColumn, style, layer_id).addTo(step_900_920_1);
+    filterByPeriod(df, stepColumn, "step_1900-1920_2", popupColumn, style, layer_id).addTo(step_900_920_2);
+    filterByPeriod(df, stepColumn, "step_1900-1920_3", popupColumn, style, layer_id).addTo(step_900_920_3);
+
+    filterByPeriod(df, stepColumn, "step_1920-1945_1", popupColumn, style, layer_id).addTo(step_920_945_1);
+    filterByPeriod(df, stepColumn, "step_1920-1945_2", popupColumn, style, layer_id).addTo(step_920_945_2);
+    filterByPeriod(df, stepColumn, "step_1920-1945_3", popupColumn, style, layer_id).addTo(step_920_945_3);
+
+    filterByPeriod(df, stepColumn, "step_1945-1960_1", popupColumn, style, layer_id).addTo(step_945_960_1);
+    filterByPeriod(df, stepColumn, "step_1945-1960_2", popupColumn, style, layer_id).addTo(step_945_960_2);
+    filterByPeriod(df, stepColumn, "step_1945-1960_3", popupColumn, style, layer_id).addTo(step_945_960_3);
+
+    filterByPeriod(df, stepColumn, "step_60-70_1", popupColumn, style, layer_id).addTo(step_960_970_1);
+    filterByPeriod(df, stepColumn, "step_60-70_2", popupColumn, style, layer_id).addTo(step_960_970_2);
+    filterByPeriod(df, stepColumn, "step_60-70_3", popupColumn, style, layer_id).addTo(step_960_970_3);
+
+    filterByPeriod(df, stepColumn, "step_70-80_1", popupColumn, style, layer_id).addTo(step_970_980_1);
+    filterByPeriod(df, stepColumn, "step_70-80_2", popupColumn, style, layer_id).addTo(step_970_980_2);
+    filterByPeriod(df, stepColumn, "step_70-80_3", popupColumn, style, layer_id).addTo(step_970_980_3);
+
+    filterByPeriod(df, stepColumn, "step_80-90_1", popupColumn, style, layer_id).addTo(step_980_990_1);
+    filterByPeriod(df, stepColumn, "step_80-90_2", popupColumn, style, layer_id).addTo(step_980_990_2);
+    filterByPeriod(df, stepColumn, "step_80-90_3", popupColumn, style, layer_id).addTo(step_980_990_3);
+
+    filterByPeriod(df, stepColumn, "step_1990+_1", popupColumn, style, layer_id).addTo(step_991_1);
+    filterByPeriod(df, stepColumn, "step_1990+_2", popupColumn, style, layer_id).addTo(step_991_2);
+    filterByPeriod(df, stepColumn, "step_1990+_3", popupColumn, style, layer_id).addTo(step_991_3);
+
 }
 
 fetch("data/polygonsData_4326_fill.geojson")
     .then(function (response) { return response.json() })
     .then(function (data) {
-        filterPoligonsByPeriod_F(data, "Data polygonsData_period", "-1800", "polygon", polygonsFillStyle, "polygonsF").addTo(step_800_1);
-        filterPoligonsByPeriod_F(data, "Data polygonsData_period", "1850-1900", "polygon", polygonsFillStyle, "polygonsF").addTo(step_850_900_1);
-        filterPoligonsByPeriod_F(data, "Data polygonsData_period", "1900-1921", "polygon", polygonsFillStyle, "polygonsF").addTo(step_900_921_1);
-        filterPoligonsByPeriod_F(data, "Data polygonsData_period", "1921-1940", "polygon", polygonsFillStyle, "polygonsF").addTo(step_921_940_1);
-        filterPoligonsByPeriod_F(data, "Data polygonsData_period", "1940-1960", "polygon", polygonsFillStyle, "polygonsF").addTo(step_940_960_1);
-        filterPoligonsByPeriod_F(data, "Data polygonsData_period", "1960-1970", "polygon", polygonsFillStyle, "polygonsF").addTo(step_960_970_1);
-        filterPoligonsByPeriod_F(data, "Data polygonsData_period", "1970-1980", "polygon", polygonsFillStyle, "polygonsF").addTo(step_970_980_1);
-        filterPoligonsByPeriod_F(data, "Data polygonsData_period", "1980-1990", "polygon", polygonsFillStyle, "polygonsF").addTo(step_980_990_1);
-        filterPoligonsByPeriod_F(data, "Data polygonsData_period", "1980-1990", "polygon", polygonsFillStyle, "polygonsF").addTo(step_980_990_1);
+
+        let layer_id = "polygonsF";
+        let stepColumn = "polygonsDataF_step";
+        let style = polygonsFillStyle;
+        let popupColumn = "polygon";
+
+        scatterToLayers(data, stepColumn, popupColumn, style, layer_id);
     });
 
 
 fetch("data/polygonsData_4326_color.geojson")
     .then(function (response) { return response.json() })
     .then(function (data) {
-        filterPoligonsByPeriod_C(data, "Data polygonsData_period", "-1800", "polygon", polygonsColorStyle, "polygonsC").addTo(step_800_1);
-        filterPoligonsByPeriod_C(data, "Data polygonsData_period", "1850-1900", "polygon", polygonsColorStyle, "polygonsC").addTo(step_850_900_1);
-        filterPoligonsByPeriod_C(data, "Data polygonsData_period", "1900-1921", "polygon", polygonsColorStyle, "polygonsC").addTo(step_900_921_1);
-        filterPoligonsByPeriod_C(data, "Data polygonsData_period", "1921-1940", "polygon", polygonsColorStyle, "polygonsC").addTo(step_921_940_1);
-        filterPoligonsByPeriod_C(data, "Data polygonsData_period", "1940-1960", "polygon", polygonsColorStyle, "polygonsC").addTo(step_940_960_1);
-        filterPoligonsByPeriod_C(data, "Data polygonsData_period", "1960-1970", "polygon", polygonsColorStyle, "polygonsC").addTo(step_960_970_1);
-        filterPoligonsByPeriod_C(data, "Data polygonsData_period", "1970-1980", "polygon", polygonsColorStyle, "polygonsC").addTo(step_970_980_1);
-        filterPoligonsByPeriod_C(data, "Data polygonsData_period", "1980-1990", "polygon", polygonsColorStyle, "polygonsC").addTo(step_980_990_1);
-        filterPoligonsByPeriod_C(data, "Data polygonsData_period", "1980-1990", "polygon", polygonsColorStyle, "polygonsC").addTo(step_980_990_1);
+
+        let layer_id = "polygonsC";
+        let stepColumn = "polygonsDataС_step";
+        let style = polygonsColorStyle;
+        let popupColumn = "polygon";
+
+        scatterToLayers(data, stepColumn, popupColumn, style, layer_id);
     });
 
 
 fetch("data/osmData_4326.geojson")
     .then(function (response) { return response.json() })
     .then(function (data) {
-        filterBuildingsByPeriod(data, "Data osmData_period", "1800-1850", "building", buildingsStyle, "building").addTo(step_800_850_1);
-        filterBuildingsByPeriod(data, "Data osmData_period", "1850-1900", "building", buildingsStyle, "building").addTo(step_850_900_1);
-        filterBuildingsByPeriod(data, "Data osmData_period", "1900-1921", "building", buildingsStyle, "building").addTo(step_900_921_1);
-        filterBuildingsByPeriod(data, "Data osmData_period", "1921-1940", "building", buildingsStyle, "building").addTo(step_921_940_1);
-        filterBuildingsByPeriod(data, "Data osmData_period", "1940-1960", "building", buildingsStyle, "building").addTo(step_940_960_1);
-        filterBuildingsByPeriod(data, "Data osmData_period", "1960-1970", "building", buildingsStyle, "building").addTo(step_960_970_1);
-        filterBuildingsByPeriod(data, "Data osmData_period", "1970-1980", "building", buildingsStyle, "building").addTo(step_970_980_1);
-        filterBuildingsByPeriod(data, "Data osmData_period", "1980-1990", "building", buildingsStyle, "building").addTo(step_980_990_1);
-        filterBuildingsByPeriod(data, "Data osmData_period", "1991-", "building", buildingsStyle, "building").addTo(step_991_1);
+
+        let layer_id = "building";
+        let stepColumn = "osmData_17_02_step";
+        let style = buildingsStyle;
+        let popupColumn = "building";
+
+        scatterToLayers(data, stepColumn, popupColumn, style, layer_id);
     });
 
 
 fetch("data/linesData_4326.geojson")
     .then(function (response) { return response.json() })
     .then(function (data) {
-        filterLinesByPeriod(data, ["Шлях на Кам'янець", "Шлях на Летичів"], "line", "lines").addTo(step_800_850_1);
-        filterLinesByPeriod(data,["Вул. Кам'янецька", "вул. Ремісницька", "вул. Соборна", "вул. Набережна", "вул. Аптекарська", "вул. Старобульварна", "вул. Коммерційна", "вул. Купецька", "Вул. Дворянська"], "line", "lines").addTo(step_800_850_2);
+
+        let layer_id = "lines";
+        let stepColumn = "linesData_17_02_steps";
+        let style = linesStyle;
+        let popupColumn = "line";
+
+        scatterToLayers(data, stepColumn, popupColumn, style, layer_id);
     });
 
 
 fetch("data/pointsData_4326.geojson")
     .then(function (response) { return response.json() })
     .then(function (data) {
-        filterPointsByPeriod(data, "Data pointsData_period", "-1800", "point", "points").addTo(step_800_1);
-        filterPointsByPeriod(data, "Data pointsData_period", "1800-1850", "point", "points").addTo(step_800_850_1);
-        filterPointsByPeriod(data, "Data pointsData_period", "1850-1900", "point", "points").addTo(step_850_900_1);
-        filterPointsByPeriod(data, "Data pointsData_period", "1900-1921", "point", "points").addTo(step_900_921_1);
+
+
+        let layer_id = "points";
+        let stepColumn = "pointsData_17_02_Step";
+        let style = geojsonMarkerOptions;
+        let popupColumn = "point";
+
+        scatterToLayers(data, stepColumn, popupColumn, style, layer_id);
+
+        // filterPointsByPeriod(data, "pointsData_17_02_period", "-1800", "point", "points").addTo(step_800_1);
+        // filterPointsByPeriod(data, "pointsData_17_02_period", "1800-1850", "point", "points").addTo(step_800_850_1);
+        // filterPointsByPeriod(data, "pointsData_17_02_period", "1850-1900", "point", "points").addTo(step_850_900_1);
+        // filterPointsByPeriod(data, "pointsData_17_02_period", "1900-1921", "point", "points").addTo(step_900_920_1);
     });
 
 
@@ -238,7 +285,6 @@ function onEachFeatureClosure(defaultColor, weightValue) {
 }
 
 function returnPreviousStyle(layer) {
-    console.log(layer.options.id);
     let pane = layer.options.id;
     if(pane === "building"){
         layer.setStyle(buildingsStyle);
@@ -277,10 +323,10 @@ var scroller = scrollama();
 function handleStepEnter(r) {
     // if(r.index > 0) {
 
-        if(r.index === 3){
+        if(r.index === 2){
             $("#pic-overlay").css("display", "flex").hide().fadeIn(1000)
         }
-        else if(r.index != 3){
+        else if(r.index != 2){
             $("#pic-overlay").fadeOut(1000);
         }
         //map.flyTo([49.422, 27.02], 14);
