@@ -1,6 +1,6 @@
 
 // Map
-var map = L.map('map').setView([49.422, 27.02], 14);
+var map = L.map('map').setView([49.422, 27.02], 13);
 
 L.tileLayer(
     'https://stamen-tiles-{s}.a.ssl.fastly.net/toner-lite/{z}/{x}/{y}{r}.{ext}', {
@@ -25,7 +25,8 @@ var step_800_850_1 = new L.LayerGroup(),
     step_800_850_3 = new L.LayerGroup();
 var step_850_900_1 = new L.LayerGroup(),
     step_850_900_2 = new L.LayerGroup(),
-    step_850_900_3 = new L.LayerGroup();
+    step_850_900_3 = new L.LayerGroup(),
+    step_850_900_4 = new L.LayerGroup();
 var step_900_920_1 = new L.LayerGroup(),
     step_900_920_2 = new L.LayerGroup(),
     step_900_920_3 = new L.LayerGroup();
@@ -52,7 +53,8 @@ var step_991_1 = new L.LayerGroup(),
 var buildingsColor = "#9d2f32", //"#f14633", //"#9d2f32",
     polygonsFillColor = "#c9d3b3", //"#899e91", //"#bbcda9", // "#fce0bc", //"#899e91", //"#a79d70",
     linesColor = "#0062A6", //'#4783fe',
-    pointsColor = "#ff9d04"; //'#D7A319';
+    pointsColor = "#ff9d04",//'#D7A319';
+    polygonsStrokeColor = 'red'; //'#374969'
 
 //визначаємо стилі для кожного типу елементів
 var polygonsFillStyle = {
@@ -67,7 +69,7 @@ var polygonsColorStyle = {
     weight: 2,
     opacity: 1,
     fillColor:"transparent",
-    color: '#374969',
+    color: polygonsStrokeColor,
     dashArray: '5, 5',
     dashOffset: '0'
 };
@@ -173,6 +175,7 @@ function scatterToLayers(df, stepColumn, popupColumn, style, layer_id){
     filterByPeriod(df, stepColumn, "step_1850-1900_1", popupColumn, style, layer_id).addTo(step_850_900_1);
     filterByPeriod(df, stepColumn, "step_1850-1900_2", popupColumn, style, layer_id).addTo(step_850_900_2);
     filterByPeriod(df, stepColumn, "step_1850-1900_3", popupColumn, style, layer_id).addTo(step_850_900_3);
+    filterByPeriod(df, stepColumn, "step_1850-1900_4", popupColumn, style, layer_id).addTo(step_850_900_4);
 
     filterByPeriod(df, stepColumn, "step_1900-1920_1", popupColumn, style, layer_id).addTo(step_900_920_1);
     filterByPeriod(df, stepColumn, "step_1900-1920_2", popupColumn, style, layer_id).addTo(step_900_920_2);
@@ -321,15 +324,17 @@ var scroller = scrollama();
 
 // scrollama event handlers
 function handleStepEnter(r) {
+    console.log(r.index);
     // if(r.index > 0) {
 
         if(r.index === 2){
             $("#pic-overlay").css("display", "flex").hide().fadeIn(1000)
-        }
-        else if(r.index != 2){
+        } else if(r.index === 3 || r.index === 1){
             $("#pic-overlay").fadeOut(1000);
+        } else if(r.index === 10) {
+            map.flyTo([49.422, 27.02], 14);
         }
-        //map.flyTo([49.422, 27.02], 14);
+
         let layerToAdd = $(r.element).data("stuff")[0];
         let layerToRemove = $(r.element).data("stuff")[1];
         let layerToGrey = $(r.element).data("stuff")[2];
