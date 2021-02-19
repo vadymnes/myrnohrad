@@ -54,7 +54,7 @@ var buildingsColor = "#9d2f32", //"#f14633", //"#9d2f32",
     polygonsFillColor = "#c9d3b3", //"#899e91", //"#bbcda9", // "#fce0bc", //"#899e91", //"#a79d70",
     linesColor = "#0062A6", //'#4783fe',
     pointsColor = "#ff9d04",//'#D7A319';
-    polygonsStrokeColor = 'red'; //'#374969'
+    polygonsStrokeColor = '#CE4066'; //'#374969'
 
 //визначаємо стилі для кожного типу елементів
 var polygonsFillStyle = {
@@ -107,7 +107,7 @@ var toGreyStyle = {
 };
 
 
-var mouseoverStyle = { color: "grey", weight: 3 };
+var mouseoverStyle = { color: "black", weight: 3 };
 
 
 //фільтруємо елементи на різні групи шарів за періодами
@@ -137,29 +137,30 @@ function filterByPeriod(data, filter_property, period, popup, style, id_value){
 }
 
 
-function filterPointsByPeriod(data, filter_property, period, popup, id_value) {
-    if(id_value === "points"){
-        return L.geoJson(data, {
-            id: id_value,
-            filter: function (feat) {
-                return feat.properties[filter_property] == period
-            },
-            renderer: canvasRenderer,
-            onEachFeature: onEachFeatureClosure("green", 1),
-            pointToLayer: function (feature, latlng) {
-                return L.circleMarker(latlng, geojsonMarkerOptions);
-            }
-        }).bindPopup(popup);
+function loopOn() {
+    let thisId = $(this).attr("id");
+    let currentLayer = $(this).closest(".step").data("stuff")[0];
+    eval(currentLayer).eachLayer(function(layer) {
 
-    }  else {
-        return L.geoJson(data, {
-            id: id_value,
-            filter: function(feat) { return feat.properties[filter_property] == period},
-            renderer: canvasRenderer,
-            style: function(){ return  style }
-        }).bindPopup(popup);
-    }
+        for (let i=0; i< layer.getLayers().length; i++) {
+            let current = layer.getLayers()[i].feature.properties.id;
+            if(current  === thisId){
+                layer.getLayers()[i].setStyle(mouseoverStyle)
+            }
+        }
+    });
 }
+
+function loopOut() {
+    let currentLayer = $(this).closest(".step").data("stuff")[0];
+    eval(currentLayer).eachLayer(function(layer) {
+        returnPreviousStyle(layer);
+    });
+}
+
+$(".highlight")
+    .on("mouseover", loopOn)
+    .on("mouseout", loopOut);
 
 
 
@@ -324,14 +325,13 @@ var scroller = scrollama();
 
 // scrollama event handlers
 function handleStepEnter(r) {
-    console.log(r.index);
     // if(r.index > 0) {
 
         if(r.index === 2){
             $("#pic-overlay").css("display", "flex").hide().fadeIn(1000)
         } else if(r.index === 3 || r.index === 1){
             $("#pic-overlay").fadeOut(1000);
-        } else if(r.index === 10) {
+        } else if(r.index > 10) {
             map.flyTo([49.422, 27.02], 14);
         }
 
