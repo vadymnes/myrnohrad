@@ -205,10 +205,10 @@ h3 {
 
   .flex-wrapper {
     margin: auto;
+    max-width: 500px;
 
     p {
       background-color: white;
-      width: 50%;
       margin: auto;
     }
   }
@@ -216,10 +216,11 @@ h3 {
 
 
   img {
+    max-width: 500px;
     display: block;
     margin: auto;
     width: 100%;
-    max-width: 400px;
+
   }
 }
 

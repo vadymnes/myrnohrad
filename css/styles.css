@@ -160,16 +160,16 @@ h3 {
   left: 0;
   z-index: 10000000; }
   #coat .flex-wrapper, #diploma .flex-wrapper {
-    margin: auto; }
+    margin: auto;
+    max-width: 500px; }
     #coat .flex-wrapper p, #diploma .flex-wrapper p {
       background-color: white;
-      width: 50%;
       margin: auto; }
   #coat img, #diploma img {
+    max-width: 500px;
     display: block;
     margin: auto;
-    width: 100%;
-    max-width: 400px; }
+    width: 100%; }
 
 #show-coat, #show-diploma {
   padding: 0 5px;
