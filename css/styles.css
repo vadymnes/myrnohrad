@@ -163,6 +163,8 @@ h3 {
     max-width: 400px; }
 
 .highlight {
-  background-color: yellow; }
+  padding: 0 5px;
+  background-color: #f0da9f;
+  cursor: pointer; }
 
 /*# sourceMappingURL=styles.css.map */

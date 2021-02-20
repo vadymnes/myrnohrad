@@ -52,7 +52,7 @@ var step_991_1 = new L.LayerGroup(),
 
 var buildingsColor = "#9d2f32", //"#f14633", //"#9d2f32",
     polygonsFillColor = "#c9d3b3", //"#899e91", //"#bbcda9", // "#fce0bc", //"#899e91", //"#a79d70",
-    linesColor = "#0062A6", //'#4783fe',
+    linesColor = "#0089C0", //'#4783fe',
     pointsColor = "#ff9d04",//'#D7A319';
     polygonsStrokeColor = '#CE4066'; //'#374969'
 
@@ -107,7 +107,7 @@ var toGreyStyle = {
 };
 
 
-var mouseoverStyle = { color: "black", weight: 3 };
+var mouseoverStyle = { color: "#574144", weight: 3, opacity: 1, fillOpacity: 0.6 };
 
 
 //фільтруємо елементи на різні групи шарів за періодами
@@ -116,35 +116,31 @@ function filterByPeriod(data, filter_property, period, popup, style, id_value){
     if(id_value === "points"){
         return L.geoJson(data, {
             id: id_value,
-            filter: function (feat) {
-                return feat.properties[filter_property] == period
-            },
+            filter: function (feat) { return feat.properties[filter_property] == period },
             renderer: canvasRenderer,
             onEachFeature: onEachFeatureClosure("green", 1),
-            pointToLayer: function (feature, latlng) {
-                return L.circleMarker(latlng, geojsonMarkerOptions);
-            }
-        }).bindPopup(popup);
+            pointToLayer: function (feature, latlng) { return L.circleMarker(latlng, geojsonMarkerOptions); }
+        });
 
     }  else {
         return L.geoJson(data, {
             id: id_value,
             filter: function(feat) { return feat.properties[filter_property] == period},
             renderer: canvasRenderer,
+            onEachFeature: onEachFeatureClosure("green", 1),
             style: function(){ return  style }
-        }).bindPopup(popup);
+        });
     }
 }
 
 
 function loopOn() {
-    let thisId = $(this).attr("id");
-    let currentLayer = $(this).closest(".step").data("stuff")[0];
+    let thisId = $(this).data("details")[1];
+    let currentLayer = $(this).data("details")[0];
     eval(currentLayer).eachLayer(function(layer) {
-
-        for (let i=0; i< layer.getLayers().length; i++) {
+        for (let i=0; i < layer.getLayers().length; i++) {
             let current = layer.getLayers()[i].feature.properties.id;
-            if(current  === thisId){
+            if(current.toString() === thisId.toString()){
                 layer.getLayers()[i].setStyle(mouseoverStyle)
             }
         }
@@ -152,10 +148,18 @@ function loopOn() {
 }
 
 function loopOut() {
-    let currentLayer = $(this).closest(".step").data("stuff")[0];
-    eval(currentLayer).eachLayer(function(layer) {
-        returnPreviousStyle(layer);
-    });
+    let currentLayer = $(this).data("details")[0];
+    let steplayer = $(this).closest(".step").data("stuff")[0];
+    if(steplayer === currentLayer){
+        eval(currentLayer).eachLayer(function(layer) {
+            returnPreviousStyle(layer);
+        });
+    } else {
+        eval(currentLayer).eachLayer(function(layer) {
+            layer.setStyle(toGreyStyle)
+        });
+    }
+
 }
 
 $(".highlight")
@@ -247,7 +251,7 @@ fetch("data/osmData_4326.geojson")
     });
 
 
-fetch("data/linesData_4326.geojson")
+fetch("data/linesData_4326_2.geojson")
     .then(function (response) { return response.json() })
     .then(function (data) {
 
@@ -283,8 +287,9 @@ fetch("data/pointsData_4326.geojson")
 //щоб передати змнну у кожен клік
 function onEachFeatureClosure(defaultColor, weightValue) {
     return function onEachFeature(feature, layer) {
-        layer.on('mouseover', function (e) {  e.target.setStyle(mouseoverStyle); });
-        layer.on('mouseout', function (e) {  e.target.setStyle({ color: defaultColor, weight: weightValue }); });
+        // layer.on('mouseover', function (e) {  e.target.setStyle(mouseoverStyle); });
+        // layer.on('mouseout', function (e) {  e.target.setStyle({ color: defaultColor, weight: weightValue }); });
+        layer.bindPopup('<p>'+feature.properties.id+ "  " +feature.properties.name+'</p>');
     }
 }
 
@@ -331,7 +336,7 @@ function handleStepEnter(r) {
             $("#pic-overlay").css("display", "flex").hide().fadeIn(1000)
         } else if(r.index === 3 || r.index === 1){
             $("#pic-overlay").fadeOut(1000);
-        } else if(r.index > 10) {
+        } else if(r.index >= 10) {
             map.flyTo([49.422, 27.02], 14);
         }
 
