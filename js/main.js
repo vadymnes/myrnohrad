@@ -50,6 +50,8 @@ var step_991_1 = new L.LayerGroup(),
     step_991_3 = new L.LayerGroup();
 
 
+var pulseLayer = new L.LayerGroup();
+
 var buildingsColor = "#9d2f32", //"#f14633", //"#9d2f32",
     polygonsFillColor = "#c9d3b3", //"#899e91", //"#bbcda9", // "#fce0bc", //"#899e91", //"#a79d70",
     linesColor = "#0089C0", //'#4783fe',
@@ -134,6 +136,26 @@ function filterByPeriod(data, filter_property, period, popup, style, id_value){
 }
 
 
+function loopOnBuilding() {
+
+    let thisId = $(this).data("details")[1];
+    let currentLayer = $(this).data("details")[0];
+    eval(currentLayer).eachLayer(function(layer) {
+        for (let i=0; i < layer.getLayers().length; i++) {
+            let current = layer.getLayers()[i].feature.properties.id;
+            if(current.toString() === thisId.toString()){
+                pulseLayer.clearLayers();
+                //layer.getLayers()[i].setStyle(mouseoverStyle);
+                const pulsatingIcon = generatePulsatingMarker(10, 'orange');
+                L.marker(layer.getLayers()[i].getBounds().getCenter(), { icon: pulsatingIcon}).addTo(pulseLayer);
+                pulseLayer.addTo(map);
+
+            }
+        }
+    });
+}
+
+
 function loopOn() {
     let thisId = $(this).data("details")[1];
     let currentLayer = $(this).data("details")[0];
@@ -141,15 +163,17 @@ function loopOn() {
         for (let i=0; i < layer.getLayers().length; i++) {
             let current = layer.getLayers()[i].feature.properties.id;
             if(current.toString() === thisId.toString()){
-                layer.getLayers()[i].setStyle(mouseoverStyle)
+                layer.getLayers()[i].setStyle(mouseoverStyle); 
             }
         }
     });
 }
 
 function loopOut() {
+    //map.removeLayer(pulseLayer)
     let currentLayer = $(this).data("details")[0];
     let steplayer = $(this).closest(".step").data("stuff")[0];
+    map.removeLayer(pulseLayer);
     if(steplayer === currentLayer){
         eval(currentLayer).eachLayer(function(layer) {
             returnPreviousStyle(layer);
@@ -166,7 +190,36 @@ $(".highlight")
     .on("mouseover", loopOn)
     .on("mouseout", loopOut);
 
+$(".highlight-building")
+    .on("mouseover", loopOnBuilding)
+    .on("mouseout", loopOut);
 
+
+
+
+const generatePulsatingMarker = function (radius, color) {
+    const cssStyle = `
+    width: ${radius}px;
+    height: ${radius}px;
+    background: ${color};
+    color: ${color};
+    opacity: 0.5;
+    box-shadow: 0 0 0 ${color};
+  `
+    return L.divIcon({
+        html: `<span style="${cssStyle}" class="pulse"/>`,
+        className: ''
+    })
+};
+
+
+$("#show-coat")
+    .on("mouseover", function(){ $("#coat").css("display", "flex").hide().fadeIn(500); })
+    .on("mouseout", function(){  $("#coat").hide();  });
+
+$("#show-diploma")
+    .on("mouseover", function() { $("#diploma").css("display", "flex").show() })
+    .on("mouseout", function(){  $("#diploma").hide(); });
 
 
 function scatterToLayers(df, stepColumn, popupColumn, style, layer_id){
@@ -332,11 +385,7 @@ var scroller = scrollama();
 function handleStepEnter(r) {
     // if(r.index > 0) {
 
-        if(r.index === 2){
-            $("#pic-overlay").css("display", "flex").hide().fadeIn(1000)
-        } else if(r.index === 3 || r.index === 1){
-            $("#pic-overlay").fadeOut(1000);
-        } else if(r.index >= 10) {
+        if(r.index >= 10) {
             map.flyTo([49.422, 27.02], 14);
         }
 

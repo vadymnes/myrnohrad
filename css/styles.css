@@ -149,22 +149,57 @@ h3 {
       font-weight: bold;
       color: #CE4066; }
 
-#pic-overlay {
+#coat, #diploma {
   width: 60%;
   height: 100%;
   position: absolute;
   display: none;
+  justify-content: center;
+  flex-direction: column;
   top: 0;
   left: 0;
   z-index: 10000000; }
-  #pic-overlay img {
+  #coat .flex-wrapper, #diploma .flex-wrapper {
+    margin: auto; }
+    #coat .flex-wrapper p, #diploma .flex-wrapper p {
+      background-color: white;
+      width: 50%;
+      margin: auto; }
+  #coat img, #diploma img {
+    display: block;
     margin: auto;
     width: 100%;
     max-width: 400px; }
 
-.highlight {
+#show-coat, #show-diploma {
   padding: 0 5px;
-  background-color: #f0da9f;
-  cursor: pointer; }
+  background-color: blue;
+  cursor: pointer;
+  color: white; }
+
+.highlight, .highlight-building {
+  padding: 0 5px;
+  background-color: #7A6265;
+  cursor: pointer;
+  color: white; }
+
+.pulse {
+  display: block;
+  border-radius: 50%;
+  cursor: pointer;
+  animation: pulse 1s infinite;
+  opacity: 0.5; }
+
+@keyframes pulse {
+  0% {
+    box-shadow: 0 0 0 0; }
+  30% {
+    box-shadow: 0 0 0 15px rgba(0, 0, 0, 0); }
+  50% {
+    box-shadow: 0 0 0 0 rgba(0, 0, 0, 0); }
+  70% {
+    box-shadow: 0 0 0 25px rgba(0, 0, 0, 0); }
+  100% {
+    box-shadow: 0 0 0 0 rgba(0, 0, 0, 0); } }
 
 /*# sourceMappingURL=styles.css.map */
