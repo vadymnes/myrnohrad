@@ -308,7 +308,13 @@ fetch("data/osmData_4326.geojson")
         /* тут колонка з id називається інакше, тому ренеймимо*/
         data.features.forEach(function(d){
             d.properties.id = d.properties.osm_id;
+            d.properties.name = d.properties.osmData_25_02_Shortdescription;
+            d.properties.info = d.properties.osmData_25_02_Info;
+            d.properties.picture = d.properties.osmData_25_02_photo;
+            d.properties.year = d.properties.osmData_25_02_StartYear;
             delete d.properties.osm_id;
+            delete d.properties.osmData_25_02_info;
+            delete d.properties.osmData_25_02_photo;
         });
 
         let layer_id = "building";
@@ -358,7 +364,25 @@ function onEachFeatureClosure(defaultColor, weightValue) {
     return function onEachFeature(feature, layer) {
         // layer.on('mouseover', function (e) {  e.target.setStyle(mouseoverStyle); });
         // layer.on('mouseout', function (e) {  e.target.setStyle({ color: defaultColor, weight: weightValue }); });
-        layer.bindPopup('<p>'+feature.properties.id+ "  " +feature.properties.name+'</p>');
+        var popup;
+        if(feature.properties.picture != ".jpg"){
+            popup = '<p> ' +
+                'id:'+feature.properties.id+ " <br> <b>" +
+                "назва: " + feature.properties.name+ "</b><br>"+
+                "рік побудови: " + feature.properties.year + "<br>"+
+                "<img style='max-width: 200px;' src='img/tips/" +feature.properties.picture +"'/>" + '<br> ' +
+                feature.properties.info +"<br>"+
+                '</p>'
+        } else {
+            popup = '<p> ' +
+                'id:'+feature.properties.id+ " <br> <b>" +
+                "назва: " + feature.properties.name+ "</b><br>"+
+                "рік побудови: " + feature.properties.year + "<br>"+
+                feature.properties.info +"<br>"+
+                '</p>'
+        }
+
+        layer.bindPopup(popup);
     }
 }
 
