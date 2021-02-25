@@ -397,11 +397,10 @@ function onEachFeatureClosure(defaultColor, weightValue) {
         // layer.on('mouseover', function (e) {  e.target.setStyle(mouseoverStyle); });
         // layer.on('mouseout', function (e) {  e.target.setStyle({ color: defaultColor, weight: weightValue }); });
         var popup;
-        if(feature.properties.picture != ".jpg"){
+        if(feature.properties.picture && feature.properties.picture != ".jpg"){
             popup = '<p> ' +
                 'id:'+feature.properties.id+ " <br> <b>" +
-                "назва: " + feature.properties.name+ "</b><br>"+
-                "рік побудови: " + feature.properties.year + "<br>"+
+                "назва: " + feature.properties.name+ "</b> ("+ feature.properties.year  + ")<br>"+
                 "<img style='max-width: 200px;' src='img/tips/" +feature.properties.picture +"'/>" + '<br> ' +
                 feature.properties.info +"<br>"+
                 '</p>'
