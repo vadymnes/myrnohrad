@@ -279,6 +279,16 @@ fetch("data/polygonsData_4326_fill.geojson")
     .then(function (response) { return response.json() })
     .then(function (data) {
 
+        data.features.forEach(function(d){
+            d.properties.info = d.properties.polygonsDataF_25_02_popup;
+            d.properties.picture = d.properties.polygonsDataF_25_02_photo;
+            d.properties.year = d.properties.polygonsDataF_25_02_year;
+            delete d.properties.polygonsDataF_25_02_popup;
+            delete d.properties.polygonsDataF_25_02_year;
+            delete d.properties.polygonsDataF_25_02_photo;
+        });
+
+
         let layer_id = "polygonsF";
         let stepColumn = "polygonsDataF_step";
         let style = polygonsFillStyle;
@@ -291,6 +301,15 @@ fetch("data/polygonsData_4326_fill.geojson")
 fetch("data/polygonsData_4326_color.geojson")
     .then(function (response) { return response.json() })
     .then(function (data) {
+
+        data.features.forEach(function(d){
+            d.properties.info = d.properties.polygonsDataС_25_02_popup;
+            d.properties.picture = d.properties.polygonsDataС_25_02_photo;
+            d.properties.year = d.properties.polygonsDataС_year;
+            delete d.properties.polygonsDataС_25_02_popup;
+            delete d.properties.polygonsDataС_year;
+            delete d.properties.polygonsDataС_25_02_photo;
+        });
 
         let layer_id = "polygonsC";
         let stepColumn = "polygonsDataС_step";
@@ -313,7 +332,9 @@ fetch("data/osmData_4326.geojson")
             d.properties.picture = d.properties.osmData_25_02_photo;
             d.properties.year = d.properties.osmData_25_02_StartYear;
             delete d.properties.osm_id;
-            delete d.properties.osmData_25_02_info;
+            delete d.properties.osmData_25_02_Shortdescription;
+            delete d.properties.osmData_25_02_Info;
+            delete d.properties.osmData_25_02_StartYear;
             delete d.properties.osmData_25_02_photo;
         });
 
@@ -343,9 +364,20 @@ fetch("data/pointsData_4326.geojson")
     .then(function (response) { return response.json() })
     .then(function (data) {
 
+        data.features.forEach(function(d){
+            d.properties.name = d.properties.pointsData_25_02_name;
+            d.properties.info = d.properties.pointsData_25_02_popup;
+            d.properties.picture = d.properties.pointsData_25_02_photo;
+            d.properties.year = d.properties.pointsData_25_02_year;
+            delete d.properties.pointsData_25_02_name;
+            delete d.properties.pointsData_25_02_popup;
+            delete d.properties.pointsData_25_02_photo;
+            delete d.properties.pointsData_25_02_year;
+        });
+
 
         let layer_id = "points";
-        let stepColumn = "pointsData_17_02_Step";
+        let stepColumn = "pointsData_25_02_Step";
         let style = geojsonMarkerOptions;
         let popupColumn = "point";
 
