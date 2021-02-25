@@ -14,6 +14,13 @@ L.tileLayer(
 map.scrollWheelZoom.disable();
 var canvasRenderer = L.canvas();
 
+const layerGroups = ["step_800_1", "step_800_2", "step_800_3", "step_800_4",
+    "step_800_850_1", "step_800_850_2", "step_800_850_3",
+    "step_850_900_1", "step_850_900_2", "step_850_900_3", "step_850_900_4"];
+
+
+
+
 
 /*створюємо шари на всі scrolling steps */
 var step_800_1 = new L.LayerGroup(),
@@ -130,6 +137,7 @@ function filterByPeriod(data, filter_property, period, popup, style, id_value){
             filter: function(feat) { return feat.properties[filter_property] == period},
             renderer: canvasRenderer,
             onEachFeature: onEachFeatureClosure("green", 1),
+
             style: function(){ return  style }
         });
     }
@@ -222,6 +230,8 @@ $("#show-diploma")
     .on("mouseout", function(){  $("#diploma").hide(); });
 
 
+//функція, якою ми розкидаємо всі наші обʼєкти відповідно до зазначеного в них кроку
+
 function scatterToLayers(df, stepColumn, popupColumn, style, layer_id){
     filterByPeriod(df, stepColumn, "step_-1800_1", popupColumn, style, layer_id).addTo(step_800_1);
     filterByPeriod(df, stepColumn, "step_-1800_2", popupColumn, style, layer_id).addTo(step_800_2);
@@ -295,8 +305,14 @@ fetch("data/osmData_4326.geojson")
     .then(function (response) { return response.json() })
     .then(function (data) {
 
+        /* тут колонка з id називається інакше, тому ренеймимо*/
+        data.features.forEach(function(d){
+            d.properties.id = d.properties.osm_id;
+            delete d.properties.osm_id;
+        });
+
         let layer_id = "building";
-        let stepColumn = "osmData_17_02_step";
+        let stepColumn = "osmData_25_02_step";
         let style = buildingsStyle;
         let popupColumn = "building";
 
@@ -309,7 +325,7 @@ fetch("data/linesData_4326_2.geojson")
     .then(function (data) {
 
         let layer_id = "lines";
-        let stepColumn = "linesData_17_02_steps";
+        let stepColumn = "linesData_25_02_steps";
         let style = linesStyle;
         let popupColumn = "line";
 
@@ -383,28 +399,64 @@ var scroller = scrollama();
 
 // scrollama event handlers
 function handleStepEnter(r) {
-    // if(r.index > 0) {
+    let layerToAdd = $(r.element).data("stuff")[0];
+    let layerToRemove = $(r.element).data("stuff")[1];
+    let layerToGrey = $(r.element).data("stuff")[2];
+
+    //всі кроки окрім першого та останнього
+    if(r.direction === "down" && layerToGrey != 'none'){
+        eval(layerToAdd).addTo(map);
+        eval(layerToGrey).eachLayer(function(layer) {layer.setStyle(toGreyStyle);});
+    } else if(r.direction === "down" && layerToGrey === 'none'){
+        eval(layerToAdd).addTo(map);
+    } else if(r.direction === "up" && layerToRemove != 'none'){
+        map.removeLayer(eval(layerToRemove));
+        eval(layerToAdd).eachLayer(function(layer) {
+            returnPreviousStyle(layer)
+        });
+    }
+
+
+    if(r.index === 5 && r.direction === "down"){
+        for(let l in layerGroups) {
+            eval(layerGroups[l]).eachLayer(function(f){
+                for (let i=0; i < f.getLayers().length; i++) {
+                    let current = f.getLayers()[i].feature.properties.id;
+                    if(current === "L000000004" || current === "L000000003"){
+                        f.getLayers()[i].setStyle({opacity: 0});
+                        f.getLayers()[i].off('click');
+                    }
+
+                }
+            });
+        }
+    }
+
+
+    if(r.index === 5 && r.direction === "up"){
+        for(let l in layerGroups) {
+            eval(layerGroups[l]).eachLayer(function(f){
+                for (let i=0; i < f.getLayers().length; i++) {
+                    let current = f.getLayers()[i].feature.properties.id;
+                    if(current === "L000000004" || current === "L000000003"){
+                        f.getLayers()[i].resetStyle(eval(layerGroups[l]));
+
+                    }
+
+                }
+            });
+        }
+    }
+
+
+
+
 
         if(r.index >= 10) {
             map.flyTo([49.422, 27.02], 14);
         }
 
-        let layerToAdd = $(r.element).data("stuff")[0];
-        let layerToRemove = $(r.element).data("stuff")[1];
-        let layerToGrey = $(r.element).data("stuff")[2];
 
-        //всі кроки окрім першого та останнього
-        if(r.direction === "down" && layerToGrey != 'none'){
-            eval(layerToAdd).addTo(map);
-            eval(layerToGrey).eachLayer(function(layer) {layer.setStyle(toGreyStyle);});
-        } else if(r.direction === "down" && layerToGrey === 'none'){
-            eval(layerToAdd).addTo(map);
-        } else if(r.direction === "up" && layerToRemove != 'none'){
-            map.removeLayer(eval(layerToRemove));
-            eval(layerToAdd).eachLayer(function(layer) {
-                returnPreviousStyle(layer)
-            });
-        }
     // }
 }
 
