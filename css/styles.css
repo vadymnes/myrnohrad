@@ -225,5 +225,13 @@ h3 {
     box-shadow: 0 0 0 25px rgba(0, 0, 0, 0); }
   100% {
     box-shadow: 0 0 0 0 rgba(0, 0, 0, 0); } }
+a {
+  text-decoration: none;
+  border-bottom: 2px dashed #CE4066;
+  padding-bottom: 2px;
+  color: inherit; }
+
+a:hover {
+  color: #CE4066; }
 
 /*# sourceMappingURL=styles.css.map */

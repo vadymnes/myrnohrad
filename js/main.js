@@ -578,6 +578,69 @@ function handleStepEnter(r) {
             "L000000065", "L000000070", "L000000078", "L000000079", "L000000080"]);
     }
 
+    // крок 8
+    if(r.index === 8 && r.direction === "down"){
+        removeObjectsWhenScrollDown(["L000000081"]);
+    }
+
+    if(r.index === 8 && r.direction === "up"){
+        returnObjectsWhenScrollUp(["L000000081"]);
+    }
+
+    // крок 9
+    if(r.index === 9 && r.direction === "down"){
+        removeObjectsWhenScrollDown(["c000000053", "30"]);
+    }
+
+    if(r.index === 9 && r.direction === "up"){
+        returnObjectsWhenScrollUp(["c000000053", "30"]);
+    }
+
+    // крок 13
+    if(r.index === 13 && r.direction === "down"){
+        removeObjectsWhenScrollDown(["c000000013"]);
+    }
+
+    if(r.index === 13 && r.direction === "up"){
+        returnObjectsWhenScrollUp(["c000000013"]);
+    }
+
+    // крок 14
+    if(r.index === 14 && r.direction === "down"){
+        removeObjectsWhenScrollDown(["L000000082", "p000000027"]);
+    }
+
+    if(r.index === 14 && r.direction === "up"){
+        returnObjectsWhenScrollUp(["L000000082", "p000000027"]);
+    }
+
+    // крок 16
+    if(r.index === 16 && r.direction === "down"){
+        removeObjectsWhenScrollDown(["c000000067", "c000000068"]);
+    }
+
+    if(r.index === 16 && r.direction === "up"){
+        returnObjectsWhenScrollUp(["c000000067", "c000000068"]);
+    }
+
+    // крок 17
+    if(r.index === 17 && r.direction === "down"){
+        removeObjectsWhenScrollDown(["c000000059", "c000000028", "c000000029"]);
+    }
+
+    if(r.index === 17 && r.direction === "up"){
+        returnObjectsWhenScrollUp(["c000000059", "c000000028", "c000000029"]);
+    }
+
+    // крок 21
+    if(r.index === 21 && r.direction === "down"){
+        removeObjectsWhenScrollDown(["c000000021"]);
+    }
+
+    if(r.index === 21 && r.direction === "up"){
+        returnObjectsWhenScrollUp(["c000000021"]);
+    }
+
 
     if(r.index >= 10) {
         map.flyTo([49.422, 27.02], 14);
