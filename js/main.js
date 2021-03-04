@@ -14,12 +14,21 @@ L.tileLayer(
 map.scrollWheelZoom.disable();
 var canvasRenderer = L.canvas();
 
-const layerGroups = ["step_800_1", "step_800_2", "step_800_3", "step_800_4",
+const layerGroups = [
+    "step_800_1", "step_800_2", "step_800_3", "step_800_4",
     "step_800_850_1", "step_800_850_2", "step_800_850_3",
-    "step_850_900_1", "step_850_900_2", "step_850_900_3", "step_850_900_4"];
+    "step_850_900_1", "step_850_900_2", "step_850_900_3", "step_850_900_4",
+    "step_900_920_1", "step_900_920_2", "step_900_920_3",
+    "step_920_945_1", "step_920_945_2", "step_920_945_3",
+    "step_945_960_1", "step_945_960_2", "step_945_960_3",
+    "step_960_970_1", "step_960_970_2", "step_960_970_3",
+    "step_970_980_1", "step_970_980_2", "step_970_980_3",
+    "step_980_990_1", "step_980_990_2", "step_980_990_3",
+    "step_991_1",  "step_991_2",  "step_991_3"
 
 
 
+];
 
 
 /*створюємо шари на всі scrolling steps */
@@ -60,7 +69,7 @@ var step_991_1 = new L.LayerGroup(),
 var pulseLayer = new L.LayerGroup();
 
 var buildingsColor = "#9d2f32", //"#f14633", //"#9d2f32",
-    polygonsFillColor = "#c9d3b3", //"#899e91", //"#bbcda9", // "#fce0bc", //"#899e91", //"#a79d70",
+    polygonsFillColor = "#c9d3b3",//"#c9d3b3", //"#899e91", //"#bbcda9", // "#fce0bc", //"#899e91", //"#a79d70",
     linesColor = "#0089C0", //'#4783fe',
     pointsColor = "#ff9d04",//'#D7A319';
     polygonsStrokeColor = '#CE4066'; //'#374969'
@@ -68,7 +77,7 @@ var buildingsColor = "#9d2f32", //"#f14633", //"#9d2f32",
 //визначаємо стилі для кожного типу елементів
 var polygonsFillStyle = {
     weight: 1,
-    fillOpacity: 0.7,
+    //fillOpacity: 0.7,
     opacity: 1,
     fillColor: polygonsFillColor,
     color: polygonsFillColor
@@ -128,7 +137,9 @@ function filterByPeriod(data, filter_property, period, popup, style, id_value){
             filter: function (feat) { return feat.properties[filter_property] == period },
             renderer: canvasRenderer,
             onEachFeature: onEachFeatureClosure("green", 1),
-            pointToLayer: function (feature, latlng) { return L.circleMarker(latlng, geojsonMarkerOptions); }
+            pointToLayer: function (feature, latlng) { return L.circleMarker(latlng, geojsonMarkerOptions); },
+            style: function(){ return  geojsonMarkerOptions }
+
         });
 
     }  else {
@@ -142,92 +153,6 @@ function filterByPeriod(data, filter_property, period, popup, style, id_value){
         });
     }
 }
-
-
-function loopOnBuilding() {
-
-    let thisId = $(this).data("details")[1];
-    let currentLayer = $(this).data("details")[0];
-    eval(currentLayer).eachLayer(function(layer) {
-        for (let i=0; i < layer.getLayers().length; i++) {
-            let current = layer.getLayers()[i].feature.properties.id;
-            if(current.toString() === thisId.toString()){
-                pulseLayer.clearLayers();
-                //layer.getLayers()[i].setStyle(mouseoverStyle);
-                const pulsatingIcon = generatePulsatingMarker(10, 'orange');
-                L.marker(layer.getLayers()[i].getBounds().getCenter(), { icon: pulsatingIcon}).addTo(pulseLayer);
-                pulseLayer.addTo(map);
-
-            }
-        }
-    });
-}
-
-
-function loopOn() {
-    let thisId = $(this).data("details")[1];
-    let currentLayer = $(this).data("details")[0];
-    eval(currentLayer).eachLayer(function(layer) {
-        for (let i=0; i < layer.getLayers().length; i++) {
-            let current = layer.getLayers()[i].feature.properties.id;
-            if(current.toString() === thisId.toString()){
-                layer.getLayers()[i].setStyle(mouseoverStyle); 
-            }
-        }
-    });
-}
-
-function loopOut() {
-    //map.removeLayer(pulseLayer)
-    let currentLayer = $(this).data("details")[0];
-    let steplayer = $(this).closest(".step").data("stuff")[0];
-    map.removeLayer(pulseLayer);
-    if(steplayer === currentLayer){
-        eval(currentLayer).eachLayer(function(layer) {
-            returnPreviousStyle(layer);
-        });
-    } else {
-        eval(currentLayer).eachLayer(function(layer) {
-            layer.setStyle(toGreyStyle)
-        });
-    }
-
-}
-
-$(".highlight")
-    .on("mouseover", loopOn)
-    .on("mouseout", loopOut);
-
-$(".highlight-building")
-    .on("mouseover", loopOnBuilding)
-    .on("mouseout", loopOut);
-
-
-
-
-const generatePulsatingMarker = function (radius, color) {
-    const cssStyle = `
-    width: ${radius}px;
-    height: ${radius}px;
-    background: ${color};
-    color: ${color};
-    opacity: 0.5;
-    box-shadow: 0 0 0 ${color};
-  `
-    return L.divIcon({
-        html: `<span style="${cssStyle}" class="pulse"/>`,
-        className: ''
-    })
-};
-
-
-$("#show-coat")
-    .on("mouseover", function(){ $("#coat").css("display", "flex").hide().fadeIn(500); })
-    .on("mouseout", function(){  $("#coat").hide();  });
-
-$("#show-diploma")
-    .on("mouseover", function() { $("#diploma").css("display", "flex").show() })
-    .on("mouseout", function(){  $("#diploma").hide(); });
 
 
 //функція, якою ми розкидаємо всі наші обʼєкти відповідно до зазначеного в них кроку
@@ -279,20 +204,15 @@ fetch("data/polygonsData_4326_fill.geojson")
     .then(function (response) { return response.json() })
     .then(function (data) {
 
-        data.features.forEach(function(d){
-            d.properties.info = d.properties.polygonsDataF_25_02_popup;
-            d.properties.picture = d.properties.polygonsDataF_25_02_photo;
-            d.properties.year = d.properties.polygonsDataF_25_02_year;
-            delete d.properties.polygonsDataF_25_02_popup;
-            delete d.properties.polygonsDataF_25_02_year;
-            delete d.properties.polygonsDataF_25_02_photo;
-        });
-
+        //data.features.forEach(function(d){
+            // d.properties.name = d.properties.polygonsDataF_27_02_name;
+            // delete d.properties.polygonsDataF_27_02_name;
+        //});
 
         let layer_id = "polygonsF";
-        let stepColumn = "polygonsDataF_step";
+        let stepColumn = "step";
         let style = polygonsFillStyle;
-        let popupColumn = "polygon";
+        let popupColumn = "info";
 
         scatterToLayers(data, stepColumn, popupColumn, style, layer_id);
     });
@@ -302,17 +222,8 @@ fetch("data/polygonsData_4326_color.geojson")
     .then(function (response) { return response.json() })
     .then(function (data) {
 
-        data.features.forEach(function(d){
-            d.properties.info = d.properties.polygonsDataС_25_02_popup;
-            d.properties.picture = d.properties.polygonsDataС_25_02_photo;
-            d.properties.year = d.properties.polygonsDataС_year;
-            delete d.properties.polygonsDataС_25_02_popup;
-            delete d.properties.polygonsDataС_year;
-            delete d.properties.polygonsDataС_25_02_photo;
-        });
-
         let layer_id = "polygonsC";
-        let stepColumn = "polygonsDataС_step";
+        let stepColumn = "step";
         let style = polygonsColorStyle;
         let popupColumn = "polygon";
 
@@ -324,22 +235,8 @@ fetch("data/osmData_4326.geojson")
     .then(function (response) { return response.json() })
     .then(function (data) {
 
-        /* тут колонка з id називається інакше, тому ренеймимо*/
-        data.features.forEach(function(d){
-            d.properties.id = d.properties.osm_id;
-            d.properties.name = d.properties.osmData_25_02_Shortdescription;
-            d.properties.info = d.properties.osmData_25_02_Info;
-            d.properties.picture = d.properties.osmData_25_02_photo;
-            d.properties.year = d.properties.osmData_25_02_StartYear;
-            delete d.properties.osm_id;
-            delete d.properties.osmData_25_02_Shortdescription;
-            delete d.properties.osmData_25_02_Info;
-            delete d.properties.osmData_25_02_StartYear;
-            delete d.properties.osmData_25_02_photo;
-        });
-
         let layer_id = "building";
-        let stepColumn = "osmData_25_02_step";
+        let stepColumn = "step";
         let style = buildingsStyle;
         let popupColumn = "building";
 
@@ -352,7 +249,7 @@ fetch("data/linesData_4326_2.geojson")
     .then(function (data) {
 
         let layer_id = "lines";
-        let stepColumn = "linesData_25_02_steps";
+        let stepColumn = "step";
         let style = linesStyle;
         let popupColumn = "line";
 
@@ -364,72 +261,233 @@ fetch("data/pointsData_4326.geojson")
     .then(function (response) { return response.json() })
     .then(function (data) {
 
-        data.features.forEach(function(d){
-            d.properties.name = d.properties.pointsData_25_02_name;
-            d.properties.info = d.properties.pointsData_25_02_popup;
-            d.properties.picture = d.properties.pointsData_25_02_photo;
-            d.properties.year = d.properties.pointsData_25_02_year;
-            delete d.properties.pointsData_25_02_name;
-            delete d.properties.pointsData_25_02_popup;
-            delete d.properties.pointsData_25_02_photo;
-            delete d.properties.pointsData_25_02_year;
-        });
-
-
         let layer_id = "points";
-        let stepColumn = "pointsData_25_02_Step";
+        let stepColumn = "step";
         let style = geojsonMarkerOptions;
         let popupColumn = "point";
 
         scatterToLayers(data, stepColumn, popupColumn, style, layer_id);
-
-        // filterPointsByPeriod(data, "pointsData_17_02_period", "-1800", "point", "points").addTo(step_800_1);
-        // filterPointsByPeriod(data, "pointsData_17_02_period", "1800-1850", "point", "points").addTo(step_800_850_1);
-        // filterPointsByPeriod(data, "pointsData_17_02_period", "1850-1900", "point", "points").addTo(step_850_900_1);
-        // filterPointsByPeriod(data, "pointsData_17_02_period", "1900-1921", "point", "points").addTo(step_900_920_1);
     });
+
+
+
+//підсвітка кількох будівель одночасно (ДОСИ, Курчатова тощо)
+function loopOnMultiple(currentStep, array) {
+    pulseLayer.clearLayers();
+    array.forEach(function(el){
+        let thisId = el;
+        eval(currentStep).eachLayer(function(layer) {
+            for (let i=0; i < layer.getLayers().length; i++) {
+                let current = layer.getLayers()[i].feature.properties.id;
+                if(current.toString() === thisId.toString()){
+                    const pulsatingIcon = generatePulsatingMarker(10, 'orange');
+                    L.marker(layer.getLayers()[i].getBounds().getCenter(), { icon: pulsatingIcon}).addTo(pulseLayer);
+                    pulseLayer.addTo(map);
+
+                }
+            }
+        });
+    })
+}
+
+
+//підсвітка будівель
+function loopOnBuilding() {
+    let thisId = $(this).data("details")[1];
+    let currentLayer = $(this).data("details")[0];
+    eval(currentLayer).eachLayer(function(layer) {
+        for (let i=0; i < layer.getLayers().length; i++) {
+            let current = layer.getLayers()[i].feature.properties.id;
+            if(current.toString() === thisId.toString()){
+                pulseLayer.clearLayers();
+                const pulsatingIcon = generatePulsatingMarker(10, 'orange');
+                L.marker(layer.getLayers()[i].getBounds().getCenter(), { icon: pulsatingIcon}).addTo(pulseLayer);
+                pulseLayer.addTo(map);
+
+            }
+        }
+    });
+}
+
+
+function loopOn() {
+    let thisId = $(this).data("details")[1];
+    let currentLayer = $(this).data("details")[0];
+    eval(currentLayer).eachLayer(function(layer) {
+        for (let i=0; i < layer.getLayers().length; i++) {
+            let current = layer.getLayers()[i].feature.properties.id;
+            if(current.toString() === thisId.toString()){
+                layer.getLayers()[i].setStyle(mouseoverStyle);
+            }
+        }
+    });
+}
+
+function loopOut() {
+    let currentLayer = $(this).data("details")[0];
+    let steplayer = $(this).closest(".step").data("stuff")[0];
+    map.removeLayer(pulseLayer);
+    if(steplayer === currentLayer){
+        eval(currentLayer).eachLayer(function(layer) {
+            returnPreviousStyle(layer);
+        });
+    } else {
+        eval(currentLayer).eachLayer(function(layer) {
+            layer.setStyle(toGreyStyle)
+        });
+    }
+
+}
+
+$(".highlight")
+    .on("mouseover", loopOn)
+    .on("mouseout", loopOut);
+
+$(".highlight-building")
+    .on("mouseover", loopOnBuilding)
+    .on("mouseout", loopOut);
+
+$('.highlight-officer')
+    .on("mouseover", function() {
+        loopOnMultiple("step_900_920_3", ["39450196", "39450197", "130541840", "130541849", "189209006", "130541852", "202318663", "252744668", "587491806"])
+    })
+    .on("mouseout", function() { pulseLayer.clearLayers(); });
+
+
+$('.highlight-kurchatova')
+    .on("mouseover", function(){
+        loopOnMultiple("step_970_980_1", ["134126155", "134126167", "134126159", "134126154", "134126156"])
+    })
+    .on("mouseout", function() { pulseLayer.clearLayers(); });
+
+// $('.highlight-sixteen')
+//     .on("mouseover", function(){
+//         loopOnMultiple("step_970_980_1", ["191799585"]);
+//     });
+
+
+const generatePulsatingMarker = function (radius, color) {
+    const cssStyle = `
+    width: ${radius}px;
+    height: ${radius}px;
+    background: ${color};
+    color: ${color};
+    opacity: 0.5;
+    box-shadow: 0 0 0 ${color};
+  `
+    return L.divIcon({
+        html: `<span style="${cssStyle}" class="pulse"/>`,
+        className: ''
+    })
+};
+
+
+
+
+//показуємо картинки по наведенню
+$("#show-1800")
+    .on("mouseover", function(){ $("#plan_1800").css("display", "flex").hide().fadeIn(500); })
+    .on("mouseout", function(){  $("#plan_1800").hide();  });
+
+$("#show-1806")
+    .on("mouseover", function(){ $("#plan_1806").css("display", "flex").hide().fadeIn(500); })
+    .on("mouseout", function(){  $("#plan_1806").hide();  });
+
+$("#show-coat")
+    .on("mouseover", function(){ $("#coat").css("display", "flex").hide().fadeIn(500); })
+    .on("mouseout", function(){  $("#coat").hide();  });
+
+$("#show-coat2")
+    .on("mouseover", function(){ $("#coat2").css("display", "flex").hide().fadeIn(500); })
+    .on("mouseout", function(){  $("#coat2").hide();  });
+
+$("#show-diploma")
+    .on("mouseover", function() { $("#diploma").css("display", "flex").show() })
+    .on("mouseout", function(){  $("#diploma").hide(); });
+
+$("#show-zamok")
+    .on("mouseover", function() { $("#zamok").css("display", "flex").show() })
+    .on("mouseout", function(){  $("#zamok").hide(); });
+
+
 
 
 
 //щоб передати змнну у кожен клік
 function onEachFeatureClosure(defaultColor, weightValue) {
     return function onEachFeature(feature, layer) {
-        // layer.on('mouseover', function (e) {  e.target.setStyle(mouseoverStyle); });
+        layer.on('click', function (e) {
+            //console.log(feature);
+            //e.target.setStyle(mouseoverStyle);
+        });
         // layer.on('mouseout', function (e) {  e.target.setStyle({ color: defaultColor, weight: weightValue }); });
-        var popup;
-        if(feature.properties.picture && feature.properties.picture != ".jpg"){
-            popup = '<p> ' +
-                'id:'+feature.properties.id+ " <br> <b>" +
-                "назва: " + feature.properties.name+ "</b> ("+ feature.properties.year  + ")<br>"+
-                "<img style='max-width: 200px;' src='img/tips/" +feature.properties.picture +"'/>" + '<br> ' +
-                feature.properties.info +"<br>"+
-                '</p>'
-        } else {
-            popup = '<p> ' +
-                'id:'+feature.properties.id+ " <br> <b>" +
-                "назва: " + feature.properties.name+ "</b><br>"+
-                "рік побудови: " + feature.properties.year + "<br>"+
-                feature.properties.info +"<br>"+
-                '</p>'
-        }
+        let name = feature.properties.name2 != "Null"? feature.properties.name2 : "невідомо";
+        let info = feature.properties.info != "Null" ? feature.properties.info : "";
+        let picture = feature.properties.photo != "Null" ? "<img style='max-width: 200px;' src='img/tips/" +feature.properties.photo +"'/>" : "";
+        let year = feature.properties.year != "Null" ? " ("+ feature.properties.year  + ") " : "";
+
+        var popup = '<p>' +
+            //'id:'+feature.properties.id+ " <br> <b>" +
+            "<b>назва: </b>" + name + "</b>" + year.replace(".0", '') + "<br>"+  picture + '<br> ' + info +"<br>"+
+            '</p>';
+
+
 
         layer.bindPopup(popup);
     }
 }
 
+
+
+
+
+//прибираємо обʼєкти на скрол
+function removeObjectsWhenScrollDown(objArray){
+    for(let l in layerGroups) {
+        eval(layerGroups[l]).eachLayer(function(f){
+            for (let i=0; i < f.getLayers().length; i++) {
+                let current = f.getLayers()[i].feature.properties.id;
+                if(objArray.includes(current)){
+                    f.getLayers()[i].setStyle({opacity: 0, fillOpacity: 0 });
+                    //f.getLayers()[i].off('click');
+                }
+
+            }
+        });
+    }
+}
+
+//повертаємо обʼєкти на скрол
+function returnObjectsWhenScrollUp(objArray){
+    for(let l in layerGroups) {
+        eval(layerGroups[l]).eachLayer(function(f){
+            for (let i = 0; i < f.getLayers().length; i++) {
+                let current = f.getLayers()[i].feature.properties.id;
+                if(objArray.includes(current)){
+                    //f.getLayers()[i].resetStyle(eval(layerGroups[l]));
+                }
+
+            }
+        });
+    }
+}
+
+
 function returnPreviousStyle(layer) {
-    let pane = layer.options.id;
+    var pane = layer.options.id;
     if(pane === "building"){
         layer.setStyle(buildingsStyle);
-    } else if(pane === "polygonsF"){
-        layer.setStyle(polygonsFillStyle);
-    }  else if(pane === "polygonsC"){
+    } else if(pane === "polygonsC"){
         layer.setStyle(polygonsColorStyle);
     } else if(pane === "lines"){
         layer.setStyle(linesStyle);
     } else if(pane === "points"){
         layer.setStyle(geojsonMarkerOptions);
     }
+    else if(pane === "polygonsF"){
+    //     layer.setStyle(polygonsFillStyle);
+    layer.setStyle(toGreyStyle);
+     }
 }
 
 
@@ -454,9 +512,19 @@ var scroller = scrollama();
 
 // scrollama event handlers
 function handleStepEnter(r) {
+
+    //console.log(r.index);
+
+
+
     let layerToAdd = $(r.element).data("stuff")[0];
     let layerToRemove = $(r.element).data("stuff")[1];
     let layerToGrey = $(r.element).data("stuff")[2];
+
+
+    // console.log(layerToAdd);
+    // console.log(layerToRemove);
+    // console.log(layerToGrey);
 
     //всі кроки окрім першого та останнього
     if(r.direction === "down" && layerToGrey != 'none'){
@@ -466,53 +534,56 @@ function handleStepEnter(r) {
         eval(layerToAdd).addTo(map);
     } else if(r.direction === "up" && layerToRemove != 'none'){
         map.removeLayer(eval(layerToRemove));
-        eval(layerToAdd).eachLayer(function(layer) {
-            returnPreviousStyle(layer)
-        });
+        eval(layerToAdd).eachLayer(function(layer) { returnPreviousStyle(layer) });
     }
 
-
+    
+    // крок 1
+    if(r.index === 1 && r.direction === "down"){
+        removeObjectsWhenScrollDown(["p000000030", "p000000031", "c000000046", "c000000045"]);
+    }
+    
+    if(r.index === 1 && r.direction === "up"){
+        returnObjectsWhenScrollUp(["p000000030", "p000000031", "c000000046", "c000000045"]);
+    }
+    
+    
+    // крок 3
+    if(r.index === 3 && r.direction === "down"){
+        removeObjectsWhenScrollDown(["c000000022"]);
+    }
+    
+    if(r.index === 3 && r.direction === "up"){
+        returnObjectsWhenScrollUp(["c000000022"]);
+    }
+    
+    // крок 5
     if(r.index === 5 && r.direction === "down"){
-        for(let l in layerGroups) {
-            eval(layerGroups[l]).eachLayer(function(f){
-                for (let i=0; i < f.getLayers().length; i++) {
-                    let current = f.getLayers()[i].feature.properties.id;
-                    if(current === "L000000004" || current === "L000000003"){
-                        f.getLayers()[i].setStyle({opacity: 0});
-                        f.getLayers()[i].off('click');
-                    }
-
-                }
-            });
-        }
+        removeObjectsWhenScrollDown(["L000000004", "L000000003"]);
     }
-
-
+    
     if(r.index === 5 && r.direction === "up"){
-        for(let l in layerGroups) {
-            eval(layerGroups[l]).eachLayer(function(f){
-                for (let i=0; i < f.getLayers().length; i++) {
-                    let current = f.getLayers()[i].feature.properties.id;
-                    if(current === "L000000004" || current === "L000000003"){
-                        f.getLayers()[i].resetStyle(eval(layerGroups[l]));
-
-                    }
-
-                }
-            });
-        }
+        returnObjectsWhenScrollUp(["L000000004", "L000000003"]);
     }
 
 
+    // крок 6
+    if(r.index === 6 && r.direction === "down"){
+        removeObjectsWhenScrollDown(["L000000046", "L000000055", "L000000008", "L000000060",
+            "L000000061", "L000000065", "L000000070", "L000000078", "L000000079", "L000000080"]);
+    }
+    
+    if(r.index === 6 && r.direction === "up"){
+        returnObjectsWhenScrollUp(["L000000046", "L000000055", "L000000008", "L000000060", "L000000061",
+            "L000000065", "L000000070", "L000000078", "L000000079", "L000000080"]);
+    }
 
 
+    if(r.index >= 10) {
+        map.flyTo([49.422, 27.02], 14);
+    }
 
-        if(r.index >= 10) {
-            map.flyTo([49.422, 27.02], 14);
-        }
 
-
-    // }
 }
 
 

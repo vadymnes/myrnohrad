@@ -191,10 +191,43 @@ h3 {
   }
 }
 
-#coat, #diploma {
+
+#diploma {
   width: 60%;
   height: 100%;
+  position: absolute;
+  display: none;
+  justify-content: center;
+  flex-direction: column;
+  top: 0;
+  left: 0;
+  z-index: 10000000;
 
+  .flex-wrapper {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+
+    img {
+      max-width: 400px;
+      display: block;
+      margin: auto;
+      width: 100%;
+
+    }
+
+
+    p {
+      width: 90%;
+      background-color: white;
+      margin: auto;
+      grid-column: 1/3;
+    }
+  }
+}
+
+#coat, #coat2, #zamok, #plan_1800, #plan_1806 {
+  width: 60%;
+  height: 100%;
   position: absolute;
   display: none;
   justify-content: center;
@@ -224,14 +257,14 @@ h3 {
   }
 }
 
-#show-coat, #show-diploma {
+#show-coat, #show-coat2, #show-diploma, #show-zamok, #show-1800, #show-1806 {
   padding: 0 5px;
   background-color: blue;
   cursor: pointer;
   color: white ;
 }
 
-.highlight, .highlight-building  {
+.highlight, .highlight-building, .highlight-officer, .highlight-kurchatova, .highlight-sixteen  {
   padding: 0 5px;
   background-color: #7A6265;
   cursor: pointer;
