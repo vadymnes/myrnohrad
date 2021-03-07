@@ -324,16 +324,29 @@ function loopOn() {
 }
 
 function loopOut() {
+    let thisId = $(this).data("details")[1];
     let currentLayer = $(this).data("details")[0];
     let steplayer = $(this).closest(".step").data("stuff")[0];
     map.removeLayer(pulseLayer);
     if(steplayer === currentLayer){
         eval(currentLayer).eachLayer(function(layer) {
-            returnPreviousStyle(layer);
+            for (let i=0; i < layer.getLayers().length; i++) {
+                let current = layer.getLayers()[i].feature.properties.id;
+                if(current.toString() === thisId.toString()){
+                    returnPreviousStyle(layer);
+                }
+            }
+
         });
     } else {
         eval(currentLayer).eachLayer(function(layer) {
-            layer.setStyle(toGreyStyle)
+            for (let i=0; i < layer.getLayers().length; i++) {
+                let current = layer.getLayers()[i].feature.properties.id;
+                if(current.toString() === thisId.toString()){
+                    layer.getLayers()[i].setStyle(toGreyStyle);
+                }
+            }
+
         });
     }
 
@@ -360,10 +373,11 @@ $('.highlight-kurchatova')
     })
     .on("mouseout", function() { pulseLayer.clearLayers(); });
 
-// $('.highlight-sixteen')
-//     .on("mouseover", function(){
-//         loopOnMultiple("step_970_980_1", ["191799585"]);
-//     });
+$('.highlight-sixteen')
+    .on("mouseover", function(){
+        loopOnMultiple("step_970_980_1", ["191799585", "p000000016"]);
+    })
+    .on("mouseout", function() { pulseLayer.clearLayers(); });
 
 
 const generatePulsatingMarker = function (radius, color) {
@@ -416,11 +430,7 @@ $("#show-zamok")
 //щоб передати змнну у кожен клік
 function onEachFeatureClosure(defaultColor, weightValue) {
     return function onEachFeature(feature, layer) {
-        layer.on('click', function (e) {
-            //console.log(feature);
-            //e.target.setStyle(mouseoverStyle);
-        });
-        // layer.on('mouseout', function (e) {  e.target.setStyle({ color: defaultColor, weight: weightValue }); });
+        layer.on('click', function (e) { });
         let name = feature.properties.name2 != "Null"? feature.properties.name2 : "невідомо";
         let info = feature.properties.info != "Null" ? feature.properties.info : "";
         let picture = feature.properties.photo != "Null" ? "<img style='max-width: 200px;' src='img/tips/" +feature.properties.photo +"'/>" : "";
@@ -483,11 +493,9 @@ function returnPreviousStyle(layer) {
         layer.setStyle(linesStyle);
     } else if(pane === "points"){
         layer.setStyle(geojsonMarkerOptions);
+    } else if(pane === "polygonsF"){
+        layer.setStyle(polygonsFillStyle);
     }
-    else if(pane === "polygonsF"){
-         //layer.setStyle(polygonsFillStyle);
-         //layer.setStyle(toGreyStyle);
-     }
 }
 
 
@@ -512,7 +520,6 @@ var scroller = scrollama();
 
 // scrollama event handlers
 function handleStepEnter(r) {
-    console.log(r.index);
 
     let layerToAdd = $(r.element).data("stuff")[0];
     let layerToRemove = $(r.element).data("stuff")[1];
