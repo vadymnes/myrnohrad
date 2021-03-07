@@ -192,7 +192,7 @@ h3 {
 }
 
 
-#diploma {
+#diploma, #coat {
   width: 60%;
   height: 100%;
   position: absolute;
@@ -225,7 +225,7 @@ h3 {
   }
 }
 
-#coat, #coat2, #zamok, #plan_1800, #plan_1806 {
+#zamok, #plan_1800, #plan_1806 {
   width: 60%;
   height: 100%;
   position: absolute;
@@ -259,7 +259,7 @@ h3 {
 
 #show-coat, #show-coat2, #show-diploma, #show-zamok, #show-1800, #show-1806 {
   padding: 0 5px;
-  background-color: blue;
+  background-color: #0089C0;
   cursor: pointer;
   color: white ;
 }

@@ -69,7 +69,7 @@ var step_991_1 = new L.LayerGroup(),
 var pulseLayer = new L.LayerGroup();
 
 var buildingsColor = "#9d2f32", //"#f14633", //"#9d2f32",
-    polygonsFillColor = "#c9d3b3",//"#c9d3b3", //"#899e91", //"#bbcda9", // "#fce0bc", //"#899e91", //"#a79d70",
+    polygonsFillColor = "#A7718D",//"#c9d3b3", //"#899e91", //"#bbcda9", // "#fce0bc", //"#899e91", //"#a79d70",
     linesColor = "#0089C0", //'#4783fe',
     pointsColor = "#ff9d04",//'#D7A319';
     polygonsStrokeColor = '#CE4066'; //'#374969'
@@ -77,7 +77,7 @@ var buildingsColor = "#9d2f32", //"#f14633", //"#9d2f32",
 //визначаємо стилі для кожного типу елементів
 var polygonsFillStyle = {
     weight: 1,
-    //fillOpacity: 0.7,
+    //fillOpacity: 1,
     opacity: 1,
     fillColor: polygonsFillColor,
     color: polygonsFillColor
@@ -485,8 +485,8 @@ function returnPreviousStyle(layer) {
         layer.setStyle(geojsonMarkerOptions);
     }
     else if(pane === "polygonsF"){
-    //     layer.setStyle(polygonsFillStyle);
-    layer.setStyle(toGreyStyle);
+         //layer.setStyle(polygonsFillStyle);
+         //layer.setStyle(toGreyStyle);
      }
 }
 
@@ -634,8 +634,8 @@ function handleStepEnter(r) {
     }
 
 
-    if(r.index >= 10) {
-        map.flyTo([49.422, 27.02], 14);
+    if(r.index === 3) {
+        map.flyTo([49.418, 27.015], 14);
     }
 
 
@@ -668,6 +668,19 @@ function init() {
     //window.addEventListener('resize', handleResize);
 }
 init();
+
+
+window.onbeforeunload = function () {
+    window.scrollTo(0, 0);
+};
+
+function flyTo(coordinates){
+        map.flyTo(coordinates, 14);
+}
+
+function flyOut(){
+    map.flyTo([49.418, 27.015], 14);
+}
 
 
 //// не потрібне
