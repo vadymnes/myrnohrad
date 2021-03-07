@@ -512,6 +512,7 @@ var scroller = scrollama();
 
 // scrollama event handlers
 function handleStepEnter(r) {
+    console.log(r.index);
 
     let layerToAdd = $(r.element).data("stuff")[0];
     let layerToRemove = $(r.element).data("stuff")[1];
