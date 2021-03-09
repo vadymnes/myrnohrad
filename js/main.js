@@ -1,6 +1,11 @@
 
 // Map
-var map = L.map('map').setView([49.422, 27.02], 13);
+
+
+var default_coordinates = window.innerWidth < 813 ? [49.422, 26.98] : [49.418, 27.015];
+var default_zoom = window.innerWidth < 813 ? 13 : 14;
+
+var map = L.map('map').setView(default_coordinates, 13);
 
 L.tileLayer(
     'https://stamen-tiles-{s}.a.ssl.fastly.net/toner-lite/{z}/{x}/{y}{r}.{ext}', {
@@ -643,7 +648,7 @@ function handleStepEnter(r) {
 
 
     if(r.index === 3) {
-        map.flyTo([49.418, 27.015], 14);
+        map.flyTo(default_coordinates, default_zoom);
     }
 
 
@@ -683,11 +688,11 @@ window.onbeforeunload = function () {
 };
 
 function flyTo(coordinates){
-        map.flyTo(coordinates, 14);
+        map.flyTo(coordinates, default_zoom);
 }
 
 function flyOut(){
-    map.flyTo([49.418, 27.015], 14);
+    map.flyTo(default_coordinates, default_zoom);
 }
 
 

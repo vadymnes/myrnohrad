@@ -87,7 +87,7 @@ h3 {
 
 #map-wrapper {
   width: 100%;
-  min-height: 100vh;
+  height: 100%;
   position:relative;
 }
 
@@ -116,6 +116,13 @@ h3 {
   margin: 50px 0 50px auto;
   display: grid;
   grid-template-columns: 60% 40%;
+  @media(hover: none) and (orientation: portrait){
+    display: block;
+  }
+  @media(hover: none) and (orientation: landscape){
+    display: grid;
+    grid-template-columns: 50% 50%;
+  }
 
   .buttons {
     min-height: 30px;
@@ -136,10 +143,14 @@ h3 {
   left: 0;
   max-height: 100vh;
   z-index: 10;
-  @media(hover: none), (max-width: 812px)  {
-    height: 70vh;
-    top: 50px;
+  @media(hover: none) and (orientation: portrait){
+    height: 50vh;
+    top: 0;
     z-index: 1;
+  }
+  @media(hover: none) and (orientation: landscape){
+    grid-column: 1/2;
+    grid-row: 1/2;
   }
 
   canvas {
@@ -163,8 +174,13 @@ h3 {
   grid-row: 1/2;
   //pointer-events: none;
   z-index: 100;
-  @media(max-width: 800px){
-    grid-column: 1/3;
+  @media(hover: none) and (orientation: portrait){
+    width: 96%;
+    margin: auto;
+  }
+  @media(hover: none) and (orientation: landscape){
+    grid-column: 2/3;
+    grid-row: 1/2;
   }
 
   .step {
