@@ -666,6 +666,14 @@ function handleStepEnter(r) {
         map.flyTo(default_coordinates, default_zoom);
     }
 
+    if(r.index >= 16 && r.direction === "down") {
+        map.flyTo(default_coordinates, 13);
+    }
+
+    if(r.index === 15 && r.direction === "up") {
+        map.flyTo(default_coordinates, default_zoom);
+    }
+
 
 }
 

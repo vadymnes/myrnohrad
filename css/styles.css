@@ -50,9 +50,7 @@ h3 {
   grid-template-columns: 60% 40%; }
 
 #nav {
-  width: 100%;
-  /*display: flex;*/
-  /*justify-content: space-between;*/ }
+  width: 100%; }
 
 #nav p {
   cursor: pointer;
@@ -148,14 +146,18 @@ h3 {
       grid-column: 2/3;
       grid-row: 1/2; } }
   .scroll__text .step {
-    background-color: rgba(255, 255, 255, 0.8);
-    margin-top: 80vh;
-    margin-bottom: 50vh; }
+    min-height: 150vh;
+    margin-top: 20vh; }
+    @media (max-width: 812px) and (orientation: portrait) {
+      .scroll__text .step {
+        min-height: max-content;
+        margin-top: 20vh; } }
   .scroll__text .step#last {
     margin-top: 0;
     margin-bottom: 0;
-    height: 100vh; }
+    min-height: 0; }
   .scroll__text .step div {
+    background-color: rgba(255, 255, 255, 0.8);
     padding: 20px;
     line-height: 1.6; }
     .scroll__text .step div p {
@@ -178,6 +180,10 @@ h3 {
   top: 0;
   left: 0;
   z-index: 10000000; }
+  @media (max-width: 812px) and (orientation: portrait) {
+    #diploma, #coat {
+      width: 80%;
+      left: 10%; } }
   #diploma .flex-wrapper, #coat .flex-wrapper {
     display: grid;
     grid-template-columns: 1fr 1fr; }
@@ -193,6 +199,7 @@ h3 {
       grid-column: 1/3; }
 
 .plan {
+  margin: auto;
   width: 60%;
   height: 100%;
   position: absolute;
@@ -202,6 +209,10 @@ h3 {
   top: 0;
   left: 0;
   z-index: 10000000; }
+  @media (max-width: 812px) and (orientation: portrait) {
+    .plan {
+      width: 80%;
+      left: 10%; } }
   .plan .flex-wrapper {
     margin: auto;
     max-width: 500px; }
