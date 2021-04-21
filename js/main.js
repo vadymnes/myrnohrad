@@ -7,12 +7,19 @@ var default_zoom = window.innerWidth < 813 ? 13 : 14;
 
 var map = L.map('map').setView(default_coordinates, 13);
 
+
 L.tileLayer(
-    'https://stamen-tiles-{s}.a.ssl.fastly.net/toner-lite/{z}/{x}/{y}{r}.{ext}', {
-        attribution: 'Map tiles by <a href="http://stamen.com">Stamen Design</a>, <a href="http://creativecommons.org/licenses/by/3.0">CC BY 3.0</a> &mdash; Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+    // 'https://api.mapbox.com/styles/v1/evgeshadrozdova/ckl1654or031r17mvc4wr7edc/tiles/256/{z}/{x}/{y}?access_token=pk.eyJ1IjoiZXZnZXNoYWRyb3pkb3ZhIiwiYSI6ImNqMjZuaGpkYTAwMXAzMm5zdGVvZ2c0OHYifQ.s8MMs2wW15ZyUfDhTS_cdQ',
+
+    //красива, але у stamen недекомунізовані вулиці
+    //'https://stamen-tiles-{s}.a.ssl.fastly.net/toner-lite/{z}/{x}/{y}{r}.{ext}',
+
+    //резервна підложка, якщо mapbox вибере ліміт
+    'https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png',
+    {
+        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>',
         subdomains: 'abcd',
-        minZoom: 0,
-        maxZoom: 20,
+        maxZoom: 19,
         ext: 'png'
     }).addTo(map);
 
@@ -75,7 +82,7 @@ var pulseLayer = new L.LayerGroup();
 
 var buildingsColor = "#9d2f32", //"#f14633", //"#9d2f32",
     polygonsFillColor = "#A7718D",//"#c9d3b3", //"#899e91", //"#bbcda9", // "#fce0bc", //"#899e91", //"#a79d70",
-    linesColor = "#0089C0", //'#4783fe',
+    linesColor = '#718A8C', //"#0089C0", //'#4783fe',
     pointsColor = "#ff9d04",//'#D7A319';
     polygonsStrokeColor = '#CE4066'; //'#374969'
 
@@ -301,9 +308,9 @@ function loopOnBuilding() {
     let thisId = $(this).data("details")[1];
     let currentLayer = $(this).data("details")[0];
     eval(currentLayer).eachLayer(function(layer) {
-        for (let i=0; i < layer.getLayers().length; i++) {
+        for (let i = 0; i < layer.getLayers().length; i++) {
             let current = layer.getLayers()[i].feature.properties.id;
-            if(current.toString() === thisId.toString()){
+              if(current.toString() === thisId.toString()){
                 pulseLayer.clearLayers();
                 const pulsatingIcon = generatePulsatingMarker(10, 'orange');
                 L.marker(layer.getLayers()[i].getBounds().getCenter(), { icon: pulsatingIcon}).addTo(pulseLayer);
@@ -319,12 +326,12 @@ function loopOn() {
     let thisId = $(this).data("details")[1];
     let currentLayer = $(this).data("details")[0];
     eval(currentLayer).eachLayer(function(layer) {
-        for (let i=0; i < layer.getLayers().length; i++) {
-            let current = layer.getLayers()[i].feature.properties.id;
-            if(current.toString() === thisId.toString()){
-                layer.getLayers()[i].setStyle(mouseoverStyle);
-            }
+    for (let i=0; i < layer.getLayers().length; i++) {
+        let current = layer.getLayers()[i].feature.properties.id;
+        if(current.toString() === thisId.toString()){
+            layer.getLayers()[i].setStyle(mouseoverStyle);
         }
+    }
     });
 }
 
@@ -370,7 +377,7 @@ $('.highlight-officer')
         loopOnMultiple("step_900_920_3", ["39450196", "39450197", "130541840", "130541849", "189209006", "130541852", "202318663", "252744668", "587491806"])
     })
     .on("mouseout", function() { pulseLayer.clearLayers(); });
-
+//step_1900-1920_3
 
 $('.highlight-kurchatova')
     .on("mouseover", function(){
@@ -412,6 +419,14 @@ $("#show-1806")
     .on("mouseover", function(){ $("#plan_1806").css("display", "flex").hide().fadeIn(500); })
     .on("mouseout", function(){  $("#plan_1806").hide();  });
 
+$("#show-1944")
+    .on("mouseover", function(){ $("#plan_1944").css("display", "flex").hide().fadeIn(500); })
+    .on("mouseout", function(){  $("#plan_1944").hide();  });
+
+$("#show-1951")
+    .on("mouseover", function(){ $("#plan_1951").css("display", "flex").hide().fadeIn(500); })
+    .on("mouseout", function(){  $("#plan_1951").hide();  });
+
 $("#show-coat")
     .on("mouseover", function(){ $("#coat").css("display", "flex").hide().fadeIn(500); })
     .on("mouseout", function(){  $("#coat").hide();  });
@@ -436,14 +451,14 @@ $("#show-zamok")
 function onEachFeatureClosure(defaultColor, weightValue) {
     return function onEachFeature(feature, layer) {
         layer.on('click', function (e) { });
-        let name = feature.properties.name2 != "Null"? feature.properties.name2 : "невідомо";
+        let name = feature.properties.name != "Null"? feature.properties.name : "невідомо";
         let info = feature.properties.info != "Null" ? feature.properties.info : "";
-        let picture = feature.properties.photo != "Null" ? "<img style='max-width: 200px;' src='img/tips/" +feature.properties.photo +"'/>" : "";
+        let picture = feature.properties.photo != "Null" ? "<img style='display: block; width: 90%; margin:10px auto;' src='img/tips/" +feature.properties.photo +"'/>" : "";
         let year = feature.properties.year != "Null" ? " ("+ feature.properties.year  + ") " : "";
 
-        var popup = '<p>' +
+        var popup = picture + '<p>' +
             //'id:'+feature.properties.id+ " <br> <b>" +
-            "<b>назва: </b>" + name + "</b>" + year.replace(".0", '') + "<br>"+  picture + '<br> ' + info +"<br>"+
+            "<b>" + name + "</b>" + year.replace(".0", '') + "<br>"  + '<br> ' + info +"<br>"+
             '</p>';
 
 

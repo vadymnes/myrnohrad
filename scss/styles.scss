@@ -8,6 +8,7 @@ body, table, tr, td, th, div, h1, h2, input {  font-size: 11pt; }
 
 $text-color: #CE4066;
 $brown-color: #574144;
+$blue-color: #718A8C; //#0089C0;
 
 header {
   min-height: 30vh;
@@ -53,14 +54,10 @@ h3 {
   line-height: 1.6;
   margin: 20px auto;
   font-weight: normal;
-  width: 40%;
+  width: 90%;
+  max-width: 800px;
   text-align: center;
-  @media(max-width: 800px){
-    width: 90%;
-  }
 }
-
-
 
 
 #viz {
@@ -116,10 +113,10 @@ h3 {
   margin: 50px 0 50px auto;
   display: grid;
   grid-template-columns: 60% 40%;
-  @media(hover: none) and (orientation: portrait){
+  @media(max-width: 812px) and (orientation: portrait){
     display: block;
   }
-  @media(hover: none) and (orientation: landscape){
+  @media(max-width: 812px) and (orientation: landscape){
     display: grid;
     grid-template-columns: 50% 50%;
   }
@@ -143,12 +140,12 @@ h3 {
   left: 0;
   max-height: 100vh;
   z-index: 10;
-  @media(hover: none) and (orientation: portrait){
+  @media(max-width: 812px) and (orientation: portrait){
     height: 50vh;
     top: 0;
     z-index: 1;
   }
-  @media(hover: none) and (orientation: landscape){
+  @media(max-width: 812px) and (orientation: landscape){
     grid-column: 1/2;
     grid-row: 1/2;
   }
@@ -174,11 +171,11 @@ h3 {
   grid-row: 1/2;
   //pointer-events: none;
   z-index: 100;
-  @media(hover: none) and (orientation: portrait){
+  @media(max-width: 812px) and (orientation: portrait){
     width: 96%;
     margin: auto;
   }
-  @media(hover: none) and (orientation: landscape){
+  @media(max-width: 812px) and (orientation: landscape){
     grid-column: 2/3;
     grid-row: 1/2;
   }
@@ -205,6 +202,12 @@ h3 {
       color: $text-color;
     }
   }
+}
+
+.leaflet-popup-content {
+  height: max-content;
+  max-height: 400px;
+  overflow-y:auto;
 }
 
 
@@ -241,7 +244,8 @@ h3 {
   }
 }
 
-#zamok, #plan_1800, #plan_1806 {
+//#zamok, #plan_1800, #plan_1806,
+.plan {
   width: 60%;
   height: 100%;
   position: absolute;
@@ -273,9 +277,10 @@ h3 {
   }
 }
 
-#show-coat, #show-coat2, #show-diploma, #show-zamok, #show-1800, #show-1806 {
+//#show-coat, #show-coat2, #show-diploma, #show-zamok, #show-1800, #show-1806, #show-1951
+.show-pic{
   padding: 0 5px;
-  background-color: #0089C0;
+  background-color: $blue-color;
   cursor: pointer;
   color: white ;
 }

@@ -41,11 +41,9 @@ h3 {
   line-height: 1.6;
   margin: 20px auto;
   font-weight: normal;
-  width: 40%;
+  width: 90%;
+  max-width: 800px;
   text-align: center; }
-  @media (max-width: 800px) {
-    h3 {
-      width: 90%; } }
 
 #viz {
   display: grid;
@@ -94,10 +92,10 @@ h3 {
   margin: 50px 0 50px auto;
   display: grid;
   grid-template-columns: 60% 40%; }
-  @media (hover: none) and (orientation: portrait) {
+  @media (max-width: 812px) and (orientation: portrait) {
     #scroll {
       display: block; } }
-  @media (hover: none) and (orientation: landscape) {
+  @media (max-width: 812px) and (orientation: landscape) {
     #scroll {
       display: grid;
       grid-template-columns: 50% 50%; } }
@@ -118,12 +116,12 @@ h3 {
   left: 0;
   max-height: 100vh;
   z-index: 10; }
-  @media (hover: none) and (orientation: portrait) {
+  @media (max-width: 812px) and (orientation: portrait) {
     .scroll__graphic {
       height: 50vh;
       top: 0;
       z-index: 1; } }
-  @media (hover: none) and (orientation: landscape) {
+  @media (max-width: 812px) and (orientation: landscape) {
     .scroll__graphic {
       grid-column: 1/2;
       grid-row: 1/2; } }
@@ -141,11 +139,11 @@ h3 {
   margin: auto 0;
   grid-row: 1/2;
   z-index: 100; }
-  @media (hover: none) and (orientation: portrait) {
+  @media (max-width: 812px) and (orientation: portrait) {
     .scroll__text {
       width: 96%;
       margin: auto; } }
-  @media (hover: none) and (orientation: landscape) {
+  @media (max-width: 812px) and (orientation: landscape) {
     .scroll__text {
       grid-column: 2/3;
       grid-row: 1/2; } }
@@ -164,6 +162,11 @@ h3 {
       font-size: 18px;
       font-weight: bold;
       color: #CE4066; }
+
+.leaflet-popup-content {
+  height: max-content;
+  max-height: 400px;
+  overflow-y: auto; }
 
 #diploma, #coat {
   width: 60%;
@@ -189,7 +192,7 @@ h3 {
       margin: auto;
       grid-column: 1/3; }
 
-#zamok, #plan_1800, #plan_1806 {
+.plan {
   width: 60%;
   height: 100%;
   position: absolute;
@@ -199,21 +202,21 @@ h3 {
   top: 0;
   left: 0;
   z-index: 10000000; }
-  #zamok .flex-wrapper, #plan_1800 .flex-wrapper, #plan_1806 .flex-wrapper {
+  .plan .flex-wrapper {
     margin: auto;
     max-width: 500px; }
-    #zamok .flex-wrapper p, #plan_1800 .flex-wrapper p, #plan_1806 .flex-wrapper p {
+    .plan .flex-wrapper p {
       background-color: white;
       margin: auto; }
-  #zamok img, #plan_1800 img, #plan_1806 img {
+  .plan img {
     max-width: 500px;
     display: block;
     margin: auto;
     width: 100%; }
 
-#show-coat, #show-coat2, #show-diploma, #show-zamok, #show-1800, #show-1806 {
+.show-pic {
   padding: 0 5px;
-  background-color: #0089C0;
+  background-color: #718A8C;
   cursor: pointer;
   color: white; }
 
