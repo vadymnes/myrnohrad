@@ -146,12 +146,13 @@ h3 {
       grid-column: 2/3;
       grid-row: 1/2; } }
   .scroll__text .step {
-    min-height: 150vh;
-    margin-top: 20vh; }
+    margin-top: 80vh;
+    margin-bottom: 80vh; }
     @media (max-width: 812px) and (orientation: portrait) {
       .scroll__text .step {
         min-height: max-content;
-        margin-top: 20vh; } }
+        margin-top: 20vh;
+        margin-bottom: 0; } }
   .scroll__text .step#last {
     margin-top: 0;
     margin-bottom: 0;
