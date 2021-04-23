@@ -212,22 +212,7 @@ function scatterToLayers(df, stepColumn, popupColumn, style, layer_id){
 
 }
 
-fetch("data/polygonsData_4326_fill.geojson")
-    .then(function (response) { return response.json() })
-    .then(function (data) {
 
-        //data.features.forEach(function(d){
-            // d.properties.name = d.properties.polygonsDataF_27_02_name;
-            // delete d.properties.polygonsDataF_27_02_name;
-        //});
-
-        let layer_id = "polygonsF";
-        let stepColumn = "step";
-        let style = polygonsFillStyle;
-        let popupColumn = "info";
-
-        scatterToLayers(data, stepColumn, popupColumn, style, layer_id);
-    });
 
 
 fetch("data/polygonsData_4326_color.geojson")
@@ -238,6 +223,23 @@ fetch("data/polygonsData_4326_color.geojson")
         let stepColumn = "step";
         let style = polygonsColorStyle;
         let popupColumn = "polygon";
+
+        scatterToLayers(data, stepColumn, popupColumn, style, layer_id);
+    });
+
+fetch("data/polygonsData_4326_fill.geojson")
+    .then(function (response) { return response.json() })
+    .then(function (data) {
+
+        //data.features.forEach(function(d){
+        // d.properties.name = d.properties.polygonsDataF_27_02_name;
+        // delete d.properties.polygonsDataF_27_02_name;
+        //});
+
+        let layer_id = "polygonsF";
+        let stepColumn = "step";
+        let style = polygonsFillStyle;
+        let popupColumn = "info";
 
         scatterToLayers(data, stepColumn, popupColumn, style, layer_id);
     });
@@ -419,6 +421,10 @@ $("#show-1806")
     .on("mouseover", function(){ $("#plan_1806").css("display", "flex").hide().fadeIn(500); })
     .on("mouseout", function(){  $("#plan_1806").hide();  });
 
+$("#show-1888")
+    .on("mouseover", function(){ $("#plan_1888").css("display", "flex").hide().fadeIn(500); })
+    .on("mouseout", function(){  $("#plan_1888").hide();  });
+
 $("#show-1944")
     .on("mouseover", function(){ $("#plan_1944").css("display", "flex").hide().fadeIn(500); })
     .on("mouseout", function(){  $("#plan_1944").hide();  });
@@ -426,6 +432,10 @@ $("#show-1944")
 $("#show-1951")
     .on("mouseover", function(){ $("#plan_1951").css("display", "flex").hide().fadeIn(500); })
     .on("mouseout", function(){  $("#plan_1951").hide();  });
+
+$("#show-1960")
+    .on("mouseover", function(){ $("#plan_1960").css("display", "flex").hide().fadeIn(500); })
+    .on("mouseout", function(){  $("#plan_1960").hide();  });
 
 $("#show-coat")
     .on("mouseover", function(){ $("#coat").css("display", "flex").hide().fadeIn(500); })
