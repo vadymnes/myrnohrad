@@ -7,20 +7,12 @@ var default_zoom = window.innerWidth < 813 ? 13 : 14;
 
 var map = L.map('map').setView(default_coordinates, 11);
 
-
+L.mapbox.accessToken = 'pk.eyJ1IjoidmFkZW52bWFwa3lpdiIsImEiOiJja2RwczBzcXYwMjgzMnprdWVxMTB2aWU0In0.OBDKIqeo6YDnxaEZR4bdIA';
 L.tileLayer(
-    'https://api.mapbox.com/styles/v1/vadenvmapkyiv/ckebblhya13tx1at7q6wpso5m.html?title=view&access_token=pk.eyJ1IjoidmFkZW52bWFwa3lpdiIsImEiOiJja2RwczBzcXYwMjgzMnprdWVxMTB2aWU0In0.OBDKIqeo6YDnxaEZR4bdIA',
-
-    //красива, але у stamen недекомунізовані вулиці
-    //'https://stamen-tiles-{s}.a.ssl.fastly.net/toner-lite/{z}/{x}/{y}{r}.{ext}',
-
-    //резервна підложка, якщо mapbox вибере ліміт
-    // 'https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png',
-    {
-        // attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>',
-        subdomains: 'abcd',
-        maxZoom: 19,
-        ext: 'png'
+    'https://api.mapbox.com/styles/v1/vadenvmapkyiv/ckebblhya13tx1at7q6wpso5m.html&access_token=' + L.mapbox.accessToken, {
+        tileSize: 512,
+        zoomOffset: -1,
+        attribution: '© <a href="https://apps.mapbox.com/feedback/">Mapbox</a> © <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
     }).addTo(map);
 
 map.scrollWheelZoom.disable();
