@@ -343,9 +343,9 @@ $("#show-1800")
     .on("mouseover", function(){ $("#plan_1800").css("display", "flex").hide().fadeIn(500); })
     .on("mouseout", function(){  $("#plan_1800").hide();  });
 
-$("#show-1806")
-    .on("mouseover", function(){ $("#plan_1806").css("display", "flex").hide().fadeIn(500); })
-    .on("mouseout", function(){  $("#plan_1806").hide();  });
+$("#show-dymytrov")
+    .on("mouseover", function(){ $("#dymytrov_map").css("display", "flex").hide().fadeIn(500); })
+    .on("mouseout", function(){  $("#dymytrov_map").hide();  });
 
 $("#show-1888")
     .on("mouseover", function(){ $("#plan_1888").css("display", "flex").hide().fadeIn(500); })
