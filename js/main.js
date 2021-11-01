@@ -2,7 +2,7 @@
 // Map
 
 
-var default_coordinates = window.innerWidth < 813 ? [49.422, 26.98] : [49.418, 27.015];
+var default_coordinates = window.innerWidth < 813 ? [48.305, 37.29135] : [48.40, 37.36];
 var default_zoom = window.innerWidth < 813 ? 13 : 14;
 
 var map = L.map('map').setView(default_coordinates, 13);
@@ -27,18 +27,7 @@ map.scrollWheelZoom.disable();
 var canvasRenderer = L.canvas();
 
 const layerGroups = [
-    "step_800_1", "step_800_2", "step_800_3", "step_800_4",
-    "step_800_850_1", "step_800_850_2", "step_800_850_3",
-    "step_850_900_1", "step_850_900_2", "step_850_900_3", "step_850_900_4",
-    "step_900_920_1", "step_900_920_2", "step_900_920_3",
-    "step_920_945_1", "step_920_945_2", "step_920_945_3",
-    "step_945_960_1", "step_945_960_2", "step_945_960_3",
-    "step_960_970_1", "step_960_970_2", "step_960_970_3",
-    "step_970_980_1", "step_970_980_2", "step_970_980_3",
-    "step_980_990_1", "step_980_990_2", "step_980_990_3",
-    "step_991_1",  "step_991_2",  "step_991_3"
-
-
+    "step_800_1", "step_800_2", "step_800_3", "step_800_4"
 
 ];
 
@@ -48,34 +37,7 @@ var step_800_1 = new L.LayerGroup(),
     step_800_2 = new L.LayerGroup(),
     step_800_3 = new L.LayerGroup(),
     step_800_4 = new L.LayerGroup();
-var step_800_850_1 = new L.LayerGroup(),
-    step_800_850_2 = new L.LayerGroup(),
-    step_800_850_3 = new L.LayerGroup();
-var step_850_900_1 = new L.LayerGroup(),
-    step_850_900_2 = new L.LayerGroup(),
-    step_850_900_3 = new L.LayerGroup(),
-    step_850_900_4 = new L.LayerGroup();
-var step_900_920_1 = new L.LayerGroup(),
-    step_900_920_2 = new L.LayerGroup(),
-    step_900_920_3 = new L.LayerGroup();
-var step_920_945_1 = new L.LayerGroup(),
-    step_920_945_2 = new L.LayerGroup(),
-    step_920_945_3 = new L.LayerGroup();
-var step_945_960_1 = new L.LayerGroup(),
-    step_945_960_2 = new L.LayerGroup(),
-    step_945_960_3 = new L.LayerGroup();
-var step_960_970_1 = new L.LayerGroup(),
-    step_960_970_2 = new L.LayerGroup(),
-    step_960_970_3 = new L.LayerGroup();
-var step_970_980_1 = new L.LayerGroup(),
-    step_970_980_2 = new L.LayerGroup(),
-    step_970_980_3 = new L.LayerGroup();
-var step_980_990_1 = new L.LayerGroup(),
-    step_980_990_2 = new L.LayerGroup(),
-    step_980_990_3 = new L.LayerGroup();
-var step_991_1 = new L.LayerGroup(),
-    step_991_2 = new L.LayerGroup(),
-    step_991_3 = new L.LayerGroup();
+
 
 
 var pulseLayer = new L.LayerGroup();
@@ -174,48 +136,13 @@ function scatterToLayers(df, stepColumn, popupColumn, style, layer_id){
     filterByPeriod(df, stepColumn, "step_-1800_2", popupColumn, style, layer_id).addTo(step_800_2);
     filterByPeriod(df, stepColumn, "step_-1800_3", popupColumn, style, layer_id).addTo(step_800_3);
     filterByPeriod(df, stepColumn, "step_-1800_4", popupColumn, style, layer_id).addTo(step_800_4);
-    filterByPeriod(df, stepColumn, "step_1800-1850_1", popupColumn, style, layer_id).addTo(step_800_850_1);
-    filterByPeriod(df, stepColumn, "step_1800-1850_2", popupColumn, style, layer_id).addTo(step_800_850_2);
-
-    filterByPeriod(df, stepColumn, "step_1850-1900_1", popupColumn, style, layer_id).addTo(step_850_900_1);
-    filterByPeriod(df, stepColumn, "step_1850-1900_2", popupColumn, style, layer_id).addTo(step_850_900_2);
-    filterByPeriod(df, stepColumn, "step_1850-1900_3", popupColumn, style, layer_id).addTo(step_850_900_3);
-    filterByPeriod(df, stepColumn, "step_1850-1900_4", popupColumn, style, layer_id).addTo(step_850_900_4);
-
-    filterByPeriod(df, stepColumn, "step_1900-1920_1", popupColumn, style, layer_id).addTo(step_900_920_1);
-    filterByPeriod(df, stepColumn, "step_1900-1920_2", popupColumn, style, layer_id).addTo(step_900_920_2);
-    filterByPeriod(df, stepColumn, "step_1900-1920_3", popupColumn, style, layer_id).addTo(step_900_920_3);
-
-    filterByPeriod(df, stepColumn, "step_1920-1945_1", popupColumn, style, layer_id).addTo(step_920_945_1);
-    filterByPeriod(df, stepColumn, "step_1920-1945_2", popupColumn, style, layer_id).addTo(step_920_945_2);
-    filterByPeriod(df, stepColumn, "step_1920-1945_3", popupColumn, style, layer_id).addTo(step_920_945_3);
-
-    filterByPeriod(df, stepColumn, "step_1945-1960_1", popupColumn, style, layer_id).addTo(step_945_960_1);
-    filterByPeriod(df, stepColumn, "step_1945-1960_2", popupColumn, style, layer_id).addTo(step_945_960_2);
-    filterByPeriod(df, stepColumn, "step_1945-1960_3", popupColumn, style, layer_id).addTo(step_945_960_3);
-
-    filterByPeriod(df, stepColumn, "step_60-70_1", popupColumn, style, layer_id).addTo(step_960_970_1);
-    filterByPeriod(df, stepColumn, "step_60-70_2", popupColumn, style, layer_id).addTo(step_960_970_2);
-    filterByPeriod(df, stepColumn, "step_60-70_3", popupColumn, style, layer_id).addTo(step_960_970_3);
-
-    filterByPeriod(df, stepColumn, "step_70-80_1", popupColumn, style, layer_id).addTo(step_970_980_1);
-    filterByPeriod(df, stepColumn, "step_70-80_2", popupColumn, style, layer_id).addTo(step_970_980_2);
-    filterByPeriod(df, stepColumn, "step_70-80_3", popupColumn, style, layer_id).addTo(step_970_980_3);
-
-    filterByPeriod(df, stepColumn, "step_80-90_1", popupColumn, style, layer_id).addTo(step_980_990_1);
-    filterByPeriod(df, stepColumn, "step_80-90_2", popupColumn, style, layer_id).addTo(step_980_990_2);
-    filterByPeriod(df, stepColumn, "step_80-90_3", popupColumn, style, layer_id).addTo(step_980_990_3);
-
-    filterByPeriod(df, stepColumn, "step_1990+_1", popupColumn, style, layer_id).addTo(step_991_1);
-    filterByPeriod(df, stepColumn, "step_1990+_2", popupColumn, style, layer_id).addTo(step_991_2);
-    filterByPeriod(df, stepColumn, "step_1990+_3", popupColumn, style, layer_id).addTo(step_991_3);
 
 }
 
 
 
 
-fetch("data/polygonsData_4326_color.geojson")
+fetch("data/precity.geojson")
     .then(function (response) { return response.json() })
     .then(function (data) {
 
@@ -227,61 +154,61 @@ fetch("data/polygonsData_4326_color.geojson")
         scatterToLayers(data, stepColumn, popupColumn, style, layer_id);
     });
 
-fetch("data/polygonsData_4326_fill.geojson")
-    .then(function (response) { return response.json() })
-    .then(function (data) {
+// fetch("data/polygonsData_4326_fill.geojson")
+//     .then(function (response) { return response.json() })
+//     .then(function (data) {
 
-        //data.features.forEach(function(d){
-        // d.properties.name = d.properties.polygonsDataF_27_02_name;
-        // delete d.properties.polygonsDataF_27_02_name;
-        //});
+//         //data.features.forEach(function(d){
+//         // d.properties.name = d.properties.polygonsDataF_27_02_name;
+//         // delete d.properties.polygonsDataF_27_02_name;
+//         //});
 
-        let layer_id = "polygonsF";
-        let stepColumn = "step";
-        let style = polygonsFillStyle;
-        let popupColumn = "info";
+//         let layer_id = "polygonsF";
+//         let stepColumn = "step";
+//         let style = polygonsFillStyle;
+//         let popupColumn = "info";
 
-        scatterToLayers(data, stepColumn, popupColumn, style, layer_id);
-    });
-
-
-fetch("data/osmData_4326.geojson")
-    .then(function (response) { return response.json() })
-    .then(function (data) {
-
-        let layer_id = "building";
-        let stepColumn = "step";
-        let style = buildingsStyle;
-        let popupColumn = "building";
-
-        scatterToLayers(data, stepColumn, popupColumn, style, layer_id);
-    });
+//         scatterToLayers(data, stepColumn, popupColumn, style, layer_id);
+//     });
 
 
-fetch("data/linesData_4326_2.geojson")
-    .then(function (response) { return response.json() })
-    .then(function (data) {
+// fetch("data/osmData_4326.geojson")
+//     .then(function (response) { return response.json() })
+//     .then(function (data) {
 
-        let layer_id = "lines";
-        let stepColumn = "step";
-        let style = linesStyle;
-        let popupColumn = "line";
+//         let layer_id = "building";
+//         let stepColumn = "step";
+//         let style = buildingsStyle;
+//         let popupColumn = "building";
 
-        scatterToLayers(data, stepColumn, popupColumn, style, layer_id);
-    });
+//         scatterToLayers(data, stepColumn, popupColumn, style, layer_id);
+//     });
 
 
-fetch("data/pointsData_4326.geojson")
-    .then(function (response) { return response.json() })
-    .then(function (data) {
+// fetch("data/linesData_4326_2.geojson")
+//     .then(function (response) { return response.json() })
+//     .then(function (data) {
 
-        let layer_id = "points";
-        let stepColumn = "step";
-        let style = geojsonMarkerOptions;
-        let popupColumn = "point";
+//         let layer_id = "lines";
+//         let stepColumn = "step";
+//         let style = linesStyle;
+//         let popupColumn = "line";
 
-        scatterToLayers(data, stepColumn, popupColumn, style, layer_id);
-    });
+//         scatterToLayers(data, stepColumn, popupColumn, style, layer_id);
+//     });
+
+
+// fetch("data/pointsData_4326.geojson")
+//     .then(function (response) { return response.json() })
+//     .then(function (data) {
+
+//         let layer_id = "points";
+//         let stepColumn = "step";
+//         let style = geojsonMarkerOptions;
+//         let popupColumn = "point";
+
+//         scatterToLayers(data, stepColumn, popupColumn, style, layer_id);
+//     });
 
 
 
@@ -568,14 +495,14 @@ function handleStepEnter(r) {
     }
 
     
-    // крок 1
-    if(r.index === 1 && r.direction === "down"){
-        removeObjectsWhenScrollDown(["p000000030", "p000000031", "c000000046", "c000000045"]);
-    }
+    // // крок 1
+    // if(r.index === 1 && r.direction === "down"){
+    //     removeObjectsWhenScrollDown(["p000000030", "p000000031", "c000000046", "c000000045"]);
+    // }
     
-    if(r.index === 1 && r.direction === "up"){
-        returnObjectsWhenScrollUp(["p000000030", "p000000031", "c000000046", "c000000045"]);
-    }
+    // if(r.index === 1 && r.direction === "up"){
+    //     returnObjectsWhenScrollUp(["p000000030", "p000000031", "c000000046", "c000000045"]);
+    // }
     
     
     // крок 3
