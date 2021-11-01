@@ -342,9 +342,9 @@ $("#show-dymytrov")
     .on("mouseover", function(){ $("#dymytrov_map").css("display", "flex").hide().fadeIn(500); })
     .on("mouseout", function(){  $("#dymytrov_map").hide();  });
 
-$("#show-1888")
-    .on("mouseover", function(){ $("#plan_1888").css("display", "flex").hide().fadeIn(500); })
-    .on("mouseout", function(){  $("#plan_1888").hide();  });
+$("#show-population")
+    .on("mouseover", function(){ $("#population").css("display", "flex").hide().fadeIn(500); })
+    .on("mouseout", function(){  $("#population").hide();  });
 
 $("#show-1944")
     .on("mouseover", function(){ $("#plan_1944").css("display", "flex").hide().fadeIn(500); })
