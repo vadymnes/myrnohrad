@@ -9,15 +9,15 @@ var map = L.map('map').setView(default_coordinates, 11);
 
 
 L.tileLayer(
-    // 'https://api.mapbox.com/styles/v1/evgeshadrozdova/ckl1654or031r17mvc4wr7edc/tiles/256/{z}/{x}/{y}?access_token=pk.eyJ1IjoiZXZnZXNoYWRyb3pkb3ZhIiwiYSI6ImNqMjZuaGpkYTAwMXAzMm5zdGVvZ2c0OHYifQ.s8MMs2wW15ZyUfDhTS_cdQ',
+    'https://api.mapbox.com/styles/v1/vadenvmapkyiv/ckebblhya13tx1at7q6wpso5m.html?title=view&access_token=pk.eyJ1IjoidmFkZW52bWFwa3lpdiIsImEiOiJja2RwczBzcXYwMjgzMnprdWVxMTB2aWU0In0.OBDKIqeo6YDnxaEZR4bdIA',
 
     //красива, але у stamen недекомунізовані вулиці
     //'https://stamen-tiles-{s}.a.ssl.fastly.net/toner-lite/{z}/{x}/{y}{r}.{ext}',
 
     //резервна підложка, якщо mapbox вибере ліміт
-    'https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png',
+    // 'https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png',
     {
-        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>',
+        // attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>',
         subdomains: 'abcd',
         maxZoom: 19,
         ext: 'png'
@@ -128,18 +128,13 @@ function filterByPeriod(data, filter_property, period, popup, style, id_value){
     }
 }
 
-
 //функція, якою ми розкидаємо всі наші обʼєкти відповідно до зазначеного в них кроку
-
 function scatterToLayers(df, stepColumn, popupColumn, style, layer_id){
     filterByPeriod(df, stepColumn, "1", popupColumn, style, layer_id).addTo(step_800_1);
     filterByPeriod(df, stepColumn, "2", popupColumn, style, layer_id).addTo(step_800_2);
 
 
 }
-
-
-
 
 fetch("data/precity.geojson")
     .then(function (response) { return response.json() })
