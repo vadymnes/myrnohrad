@@ -5,7 +5,7 @@
 var default_coordinates = window.innerWidth < 813 ? [48.305, 37.29135] : [48.40, 37.36];
 var default_zoom = window.innerWidth < 813 ? 13 : 14;
 
-var map = L.map('map').setView(default_coordinates, 13);
+var map = L.map('map').setView(default_coordinates, 11);
 
 
 L.tileLayer(
@@ -132,10 +132,9 @@ function filterByPeriod(data, filter_property, period, popup, style, id_value){
 //функція, якою ми розкидаємо всі наші обʼєкти відповідно до зазначеного в них кроку
 
 function scatterToLayers(df, stepColumn, popupColumn, style, layer_id){
-    filterByPeriod(df, stepColumn, "step_-1800_1", popupColumn, style, layer_id).addTo(step_800_1);
-    filterByPeriod(df, stepColumn, "step_-1800_2", popupColumn, style, layer_id).addTo(step_800_2);
-    filterByPeriod(df, stepColumn, "step_-1800_3", popupColumn, style, layer_id).addTo(step_800_3);
-    filterByPeriod(df, stepColumn, "step_-1800_4", popupColumn, style, layer_id).addTo(step_800_4);
+    filterByPeriod(df, stepColumn, "1", popupColumn, style, layer_id).addTo(step_800_1);
+    filterByPeriod(df, stepColumn, "2", popupColumn, style, layer_id).addTo(step_800_2);
+
 
 }
 
@@ -149,7 +148,7 @@ fetch("data/precity.geojson")
         let layer_id = "polygonsC";
         let stepColumn = "step";
         let style = polygonsColorStyle;
-        let popupColumn = "polygon";
+        let popupColumn = "name";
 
         scatterToLayers(data, stepColumn, popupColumn, style, layer_id);
     });
