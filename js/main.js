@@ -346,9 +346,9 @@ $("#show-population")
     .on("mouseover", function(){ $("#population").css("display", "flex").hide().fadeIn(500); })
     .on("mouseout", function(){  $("#population").hide();  });
 
-$("#show-1944")
-    .on("mouseover", function(){ $("#plan_1944").css("display", "flex").hide().fadeIn(500); })
-    .on("mouseout", function(){  $("#plan_1944").hide();  });
+$("#show-demography")
+    .on("mouseover", function(){ $("#demography").css("display", "flex").hide().fadeIn(500); })
+    .on("mouseout", function(){  $("#demography").hide();  });
 
 $("#show-1951")
     .on("mouseover", function(){ $("#plan_1951").css("display", "flex").hide().fadeIn(500); })
