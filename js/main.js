@@ -132,6 +132,7 @@ function filterByPeriod(data, filter_property, period, popup, style, id_value){
 function scatterToLayers(df, stepColumn, popupColumn, style, layer_id){
     filterByPeriod(df, stepColumn, "1", popupColumn, style, layer_id).addTo(step_800_1);
     filterByPeriod(df, stepColumn, "2", popupColumn, style, layer_id).addTo(step_800_2);
+    filterByPeriod(df, stepColumn, "3", popupColumn, style, layer_id).addTo(security_problem);
 
 
 }
@@ -192,17 +193,17 @@ fetch("data/precity.geojson")
 //     });
 
 
-// fetch("data/pointsData_4326.geojson")
-//     .then(function (response) { return response.json() })
-//     .then(function (data) {
+fetch("data/problems_human_security.geojson")
+    .then(function (response) { return response.json() })
+    .then(function (data) {
 
-//         let layer_id = "points";
-//         let stepColumn = "step";
-//         let style = geojsonMarkerOptions;
-//         let popupColumn = "point";
+        let layer_id = "points";
+        let stepColumn = "step";
+        let style = geojsonMarkerOptions;
+        let popupColumn = "point";
 
-//         scatterToLayers(data, stepColumn, popupColumn, style, layer_id);
-//     });
+        scatterToLayers(data, stepColumn, popupColumn, style, layer_id);
+    });
 
 
 
