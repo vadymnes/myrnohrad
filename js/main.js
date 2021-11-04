@@ -133,6 +133,7 @@ function scatterToLayers(df, stepColumn, popupColumn, style, layer_id){
     filterByPeriod(df, stepColumn, "1", popupColumn, style, layer_id).addTo(step_800_1);
     filterByPeriod(df, stepColumn, "2", popupColumn, style, layer_id).addTo(step_800_2);
     filterByPeriod(df, stepColumn, "3", popupColumn, style, layer_id).addTo(security_problem);
+    filterByPeriod(df, stepColumn, "5", popupColumn, style, layer_id).addTo(natural_water_osm);
 
 
 }
@@ -149,22 +150,17 @@ fetch("data/precity.geojson")
         scatterToLayers(data, stepColumn, popupColumn, style, layer_id);
     });
 
-// fetch("data/polygonsData_4326_fill.geojson")
-//     .then(function (response) { return response.json() })
-//     .then(function (data) {
+fetch("data/natural_water_osm.geojson")
+    .then(function (response) { return response.json() })
+    .then(function (data) {
 
-//         //data.features.forEach(function(d){
-//         // d.properties.name = d.properties.polygonsDataF_27_02_name;
-//         // delete d.properties.polygonsDataF_27_02_name;
-//         //});
+        let layer_id = "polygonsF";
+        let stepColumn = "step";
+        let style = polygonsFillStyle;
+        let popupColumn = "info";
 
-//         let layer_id = "polygonsF";
-//         let stepColumn = "step";
-//         let style = polygonsFillStyle;
-//         let popupColumn = "info";
-
-//         scatterToLayers(data, stepColumn, popupColumn, style, layer_id);
-//     });
+        scatterToLayers(data, stepColumn, popupColumn, style, layer_id);
+    });
 
 
 // fetch("data/osmData_4326.geojson")
