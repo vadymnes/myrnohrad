@@ -16,10 +16,7 @@ L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
 attribution: '&copy; <a href=”http://osm.org/copyright”>OpenStreetMap</a> contributors'
 }).addTo(newMap);
 
-$.getJSON("data/natural_water_osm.geojson",function(data){
-// L.geoJson function is used to parse geojson file and load on to map
-L.geoJson(data).addTo(newMap);
-});
+
 </script>
 </body>
 </html>
