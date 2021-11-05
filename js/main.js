@@ -66,13 +66,7 @@ var polygonsColorStyle = {
     dashOffset: '0'
 };
 
-var buildingsStyle = {
-    weight: 1,
-    fillColor: buildingsColor,
-    fillOpacity: 0.6,
-    color: buildingsColor,
-    opacity: 1
-};
+
 
 var linesStyle = {
     color: linesColor,
@@ -161,33 +155,6 @@ fetch("data/natural_water_osm.geojson")
 
         scatterToLayers(data, stepColumn, popupColumn, style, layer_id);
     });
-
-
-// fetch("data/osmData_4326.geojson")
-//     .then(function (response) { return response.json() })
-//     .then(function (data) {
-
-//         let layer_id = "building";
-//         let stepColumn = "step";
-//         let style = buildingsStyle;
-//         let popupColumn = "building";
-
-//         scatterToLayers(data, stepColumn, popupColumn, style, layer_id);
-//     });
-
-
-// fetch("data/linesData_4326_2.geojson")
-//     .then(function (response) { return response.json() })
-//     .then(function (data) {
-
-//         let layer_id = "lines";
-//         let stepColumn = "step";
-//         let style = linesStyle;
-//         let popupColumn = "line";
-
-//         scatterToLayers(data, stepColumn, popupColumn, style, layer_id);
-//     });
-
 
 fetch("data/problems_human_security.geojson")
     .then(function (response) { return response.json() })
@@ -433,9 +400,7 @@ function returnObjectsWhenScrollUp(objArray){
 
 function returnPreviousStyle(layer) {
     var pane = layer.options.id;
-    if(pane === "building"){
-        layer.setStyle(buildingsStyle);
-    } else if(pane === "polygonsC"){
+    if(pane === "polygonsC"){
         layer.setStyle(polygonsColorStyle);
     } else if(pane === "lines"){
         layer.setStyle(linesStyle);
@@ -679,29 +644,14 @@ function flyOut(){
 
 
 
-//це якщо треба додати можливість вмикати/вимикати шари
-//var layerControl = L.control.layers().addTo(map);
-//layerControl.addOverlay(buldings_900_921, "buldings_900_921");
-
-
-// плани різних років з тайлів (поки не треба)
-//        var p_800 = L.tileLayer('./tiles/plan_1800/{z}/{x}/{y}.png', {tms: true, opacity: 0.9, attribution: "",  pane: 'oldmaps'});
-//        var p_944 = L.tileLayer('./tiles/plan_1944/{z}/{x}/{y}.png', {tms: true, opacity: 0.9, attribution: "",  pane: 'oldmaps'});
-//        var p_888 = L.tileLayer('./tiles/plan_1888/{z}/{x}/{y}.png', {tms: true, opacity: 0.9, attribution: "",  pane: 'oldmaps'});
-
-
-
+// це якщо треба додати можливість вмикати/вимикати шари
+var layerControl = L.control.layers().addTo(map);
+layerControl.addOverlay("step_800_1", "step_800_2", "security_problem", "natural_water_osm");
 
 
 //        function getColor(d) { return d > 1980 ? 'green' :  d > 1950  ? 'red' :  'blue'; }
 //
-//        function buildingsStyle(feature) {
-//           return {
-//               fillColor: getColor(feature.properties["Data osmData_StartYear"]),
-//               weight: 1,
-//               color: getColor(feature.properties["Data osmData_StartYear"]),
-//               fillOpacity: 0.5  };
-//        }
+
 
 
 
