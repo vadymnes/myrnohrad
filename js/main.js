@@ -27,16 +27,14 @@ map.scrollWheelZoom.disable();
 var canvasRenderer = L.canvas();
 
 const layerGroups = [
-    "step_800_1", "step_800_2", "step_800_3", "step_800_4"
+    "novoekonom_step", "grod_step"
 
 ];
 
 
 /*створюємо шари на всі scrolling steps */
-var step_800_1 = new L.LayerGroup(),
-    step_800_2 = new L.LayerGroup(),
-    step_800_3 = new L.LayerGroup(),
-    step_800_4 = new L.LayerGroup();
+var novoekonom_step = new L.LayerGroup(),
+    grod_step = new L.LayerGroup();
 
 
 
@@ -60,7 +58,7 @@ var polygonsFillStyle = {
 var polygonsColorStyle = {
     weight: 2,
     opacity: 1,
-    fillColor:"transparent",
+    fillColor: "transparent",
     color: polygonsStrokeColor,
     dashArray: '5, 5',
     dashOffset: '0'
@@ -98,36 +96,35 @@ var mouseoverStyle = { color: "#574144", weight: 3, opacity: 1, fillOpacity: 0.6
 
 //фільтруємо елементи на різні групи шарів за періодами
 
-function filterByPeriod(data, filter_property, period, popup, style, id_value){
-    if(id_value === "points"){
+function filterByPeriod(data, filter_property, period, popup, style, id_value) {
+    if (id_value === "points") {
         return L.geoJson(data, {
             id: id_value,
             filter: function (feat) { return feat.properties[filter_property] == period },
             renderer: canvasRenderer,
             onEachFeature: onEachFeatureClosure("green", 1),
             pointToLayer: function (feature, latlng) { return L.circleMarker(latlng, geojsonMarkerOptions); },
-            style: function(){ return  geojsonMarkerOptions }
+            style: function () { return geojsonMarkerOptions }
 
         });
 
-    }  else {
+    } else {
         return L.geoJson(data, {
             id: id_value,
-            filter: function(feat) { return feat.properties[filter_property] == period},
+            filter: function (feat) { return feat.properties[filter_property] == period },
             renderer: canvasRenderer,
             onEachFeature: onEachFeatureClosure("green", 1),
 
-            style: function(){ return  style }
+            style: function () { return style }
         });
     }
 }
 
 //функція, якою ми розкидаємо всі наші обʼєкти відповідно до зазначеного в них кроку
-function scatterToLayers(df, stepColumn, popupColumn, style, layer_id){
-    filterByPeriod(df, stepColumn, "1", popupColumn, style, layer_id).addTo(step_800_1);
-    filterByPeriod(df, stepColumn, "2", popupColumn, style, layer_id).addTo(step_800_2);
-    filterByPeriod(df, stepColumn, "3", popupColumn, style, layer_id).addTo(security_problem);
-    filterByPeriod(df, stepColumn, "5", popupColumn, style, layer_id).addTo(natural_water_osm);
+function scatterToLayers(df, stepColumn, popupColumn, style, layer_id) {
+    filterByPeriod(df, stepColumn, "novoekonom_step", popupColumn, style, layer_id).addTo(novoekonom_step_1);
+    filterByPeriod(df, stepColumn, "grod_step", popupColumn, style, layer_id).addTo(grod_step_2);
+
 
 
 }
@@ -140,6 +137,18 @@ fetch("data/precity.geojson")
         let stepColumn = "step";
         let style = polygonsColorStyle;
         let popupColumn = "name";
+
+        scatterToLayers(data, stepColumn, popupColumn, style, layer_id);
+    });
+
+fetch("data/polygonsData_4326_color.geojson")
+    .then(function (response) { return response.json() })
+    .then(function (data) {
+
+        let layer_id = "polygonsC";
+        let stepColumn = "step";
+        let style = polygonsColorStyle;
+        let popupColumn = "polygon";
 
         scatterToLayers(data, stepColumn, popupColumn, style, layer_id);
     });
@@ -173,14 +182,14 @@ fetch("data/problems_human_security.geojson")
 //підсвітка кількох будівель одночасно (ДОСИ, Курчатова тощо)
 function loopOnMultiple(currentStep, array) {
     pulseLayer.clearLayers();
-    array.forEach(function(el){
+    array.forEach(function (el) {
         let thisId = el;
-        eval(currentStep).eachLayer(function(layer) {
-            for (let i=0; i < layer.getLayers().length; i++) {
+        eval(currentStep).eachLayer(function (layer) {
+            for (let i = 0; i < layer.getLayers().length; i++) {
                 let current = layer.getLayers()[i].feature.properties.id;
-                if(current.toString() === thisId.toString()){
+                if (current.toString() === thisId.toString()) {
                     const pulsatingIcon = generatePulsatingMarker(10, 'orange');
-                    L.marker(layer.getLayers()[i].getBounds().getCenter(), { icon: pulsatingIcon}).addTo(pulseLayer);
+                    L.marker(layer.getLayers()[i].getBounds().getCenter(), { icon: pulsatingIcon }).addTo(pulseLayer);
                     pulseLayer.addTo(map);
 
                 }
@@ -194,13 +203,13 @@ function loopOnMultiple(currentStep, array) {
 function loopOnBuilding() {
     let thisId = $(this).data("details")[1];
     let currentLayer = $(this).data("details")[0];
-    eval(currentLayer).eachLayer(function(layer) {
+    eval(currentLayer).eachLayer(function (layer) {
         for (let i = 0; i < layer.getLayers().length; i++) {
             let current = layer.getLayers()[i].feature.properties.id;
-              if(current.toString() === thisId.toString()){
+            if (current.toString() === thisId.toString()) {
                 pulseLayer.clearLayers();
                 const pulsatingIcon = generatePulsatingMarker(10, 'orange');
-                L.marker(layer.getLayers()[i].getBounds().getCenter(), { icon: pulsatingIcon}).addTo(pulseLayer);
+                L.marker(layer.getLayers()[i].getBounds().getCenter(), { icon: pulsatingIcon }).addTo(pulseLayer);
                 pulseLayer.addTo(map);
 
             }
@@ -212,13 +221,13 @@ function loopOnBuilding() {
 function loopOn() {
     let thisId = $(this).data("details")[1];
     let currentLayer = $(this).data("details")[0];
-    eval(currentLayer).eachLayer(function(layer) {
-    for (let i=0; i < layer.getLayers().length; i++) {
-        let current = layer.getLayers()[i].feature.properties.id;
-        if(current.toString() === thisId.toString()){
-            layer.getLayers()[i].setStyle(mouseoverStyle);
+    eval(currentLayer).eachLayer(function (layer) {
+        for (let i = 0; i < layer.getLayers().length; i++) {
+            let current = layer.getLayers()[i].feature.properties.id;
+            if (current.toString() === thisId.toString()) {
+                layer.getLayers()[i].setStyle(mouseoverStyle);
+            }
         }
-    }
     });
 }
 
@@ -227,21 +236,21 @@ function loopOut() {
     let currentLayer = $(this).data("details")[0];
     let steplayer = $(this).closest(".step").data("stuff")[0];
     map.removeLayer(pulseLayer);
-    if(steplayer === currentLayer){
-        eval(currentLayer).eachLayer(function(layer) {
-            for (let i=0; i < layer.getLayers().length; i++) {
+    if (steplayer === currentLayer) {
+        eval(currentLayer).eachLayer(function (layer) {
+            for (let i = 0; i < layer.getLayers().length; i++) {
                 let current = layer.getLayers()[i].feature.properties.id;
-                if(current.toString() === thisId.toString()){
+                if (current.toString() === thisId.toString()) {
                     returnPreviousStyle(layer);
                 }
             }
 
         });
     } else {
-        eval(currentLayer).eachLayer(function(layer) {
-            for (let i=0; i < layer.getLayers().length; i++) {
+        eval(currentLayer).eachLayer(function (layer) {
+            for (let i = 0; i < layer.getLayers().length; i++) {
                 let current = layer.getLayers()[i].feature.properties.id;
-                if(current.toString() === thisId.toString()){
+                if (current.toString() === thisId.toString()) {
                     layer.getLayers()[i].setStyle(toGreyStyle);
                 }
             }
@@ -260,23 +269,23 @@ $(".highlight-building")
     .on("mouseout", loopOut);
 
 $('.highlight-officer')
-    .on("mouseover", function() {
+    .on("mouseover", function () {
         loopOnMultiple("step_900_920_3", ["39450196", "39450197", "130541840", "130541849", "189209006", "130541852", "202318663", "252744668", "587491806"])
     })
-    .on("mouseout", function() { pulseLayer.clearLayers(); });
+    .on("mouseout", function () { pulseLayer.clearLayers(); });
 //step_1900-1920_3
 
 $('.highlight-kurchatova')
-    .on("mouseover", function(){
+    .on("mouseover", function () {
         loopOnMultiple("step_970_980_1", ["134126155", "134126167", "134126159", "134126154", "134126156"])
     })
-    .on("mouseout", function() { pulseLayer.clearLayers(); });
+    .on("mouseout", function () { pulseLayer.clearLayers(); });
 
 $('.highlight-sixteen')
-    .on("mouseover", function(){
+    .on("mouseover", function () {
         loopOnMultiple("step_970_980_1", ["191799585", "p000000016"]);
     })
-    .on("mouseout", function() { pulseLayer.clearLayers(); });
+    .on("mouseout", function () { pulseLayer.clearLayers(); });
 
 
 const generatePulsatingMarker = function (radius, color) {
@@ -299,44 +308,44 @@ const generatePulsatingMarker = function (radius, color) {
 
 //показуємо картинки по наведенню
 $("#show-1800")
-    .on("mouseover", function(){ $("#plan_1800").css("display", "flex").hide().fadeIn(500); })
-    .on("mouseout", function(){  $("#plan_1800").hide();  });
+    .on("mouseover", function () { $("#plan_1800").css("display", "flex").hide().fadeIn(500); })
+    .on("mouseout", function () { $("#plan_1800").hide(); });
 
 $("#show-dymytrov")
-    .on("mouseover", function(){ $("#dymytrov_map").css("display", "flex").hide().fadeIn(500); })
-    .on("mouseout", function(){  $("#dymytrov_map").hide();  });
+    .on("mouseover", function () { $("#dymytrov_map").css("display", "flex").hide().fadeIn(500); })
+    .on("mouseout", function () { $("#dymytrov_map").hide(); });
 
 $("#show-population")
-    .on("mouseover", function(){ $("#population").css("display", "flex").hide().fadeIn(500); })
-    .on("mouseout", function(){  $("#population").hide();  });
+    .on("mouseover", function () { $("#population").css("display", "flex").hide().fadeIn(500); })
+    .on("mouseout", function () { $("#population").hide(); });
 
 $("#show-demography")
-    .on("mouseover", function(){ $("#demography").css("display", "flex").hide().fadeIn(500); })
-    .on("mouseout", function(){  $("#demography").hide();  });
+    .on("mouseover", function () { $("#demography").css("display", "flex").hide().fadeIn(500); })
+    .on("mouseout", function () { $("#demography").hide(); });
 
 $("#show-1951")
-    .on("mouseover", function(){ $("#plan_1951").css("display", "flex").hide().fadeIn(500); })
-    .on("mouseout", function(){  $("#plan_1951").hide();  });
+    .on("mouseover", function () { $("#plan_1951").css("display", "flex").hide().fadeIn(500); })
+    .on("mouseout", function () { $("#plan_1951").hide(); });
 
 $("#show-1960")
-    .on("mouseover", function(){ $("#plan_1960").css("display", "flex").hide().fadeIn(500); })
-    .on("mouseout", function(){  $("#plan_1960").hide();  });
+    .on("mouseover", function () { $("#plan_1960").css("display", "flex").hide().fadeIn(500); })
+    .on("mouseout", function () { $("#plan_1960").hide(); });
 
 $("#show-coat")
-    .on("mouseover", function(){ $("#coat").css("display", "flex").hide().fadeIn(500); })
-    .on("mouseout", function(){  $("#coat").hide();  });
+    .on("mouseover", function () { $("#coat").css("display", "flex").hide().fadeIn(500); })
+    .on("mouseout", function () { $("#coat").hide(); });
 
 $("#show-coat2")
-    .on("mouseover", function(){ $("#coat2").css("display", "flex").hide().fadeIn(500); })
-    .on("mouseout", function(){  $("#coat2").hide();  });
+    .on("mouseover", function () { $("#coat2").css("display", "flex").hide().fadeIn(500); })
+    .on("mouseout", function () { $("#coat2").hide(); });
 
 $("#show-diploma")
-    .on("mouseover", function() { $("#diploma").css("display", "flex").show() })
-    .on("mouseout", function(){  $("#diploma").hide(); });
+    .on("mouseover", function () { $("#diploma").css("display", "flex").show() })
+    .on("mouseout", function () { $("#diploma").hide(); });
 
 $("#show-zamok")
-    .on("mouseover", function() { $("#zamok").css("display", "flex").show() })
-    .on("mouseout", function(){  $("#zamok").hide(); });
+    .on("mouseover", function () { $("#zamok").css("display", "flex").show() })
+    .on("mouseout", function () { $("#zamok").hide(); });
 
 
 
@@ -346,14 +355,14 @@ $("#show-zamok")
 function onEachFeatureClosure(defaultColor, weightValue) {
     return function onEachFeature(feature, layer) {
         layer.on('click', function (e) { });
-        let name = feature.properties.name != "Null"? feature.properties.name : "невідомо";
+        let name = feature.properties.name != "Null" ? feature.properties.name : "невідомо";
         let info = feature.properties.info != "Null" ? feature.properties.info : "";
-        let picture = feature.properties.photo != "Null" ? "<img style='display: block; width: 90%; margin:10px auto;' src='img/tips/" +feature.properties.photo +"'/>" : "";
-        let year = feature.properties.year != "Null" ? " ("+ feature.properties.year  + ") " : "";
+        let picture = feature.properties.photo != "Null" ? "<img style='display: block; width: 90%; margin:10px auto;' src='img/tips/" + feature.properties.photo + "'/>" : "";
+        let year = feature.properties.year != "Null" ? " (" + feature.properties.year + ") " : "";
 
         var popup = picture + '<p>' +
             //'id:'+feature.properties.id+ " <br> <b>" +
-            "<b>" + name + "</b>" + year.replace(".0", '') + "<br>"  + '<br> ' + info +"<br>"+
+            "<b>" + name + "</b>" + year.replace(".0", '') + "<br>" + '<br> ' + info + "<br>" +
             '</p>';
 
 
@@ -366,14 +375,14 @@ function onEachFeatureClosure(defaultColor, weightValue) {
 
 
 
-//прибираємо обʼєкти на скрол
-function removeObjectsWhenScrollDown(objArray){
-    for(let l in layerGroups) {
-        eval(layerGroups[l]).eachLayer(function(f){
-            for (let i=0; i < f.getLayers().length; i++) {
+//прибираємо обʼєкти на скрол - функція
+function removeObjectsWhenScrollDown(objArray) {
+    for (let l in layerGroups) {
+        eval(layerGroups[l]).eachLayer(function (f) {
+            for (let i = 0; i < f.getLayers().length; i++) {
                 let current = f.getLayers()[i].feature.properties.id;
-                if(objArray.includes(current)){
-                    f.getLayers()[i].setStyle({opacity: 0, fillOpacity: 0 });
+                if (objArray.includes(current)) {
+                    f.getLayers()[i].setStyle({ opacity: 0, fillOpacity: 0 });
                     //f.getLayers()[i].off('click');
                 }
 
@@ -382,13 +391,13 @@ function removeObjectsWhenScrollDown(objArray){
     }
 }
 
-//повертаємо обʼєкти на скрол
-function returnObjectsWhenScrollUp(objArray){
-    for(let l in layerGroups) {
-        eval(layerGroups[l]).eachLayer(function(f){
+//повертаємо обʼєкти на скрол - функція
+function returnObjectsWhenScrollUp(objArray) {
+    for (let l in layerGroups) {
+        eval(layerGroups[l]).eachLayer(function (f) {
             for (let i = 0; i < f.getLayers().length; i++) {
                 let current = f.getLayers()[i].feature.properties.id;
-                if(objArray.includes(current)){
+                if (objArray.includes(current)) {
                     //f.getLayers()[i].resetStyle(eval(layerGroups[l]));
                 }
 
@@ -400,13 +409,13 @@ function returnObjectsWhenScrollUp(objArray){
 
 function returnPreviousStyle(layer) {
     var pane = layer.options.id;
-    if(pane === "polygonsC"){
+    if (pane === "polygonsC") {
         layer.setStyle(polygonsColorStyle);
-    } else if(pane === "lines"){
+    } else if (pane === "lines") {
         layer.setStyle(linesStyle);
-    } else if(pane === "points"){
+    } else if (pane === "points") {
         layer.setStyle(geojsonMarkerOptions);
-    } else if(pane === "polygonsF"){
+    } else if (pane === "polygonsF") {
         layer.setStyle(polygonsFillStyle);
     }
 }
@@ -419,18 +428,6 @@ var step = $('#scroll > .scroll__text > .step'); // text.selectAll('.step');
 var scroller = scrollama();
 
 
-//        function handleResize() {
-//            var stepHeight = Math.floor(window.innerHeight * 0.5);
-//            step.css('height', stepHeight + 'px');
-//            var bodyWidth = d3.select('body').node().offsetWidth;
-//            var textWidth = text.node().offsetWidth;
-//            var graphicWidth = bodyWidth - textWidth;
-//            var chartMargin = 32;
-//            var chartWidth = graphic.node().offsetWidth - chartMargin;
-//            scroller.resize();
-//        }
-
-
 // scrollama event handlers
 function handleStepEnter(r) {
 
@@ -440,130 +437,120 @@ function handleStepEnter(r) {
 
 
     //всі кроки окрім першого та останнього
-    if(r.direction === "down" && layerToGrey != 'none'){
+    if (r.direction === "down" && layerToGrey != 'none') {
         eval(layerToAdd).addTo(map);
-        eval(layerToGrey).eachLayer(function(layer) {layer.setStyle(toGreyStyle);});
-    } else if(r.direction === "down" && layerToGrey === 'none'){
+        eval(layerToGrey).eachLayer(function (layer) { layer.setStyle(toGreyStyle); });
+    } else if (r.direction === "down" && layerToGrey === 'none') {
         eval(layerToAdd).addTo(map);
-    } else if(r.direction === "up" && layerToRemove != 'none'){
+    } else if (r.direction === "up" && layerToRemove != 'none') {
         map.removeLayer(eval(layerToRemove));
-        eval(layerToAdd).eachLayer(function(layer) { returnPreviousStyle(layer) });
+        eval(layerToAdd).eachLayer(function (layer) { returnPreviousStyle(layer) });
     }
 
-    
-    // // крок 1
-    // if(r.index === 1 && r.direction === "down"){
-    //     removeObjectsWhenScrollDown(["p000000030", "p000000031", "c000000046", "c000000045"]);
-    // }
-    
-    // if(r.index === 1 && r.direction === "up"){
-    //     returnObjectsWhenScrollUp(["p000000030", "p000000031", "c000000046", "c000000045"]);
-    // }
-    
-    
+
     // крок 3
-    if(r.index === 3 && r.direction === "down"){
+    if (r.index === 3 && r.direction === "down") {
         removeObjectsWhenScrollDown(["c000000022"]);
     }
-    
-    if(r.index === 3 && r.direction === "up"){
+
+    if (r.index === 3 && r.direction === "up") {
         returnObjectsWhenScrollUp(["c000000022"]);
     }
-    
+
     // крок 5
-    if(r.index === 5 && r.direction === "down"){
+    if (r.index === 5 && r.direction === "down") {
         removeObjectsWhenScrollDown(["L000000004", "L000000003"]);
     }
-    
-    if(r.index === 5 && r.direction === "up"){
+
+    if (r.index === 5 && r.direction === "up") {
         returnObjectsWhenScrollUp(["L000000004", "L000000003"]);
     }
 
 
     // крок 6
-    if(r.index === 6 && r.direction === "down"){
+    if (r.index === 6 && r.direction === "down") {
         removeObjectsWhenScrollDown(["L000000046", "L000000055", "L000000008", "L000000060",
             "L000000061", "L000000065", "L000000070", "L000000078", "L000000079", "L000000080"]);
     }
-    
-    if(r.index === 6 && r.direction === "up"){
+
+    if (r.index === 6 && r.direction === "up") {
         returnObjectsWhenScrollUp(["L000000046", "L000000055", "L000000008", "L000000060", "L000000061",
             "L000000065", "L000000070", "L000000078", "L000000079", "L000000080"]);
     }
 
     // крок 8
-    if(r.index === 8 && r.direction === "down"){
+    if (r.index === 8 && r.direction === "down") {
         removeObjectsWhenScrollDown(["L000000081"]);
     }
 
-    if(r.index === 8 && r.direction === "up"){
+    if (r.index === 8 && r.direction === "up") {
         returnObjectsWhenScrollUp(["L000000081"]);
     }
 
     // крок 9
-    if(r.index === 9 && r.direction === "down"){
+    if (r.index === 9 && r.direction === "down") {
         removeObjectsWhenScrollDown(["c000000053", "30"]);
     }
 
-    if(r.index === 9 && r.direction === "up"){
+    if (r.index === 9 && r.direction === "up") {
         returnObjectsWhenScrollUp(["c000000053", "30"]);
     }
 
     // крок 13
-    if(r.index === 13 && r.direction === "down"){
+    if (r.index === 13 && r.direction === "down") {
         removeObjectsWhenScrollDown(["c000000013"]);
     }
 
-    if(r.index === 13 && r.direction === "up"){
+    if (r.index === 13 && r.direction === "up") {
         returnObjectsWhenScrollUp(["c000000013"]);
     }
 
     // крок 14
-    if(r.index === 14 && r.direction === "down"){
+    if (r.index === 14 && r.direction === "down") {
         removeObjectsWhenScrollDown(["L000000082", "p000000027"]);
     }
 
-    if(r.index === 14 && r.direction === "up"){
+    if (r.index === 14 && r.direction === "up") {
         returnObjectsWhenScrollUp(["L000000082", "p000000027"]);
     }
 
     // крок 16
-    if(r.index === 16 && r.direction === "down"){
+    if (r.index === 16 && r.direction === "down") {
         removeObjectsWhenScrollDown(["c000000067", "c000000068"]);
     }
 
-    if(r.index === 16 && r.direction === "up"){
+    if (r.index === 16 && r.direction === "up") {
         returnObjectsWhenScrollUp(["c000000067", "c000000068"]);
     }
 
     // крок 17
-    if(r.index === 17 && r.direction === "down"){
+    if (r.index === 17 && r.direction === "down") {
         removeObjectsWhenScrollDown(["c000000059", "c000000028", "c000000029"]);
     }
 
-    if(r.index === 17 && r.direction === "up"){
+    if (r.index === 17 && r.direction === "up") {
         returnObjectsWhenScrollUp(["c000000059", "c000000028", "c000000029"]);
     }
 
     // крок 21
-    if(r.index === 21 && r.direction === "down"){
+    if (r.index === 21 && r.direction === "down") {
         removeObjectsWhenScrollDown(["c000000021"]);
     }
 
-    if(r.index === 21 && r.direction === "up"){
+    if (r.index === 21 && r.direction === "up") {
         returnObjectsWhenScrollUp(["c000000021"]);
     }
 
 
-    if(r.index === 3) {
+    if (r.index === 3) {
         map.flyTo(default_coordinates, default_zoom);
     }
 
-    if(r.index >= 16 && r.direction === "down") {
+    if (r.index >= 16 && r.direction === "down") {
         map.flyTo(default_coordinates, 13);
     }
 
-    if(r.index === 15 && r.direction === "up") {
+    if (r.index === 15 && r.direction === "up") {
         map.flyTo(default_coordinates, default_zoom);
     }
 
@@ -603,44 +590,16 @@ window.onbeforeunload = function () {
     window.scrollTo(0, 0);
 };
 
-function flyTo(coordinates){
-        map.flyTo(coordinates, default_zoom);
+function flyTo(coordinates) {
+    map.flyTo(coordinates, default_zoom);
 }
 
-function flyOut(){
+function flyOut() {
     map.flyTo(default_coordinates, default_zoom);
 }
 
 
-//// не потрібне
 
-
-
-// var mapbox_url = 'https://api.mapbox.com/styles/v1/evgeshadrozdova/ckl1654or031r17mvc4wr7edc/tiles/256/{z}/{x}/{y}?access_token=pk.eyJ1IjoiZXZnZXNoYWRyb3pkb3ZhIiwiYSI6ImNqMjZuaGpkYTAwMXAzMm5zdGVvZ2c0OHYifQ.s8MMs2wW15ZyUfDhTS_cdQ';
-//
-//
-//                mapbox_url, {
-//                    id: 'mapbox.light',
-//                    maxZoom: 22,
-// //жовта
-//                    'https://{s}.tile.thunderforest.com/pioneer/{z}/{x}/{y}.png?apikey={apikey}', {
-//            attribution: '&copy; <a href="http://www.thunderforest.com/">Thunderforest</a>, &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
-//                    apikey: 'df31e4fff5414a59929dc29ff3a71cfc',
-//                    maxZoom: 22,
-
-
-//чорна
-//                'https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
-//            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>',
-//            subdomains: 'abcd',
-//            maxZoom: 19,
-
-
-
-
-//якщо потрібно рознести шари на різні pane та різні канваси
-//map.createPane('buildings');
-// var buildingsRenderer = L.canvas({ padding: 0.5, pane: 'buildings' });
 
 
 
@@ -649,23 +608,3 @@ var layerControl = L.control.layers().addTo(map);
 layerControl.addOverlay("step_800_1", "step_800_2", "security_problem", "natural_water_osm");
 
 
-//        function getColor(d) { return d > 1980 ? 'green' :  d > 1950  ? 'red' :  'blue'; }
-//
-
-
-
-
-
-// міняємо періоди по кліку
-// $(".change_period").on("click", function(){
-//     $(".change_period").removeClass("active");
-//     $(this).addClass("active");
-//     let myarray = $(this).data('stuff');
-//     eval(myarrtoReturnay[0]).addTo(map);
-//
-//     if(myarray[1] != "none"){
-//         eval(myarray[1]).eachLayer(function(layer) {
-//             layer.setStyle(toGreyStyle);
-//         });
-//     }
-// });
