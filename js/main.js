@@ -599,12 +599,3 @@ function flyOut() {
 }
 
 
-
-
-
-
-// це якщо треба додати можливість вмикати/вимикати шари
-var layerControl = L.control.layers().addTo(map);
-layerControl.addOverlay("step_800_1", "step_800_2", "security_problem", "natural_water_osm");
-
-
