@@ -27,7 +27,7 @@ map.scrollWheelZoom.disable();
 var canvasRenderer = L.canvas();
 
 const layerGroups = [
-    "novoekonom_step", "grod_step"
+    "novoekonom_step_1", "grod_step_2"
 
 ];
 
