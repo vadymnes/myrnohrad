@@ -33,8 +33,8 @@ const layerGroups = [
 
 
 /*створюємо шари на всі scrolling steps */
-var novoekonom_step = new L.LayerGroup(),
-    grod_step = new L.LayerGroup();
+var novoekonom_step_1 = new L.LayerGroup(),
+    grod_step_2 = new L.LayerGroup();
 
 
 
@@ -72,6 +72,7 @@ var linesStyle = {
 };
 
 
+// стиль для маркерів
 var geojsonMarkerOptions = {
     radius: 4,
     fillColor: pointsColor,
@@ -178,44 +179,6 @@ fetch("data/problems_human_security.geojson")
     });
 
 
-
-//підсвітка кількох будівель одночасно (ДОСИ, Курчатова тощо)
-function loopOnMultiple(currentStep, array) {
-    pulseLayer.clearLayers();
-    array.forEach(function (el) {
-        let thisId = el;
-        eval(currentStep).eachLayer(function (layer) {
-            for (let i = 0; i < layer.getLayers().length; i++) {
-                let current = layer.getLayers()[i].feature.properties.id;
-                if (current.toString() === thisId.toString()) {
-                    const pulsatingIcon = generatePulsatingMarker(10, 'orange');
-                    L.marker(layer.getLayers()[i].getBounds().getCenter(), { icon: pulsatingIcon }).addTo(pulseLayer);
-                    pulseLayer.addTo(map);
-
-                }
-            }
-        });
-    })
-}
-
-
-//підсвітка будівель
-function loopOnBuilding() {
-    let thisId = $(this).data("details")[1];
-    let currentLayer = $(this).data("details")[0];
-    eval(currentLayer).eachLayer(function (layer) {
-        for (let i = 0; i < layer.getLayers().length; i++) {
-            let current = layer.getLayers()[i].feature.properties.id;
-            if (current.toString() === thisId.toString()) {
-                pulseLayer.clearLayers();
-                const pulsatingIcon = generatePulsatingMarker(10, 'orange');
-                L.marker(layer.getLayers()[i].getBounds().getCenter(), { icon: pulsatingIcon }).addTo(pulseLayer);
-                pulseLayer.addTo(map);
-
-            }
-        }
-    });
-}
 
 
 function loopOn() {
