@@ -24,7 +24,6 @@ L.tileLayer(
     }).addTo(map);
 
 map.scrollWheelZoom.disable();
-var canvasRenderer = L.canvas();
 
 const layerGroups = [
     "novoekonom_step_1", "grod_step_2"
@@ -94,32 +93,6 @@ var toGreyStyle = {
 
 var mouseoverStyle = { color: "#574144", weight: 3, opacity: 1, fillOpacity: 0.6 };
 
-
-//фільтруємо елементи на різні групи шарів за періодами
-
-function filterByPeriod(data, filter_property, period, popup, style, id_value) {
-    if (id_value === "points") {
-        return L.geoJson(data, {
-            id: id_value,
-            filter: function (feat) { return feat.properties[filter_property] == period },
-            renderer: canvasRenderer,
-            onEachFeature: onEachFeatureClosure("green", 1),
-            pointToLayer: function (feature, latlng) { return L.circleMarker(latlng, geojsonMarkerOptions); },
-            style: function () { return geojsonMarkerOptions }
-
-        });
-
-    } else {
-        return L.geoJson(data, {
-            id: id_value,
-            filter: function (feat) { return feat.properties[filter_property] == period },
-            renderer: canvasRenderer,
-            onEachFeature: onEachFeatureClosure("green", 1),
-
-            style: function () { return style }
-        });
-    }
-}
 
 //функція, якою ми розкидаємо всі наші обʼєкти відповідно до зазначеного в них кроку
 function scatterToLayers(df, stepColumn, popupColumn, style, layer_id) {
@@ -228,22 +201,6 @@ $(".highlight")
     .on("mouseout", loopOut);
 
 
-const generatePulsatingMarker = function (radius, color) {
-    const cssStyle = `
-    width: ${radius}px;
-    height: ${radius}px;
-    background: ${color};
-    color: ${color};
-    opacity: 0.5;
-    box-shadow: 0 0 0 ${color};
-  `
-    return L.divIcon({
-        html: `<span style="${cssStyle}" class="pulse"/>`,
-        className: ''
-    })
-};
-
-
 
 
 //показуємо картинки по наведенню
@@ -263,33 +220,6 @@ $("#show-demography")
     .on("mouseover", function () { $("#demography").css("display", "flex").hide().fadeIn(500); })
     .on("mouseout", function () { $("#demography").hide(); });
 
-$("#show-1951")
-    .on("mouseover", function () { $("#plan_1951").css("display", "flex").hide().fadeIn(500); })
-    .on("mouseout", function () { $("#plan_1951").hide(); });
-
-$("#show-1960")
-    .on("mouseover", function () { $("#plan_1960").css("display", "flex").hide().fadeIn(500); })
-    .on("mouseout", function () { $("#plan_1960").hide(); });
-
-$("#show-coat")
-    .on("mouseover", function () { $("#coat").css("display", "flex").hide().fadeIn(500); })
-    .on("mouseout", function () { $("#coat").hide(); });
-
-$("#show-coat2")
-    .on("mouseover", function () { $("#coat2").css("display", "flex").hide().fadeIn(500); })
-    .on("mouseout", function () { $("#coat2").hide(); });
-
-$("#show-diploma")
-    .on("mouseover", function () { $("#diploma").css("display", "flex").show() })
-    .on("mouseout", function () { $("#diploma").hide(); });
-
-$("#show-zamok")
-    .on("mouseover", function () { $("#zamok").css("display", "flex").show() })
-    .on("mouseout", function () { $("#zamok").hide(); });
-
-
-
-
 
 //щоб передати змнну у кожен клік
 function onEachFeatureClosure(defaultColor, weightValue) {
@@ -304,8 +234,6 @@ function onEachFeatureClosure(defaultColor, weightValue) {
             //'id:'+feature.properties.id+ " <br> <b>" +
             "<b>" + name + "</b>" + year.replace(".0", '') + "<br>" + '<br> ' + info + "<br>" +
             '</p>';
-
-
 
         layer.bindPopup(popup);
     }
