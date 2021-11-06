@@ -227,29 +227,6 @@ $(".highlight")
     .on("mouseover", loopOn)
     .on("mouseout", loopOut);
 
-$(".highlight-building")
-    .on("mouseover", loopOnBuilding)
-    .on("mouseout", loopOut);
-
-$('.highlight-officer')
-    .on("mouseover", function () {
-        loopOnMultiple("step_900_920_3", ["39450196", "39450197", "130541840", "130541849", "189209006", "130541852", "202318663", "252744668", "587491806"])
-    })
-    .on("mouseout", function () { pulseLayer.clearLayers(); });
-//step_1900-1920_3
-
-$('.highlight-kurchatova')
-    .on("mouseover", function () {
-        loopOnMultiple("step_970_980_1", ["134126155", "134126167", "134126159", "134126154", "134126156"])
-    })
-    .on("mouseout", function () { pulseLayer.clearLayers(); });
-
-$('.highlight-sixteen')
-    .on("mouseover", function () {
-        loopOnMultiple("step_970_980_1", ["191799585", "p000000016"]);
-    })
-    .on("mouseout", function () { pulseLayer.clearLayers(); });
-
 
 const generatePulsatingMarker = function (radius, color) {
     const cssStyle = `
