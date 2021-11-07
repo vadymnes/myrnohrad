@@ -3,9 +3,9 @@
 
 
 var default_coordinates = [48.30, 37.30];
-var default_zoom = window.innerWidth < 813 ? 13 : 14;
+var default_zoom = 13;
 
-var map = L.map('map').setView(default_coordinates, 11);
+var map = L.map('map').setView(default_coordinates, 13);
 
 
 L.tileLayer(
