@@ -38,7 +38,17 @@
                     <div id="map"></div>
                 </div>
             </div>
+                <!--Зображення Новоекономічного та Гродівського рудників-->
+                <div id="plan_1800" class="plan"><img src="img/two_settlements_hist.jpg"/></div>
 
+                <!--Зображення Димитрова як міста-->
+                <div id="dymytrov_map" class="plan"><img src="img/dymytrov.png"/></div>
+
+                <!--Зміна кількості населення міста-->
+                <div id="population" class="plan"><img src="img/population.png"/></div>
+
+                <!--Графіки по демографії міста-->
+                <div id="demography" class="plan"><img src="img/demography.png"/></div>
             <div class='scroll__text'>
                 
 
@@ -85,44 +95,294 @@
                     </div>
                 </div>
 
-                <div class='step' data-scrollama-index="6" data-stuff='["road_list"]'>
+                <div class='step' data-scrollama-index="6" data-stuff='["step_800_850_2", "step_850_900_1", "step_800_850_1"]'>
                     <div>
-                        <p>Автомобільні дороги представлені двома:
-                            <span class="highlight" data-details='["road_list", "2"]'>Н-32</span> та дорогою місцевого значення
-                            <span class="highlight" data-details='["road_list", "3"]'>Мирноград - Гродівське</span> 
+                        <p>Зараз  населення Мирнограду (за даними на 2020 рік) становить 47 460 осіб</p>
+                        <p>Населення міста
+                            <span id="show-population" class="show-pic">повільно зменшується</span>
+                            (-0,77% зміни населення)</p>
+                        <p>53% населення міста – жінки, а 47% – чоловіки</p>
+                        <p>27% населення міста становить 60+ років</p>
+                        <p>Найнижчий відсоток населення у віковій групі 20-24 роки (4% населення)</p>
+                    </div>
+                </div>
+
+                <div class='step' data-scrollama-index="7" data-stuff='1'>
+                    <div>
+                        <p>Найбільші роботодавці міста наведені в таблиці нижче.</p>
+                        <style type="text/css">
+                            .tg {
+                                border-collapse: collapse;
+                                border-spacing: 0;
+                            }
+                            .tg td {
+                                border-color: black;
+                                border-style: solid;
+                                border-width: 1px;
+                                font-family: Arial, sans-serif;
+                                font-size: 14px;
+                                overflow: hidden;
+                                padding: 10px 5px;
+                                word-break: normal;
+                            }
+                            .tg th {
+                                border-color: black;
+                                border-style: solid;
+                                border-width: 1px;
+                                font-family: Arial, sans-serif;
+                                font-size: 14px;
+                                font-weight: normal;
+                                overflow: hidden;
+                                padding: 10px 5px;
+                                word-break: normal;
+                            }
+                            .tg .tg-kgrj {
+                                background-color: #F3F3F3;
+                                text-align: center;
+                                vertical-align: top
+                            }
+                            .tg .tg-0ich {
+                                background-color: #C795E9;
+                                color: #FFF;
+                                font-weight: bold;
+                                text-align: center;
+                                vertical-align: top
+                            }
+                            .tg .tg-lt9p {
+                                background-color: #F3F3F3;
+                                text-align: left;
+                                vertical-align: top
+                            }
+                        </style>
+                        <table class="tg">
+                            <thead>
+                                <tr>
+                                    <th class="tg-0ich">
+                                        <span style="font-weight:700;font-style:normal;text-decoration:none;color:#FFF;background-color:transparent">Enterprise</span>
+                                    </th>
+                                    <th class="tg-0ich">
+                                        <span style="font-weight:700;font-style:normal;text-decoration:none;color:#FFF;background-color:transparent">Type of activity (main)</span>
+                                    </th>
+                                    <th class="tg-0ich">
+                                        <span style="font-weight:700;font-style:normal;text-decoration:none;color:#FFF;background-color:transparent">Number of employees</span>
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td class="tg-lt9p">
+                                        <span style="font-weight:400;">Separate subsection(SS) "Mine 5/6"
+                                        </span>
+                                    </td>
+                                    <td class="tg-kgrj">
+                                        <span style="font-weight:400;">Coal mining
+                                        </span>
+                                    </td>
+                                    <td class="tg-kgrj">
+                                        <span style="font-weight:400;">1039</span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="tg-lt9p">
+                                        <span style="font-weight:400;">SS "Tsentral’na Mine"
+                                        </span>
+                                    </td>
+                                    <td class="tg-kgrj">
+                                        <span style="font-weight:400;">Coal mining
+                                        </span>
+                                    </td>
+                                    <td class="tg-kgrj">
+                                        <span style="font-weight:400;">745</span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="tg-lt9p">
+                                        <span style="font-weight:400;">SS “Kapital’na Mine”</span>
+                                    </td>
+                                    <td class="tg-kgrj">
+                                        <span style="font-weight:400;">Coal mining
+                                        </span>
+                                    </td>
+                                    <td class="tg-kgrj">
+                                        <span style="font-weight:400;">3544</span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="tg-lt9p">
+                                        <span style="font-weight:400;">SS “Avtomobilist”</span>
+                                    </td>
+                                    <td class="tg-kgrj">
+                                        <span style="font-weight:400;">Transportation</span>
+                                    </td>
+                                    <td class="tg-kgrj">
+                                        <span style="font-weight:400;">194</span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="tg-lt9p">
+                                        <span style="font-weight:400;">SS “VVTZ”</span>
+                                    </td>
+                                    <td class="tg-kgrj">
+                                        <span style="font-weight:400;">Communication services</span>
+                                    </td>
+                                    <td class="tg-kgrj">
+                                        <span style="font-weight:400;">65</span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="tg-lt9p">
+                                        <span style="font-weight:400;">DVUVKG PbUE “Company “Voda Donbasu”</span>
+                                    </td>
+                                    <td class="tg-kgrj">
+                                        <span style="font-weight:400;">Water intake, purification and supply</span>
+                                    </td>
+                                    <td class="tg-kgrj">
+                                        <span style="font-weight:400;">186</span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="tg-lt9p">
+                                        <span style="font-weight:400;">SS “VO OKP “Donets’kteplokomunenergo” “Dymytrovteplomerezha”</span>
+                                    </td>
+                                    <td class="tg-kgrj">
+                                        <span style="font-weight:400;">Production and supply of thermal energy and hot water</span>
+                                    </td>
+                                    <td class="tg-kgrj">
+                                        <span style="font-weight:400;">220</span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="tg-lt9p">
+                                        <span style="font-weight:400;">State paramilitary mining and rescue service in Donetsk region</span>
+                                    </td>
+                                    <td class="tg-kgrj">
+                                        <span style="font-weight:400;">Emergency rescue service in emergency situations</span>
+                                    </td>
+                                    <td class="tg-kgrj">
+                                        <span style="font-weight:400;">410</span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="tg-lt9p">
+                                        <span style="font-weight:400;">PrJSC "Central concentrating mill  Myrnohrads’ka</span>
+                                    </td>
+                                    <td class="tg-kgrj">
+                                        <span style="font-weight:400;">Processing of ordinary coal</span>
+                                    </td>
+                                    <td class="tg-kgrj">
+                                        <span style="font-weight:400;">659</span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="tg-lt9p">
+                                        <span style="font-weight:400;">Ltd “Vuhleproomtrans”</span>
+                                    </td>
+                                    <td class="tg-kgrj">
+                                        <span style="font-weight:400;">Transportation of goods by rail</span>
+                                    </td>
+                                    <td class="tg-kgrj">
+                                        <span style="font-weight:400;">626</span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="tg-lt9p">
+                                        <span style="font-weight:400;">PE “Ecobudservis”</span>
+                                    </td>
+                                    <td class="tg-kgrj">
+                                        <span style="font-weight:400;">Lighting and solid waste disposal services</span>
+                                    </td>
+                                    <td class="tg-kgrj">
+                                        <span style="font-weight:400;">65</span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="tg-lt9p">
+                                        <span style="font-weight:400;">Ltd “ATB - market”</span>
+                                    </td>
+                                    <td class="tg-kgrj">
+                                        <span style="font-weight:400;">Retail and wholesale trade</span>
+                                    </td>
+                                    <td class="tg-kgrj">
+                                        <span style="font-weight:400;">65</span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="tg-lt9p">
+                                        <span style="font-weight:400;">Ltd “Eco - market”</span>
+                                    </td>
+                                    <td class="tg-kgrj">
+                                        <span style="font-weight:400;">Retail and wholesale trade</span>
+                                    </td>
+                                    <td class="tg-kgrj">
+                                        <span style="font-weight:400;">70</span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="tg-lt9p">
+                                        <span style="font-weight:400;">PE “PZF Harant-Servis”</span>
+                                    </td>
+                                    <td class="tg-kgrj">
+                                        <span style="font-weight:400;">Management of residential buildings and adjacent areas</span>
+                                    </td>
+                                    <td class="tg-kgrj">
+                                        <span style="font-weight:400;">33</span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="tg-lt9p">
+                                        <span style="font-weight:400;">PE “Dominant-Servis”</span>
+                                    </td>
+                                    <td class="tg-kgrj">
+                                        <span style="font-weight:400;">Management of residential buildings and adjacent areas</span>
+                                    </td>
+                                    <td class="tg-kgrj">
+                                        <span style="font-weight:400;">37</span>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div class='step' data-scrollama-index="8" data-stuff='["road_list"]'>
+                    <div>
+                        <p>Автомобільні дороги</p>
+                        <p>Центральною частиною міста проходить автодорога державного значення Покровськ—Костянтинівка <span class="highlight" data-details='["road_list", "2"]'>Н-32</span> та дорога місцевого значення
+                            <span class="highlight" data-details='["road_list", "3"]'>Мирноград - Гродівка (О0544)</span> 
                         </p>
                     </div>
                 </div>
 
 
-                <div class='step' data-scrollama-index="7" data-stuff='["railway_line"]'>
+                <div class='step' data-scrollama-index="9" data-stuff='["railway_line"]'>
                     <div>
-                        <p>Залізнична лінія Покровськ-Мирноград</p>
+                        <p>Залізниця представлена двома гілками</p>
+                        <p>Основна гілка - Ясинувата—Чаплине, проходить по південній межі міста, інша лінія -  Покровськ-Мирноград</p>
                     </div>
                 </div>
 
 
-                <div class='step' data-scrollama-index="8" data-stuff='["polygon_problems_obj"]'>
+                <div class='step' data-scrollama-index="10" data-stuff='["polygon_problems_obj"]'>
                     <div>
                         Проблеми Мирнограда відображені на карті
                     </div>
                 </div>
 
 
-                <div class='step' data-scrollama-index="9" data-stuff='["probl_marker_all"]'>
+                <div class='step' data-scrollama-index="11" data-stuff='["probl_marker_all"]'>
                     <div>
                         Точкові проблеми міста відображені на даному етапі
                     </div>
                 </div>
 
-                <div class='step_main' data-scrollama-index="10" >
+                <div class='step_main' data-scrollama-index="12" >
                     <div>
                         Природа
                     </div>
                 </div>
 
 
-                <div class='step' data-scrollama-index="11" data-stuff='["step_900_920_2", "step_900_920_3", "step_900_920_1"]'>
+                <div class='step' data-scrollama-index="13" data-stuff='["step_900_920_2", "step_900_920_3", "step_900_920_1"]'>
                     <div>
                         <p>Якість повітря в Мирнограді за допомогою автоматизованих Систем наразі не вимірюється, однак в місті Покровськ встановлений датчик такого роду. Дані спостережень за якістю повітря наведені на знімку нижче
                             <img style="width: 100%" src="img/saveecobot_pokrovsk_2021_11_02.png"></p>
@@ -131,14 +391,14 @@
                 </div>
 
 
-                <div class='step' data-scrollama-index="12" data-stuff='["watera_all", "waterl_all"]'>
+                <div class='step' data-scrollama-index="14" data-stuff='["watera_all", "waterl_all"]'>
                     <div>
                         <p>Представлено полігональними об'єктами та лінійними (додані)</p>    
                     </div>
                 </div>
 
 
-                <div class='step' data-scrollama-index="13" data-stuff='["step_920_945_1", "step_920_945_2", "step_900_920_3"]'>
+                <div class='step' data-scrollama-index="15" data-stuff='["step_920_945_1", "step_920_945_2", "step_900_920_3"]'>
                     <div>
                         <p>Рівень покриття деревною рослинністю в Мирноградській тергромаді складає 8,3% від площі громади</p>
                         <p>Територія громади розташована в степовій зоні, тому важливо не збільшувати покриття території лісовою рослинністю, адже за нинішніх кліматичних умов створення штучних лісових насаджень в степовій зоні України майже неможливе. Новостворені ліси в регіоні на 80% згорають від степових пожеж вже у перші 2 роки або просто всихають в умовах нестачі вологи та засоленості ґрунту.
@@ -148,7 +408,7 @@
                 </div>
 
 
-                <div class='step' data-scrollama-index="14" data-stuff='["pzf_obj"]'>
+                <div class='step' data-scrollama-index="16" data-stuff='["pzf_obj"]'>
                     <div>
                         <p>Природно-заповідний фонд</p>
                         <p>За даними
@@ -160,7 +420,7 @@
                 </div>
 
 
-                <div class='step' data-scrollama-index="15" data-stuff='["step_920_945_3", "step_945_960_1", "step_920_945_2"]'>
+                <div class='step' data-scrollama-index="17" data-stuff='["step_920_945_3", "step_945_960_1", "step_920_945_2"]'>
                     <div>
                         <p>За 30 років  встановлення окупації радянською владою та Другої світової війни місто пережило багато трагедій. Але починаючи з 1945 року Проскурів став перетворюватися на типовий обласний центр. За часи війни місто зазнало значних руйнувань і була знищена частина історичної забудови середмістя. Стан міста можна спостерігати на
                             <span id="show-1944" class="show-pic">аерофотознімку 1944 року</span>.
@@ -168,149 +428,10 @@
                     </div>
                 </div>
 
-                <div class='step' data-scrollama-index="16" data-stuff='["step_945_960_1", "step_945_960_2", "step_920_945_3"]'>
-                    <div>
-                        <p>Після завершення війни, у 1946 році до міста приєднали передмістя —
-                            <span
-                                class="highlight" data-details='["step_945_960_1", "c000000064"]'>
-                                <!--onmouseenter="flyTo([49.422, 26.97])" onmouseout="flyOut()"-->
-                                Гречани</span>
-                            та
-                            <span
-                                class="highlight" data-details='["step_945_960_1", "c000000051"]'><!--onmouseenter="flyTo([49.432, 27.00])" onmouseout="flyOut()"-->
-                                Заріччя</span>.</p>
-                        <p>Ядро міста, Соборну площу, забудували, а її перлина Собор Різдва Пресвятої Богородиці опинилася в центрі житлового кварталу. Центральною стала
-                            <span class="highlight" data-details='["step_945_960_1", "c000000058"]'>трикутна площа</span>
-                            на перетині Кам'янецької та Проскурівської вулиць.</p>
-                        <p>У середині 1950-х років річка Плоска була зведена у колектор, а її долину із заливних луків
-                            <span class="highlight" data-details='["step_945_960_1", "c000000059"]'>осушили.</span>
-                            Це призвело до зникнення острову, який був центром середньовічного Проскурова. Натомість на місці долини у 1955 році був закладений центральний парк, відомий нині як
-                            <span class="highlight" data-details='["step_945_960_1", "c000000034"]'>Парк імені Чекмана</span>. В 1952 році також зводиться нова дамба, і водосховище набуває свого сучасного вигляду.</p>
-                    </div>
-                </div>
+                
 
 
-                <div class='step' data-scrollama-index="17" data-stuff='["step_945_960_2", "step_945_960_3", "step_945_960_1"]'>
-                    <div>
-                        <p>В 1954 році місто Проскурів отримує відому нам всім назву Хмельницький, і Кам'янець-Подільська область перейменовується відповідно на Хмельницьку.</p>
-                        <p>У післявоєнні роки в місті з'являється архітектура у стилі сталінського ампіру, а пізніше — періоду Хрущова. Нам доступні два плани міста цього періоду: менш
-                            <span id="show-1951" class="show-pic">деталізований план 1951 року</span>, на якому в загальних кордонах показані межі кварталів міста, та більш
-                            <span id="show-1960" class="show-pic">детальний 1960 року</span>.</p>
-                    </div>
-                </div>
-
-                <div class='step' data-scrollama-index="18" data-stuff='["step_945_960_3", "step_960_970_1", "step_945_960_2"]'>
-                    <div>
-                        <p>В цей час добудовуються приватні
-                            <span class="highlight-building" data-details='["step_920_945_1", "131584617"]'>
-                                житлові будинки</span>
-                            в районі вулиць Сіцінського та Івана Франка, з'являються перші багатоповерхові
-                            <span class="highlight-building" data-details='["step_945_960_2", "38891887"]'>житлові будинки</span>
-                            в районі сучасних вулиць Болбочана та Козацької.</p>
-                        <p>Також починають забудовуватись багатоповерховою забудовою
-                            <span class="highlight-building" data-details='["step_945_960_2", "134103867"]'><!-- onmouseenter="flyTo([49.430, 26.97])" onmouseout="flyOut()">-->Гречани</span>.</p>
-                        <p>В стилі сталінського ампіру у 1956 році будується
-                            <span class="highlight-building" data-details='["step_945_960_2", "39011068"]'>будинок Рад</span>
-                            — теперішня обласна державна адміністрація. Квартали навколо також забудували житловими будинками.</p>
-                    </div>
-                </div>
-
-
-                <div class='step' data-scrollama-index="19" data-stuff='["step_960_970_1", "step_960_970_2", "step_945_960_3"]'>
-                    <div>
-                        <p>У 60-х роках будівельний бум в місті продовжується, проте переважно житловою забудовою.  Місто починає набирати свого сучасного  вигляду.</p>
-                    </div>
-                </div>
-
-                <div class='step' data-scrollama-index="20" data-stuff='["step_960_970_2", "step_960_970_3", "step_960_970_1"]'>
-                    <div>
-                        <p>В цей період багатоквартирними будинками починають забудовувати територію між проспектом Миру та вулицею Зарічанською — район
-                            <span class="highlight" data-details='["step_960_970_2", "c000000065"]'>«Виставка»</span>
-                            та
-                            <span class="highlight" data-details='["step_945_960_1", "c000000051"]'>Зарічанський мікрорайон</span>.</p>
-                    </div>
-                </div>
-
-                <div class='step' data-scrollama-index="21" data-stuff='["step_960_970_3", "step_970_980_1", "step_960_970_2"]'>
-                    <div>
-                        <p>В місті відкривають заводи
-                            <span class="highlight" data-details='["step_960_970_3", "p000000049"]'>«Катіон»</span>
-                            та
-                            <span class="highlight" data-details='["step_960_970_3", "p000000052"]'>«Новатор»</span>, починають забудовувати
-                            <span class="highlight" data-details='["step_960_970_3", "c000000060"]'>Південно-Західний</span>
-                            мікрорайон, в якому оселяли працівників заводів. Активні будівельні роботи продовжують і в центрі: в цей час забудовують майже всю вулицю Кам'янецьку, починаючи від перетину із вулицею Інститутською і до центру міста.</p>
-                    </div>
-                </div>
-
-
-                <div class='step' data-scrollama-index="22" data-stuff='["step_970_980_1", "step_970_980_2", "step_960_970_3"]'>
-                    <div>
-                        <p>У 70-их роках бум будівництва захоплює околиці міста. В Гречанах на перехресті вулиці Курчатова та Західно-Окружної зводять
-                            <span class="highlight-kurchatova">житловий мікрорайон</span>. Також багатоквартирними будинками повністю забудовують район
-                            <span class="highlight" data-details='["step_960_970_2", "c000000065"]'>«Виставка»
-                            </span>
-                            та
-                            <span class="highlight" data-details='["step_850_900_1", "c000000063"]'>Дубове</span>.</p>
-                        <p>Південно-західний район у трикутнику вулиць Тернопільської, Кам'янецької та Львівського шосе отримує свій сучасний вигляд.
-                        </p>
-                    </div>
-                </div>
-
-                <div class='step' data-scrollama-index="23" data-stuff='["step_970_980_2", "step_970_980_3", "step_970_980_1"]'>
-                    <div>
-                        <p>У січні 1963-го до міста приєднують як мікрорайон село
-                            <span class="highlight" data-details='["step_970_980_2", "c000000048"]'>Лезневе</span>, у 1981-му -
-                            <span class="highlight" data-details='["step_970_980_2", "c000000066"]'><!-- onmouseenter="flyTo([49.400, 27.00])" onmouseout="flyOut()">-->Книжківці</span>.</p>
-                    </div>
-                </div>
-
-                <div class='step' data-scrollama-index="24" data-stuff='["step_970_980_3", "step_980_990_1", "step_970_980_2"]'>
-                    <div>
-                        <p>В центрі міста будують два хмельницькі хмарочоси —
-                            <span class="highlight-sixteen" data-details='["step_970_980_1", "191799585"]'>шістнадцятиповерхівки</span>, які остаточно «пригнічують» Собор Різдва Пресвятої Богородиці.</p>
-                        <p>Типовою забудовою, яка не вписується в навколишню архітектуру, починають знищувати автентичність міста. В цей час активно руйнують історичну одноповерхову садибну забудову міста.</p>
-                    </div>
-                </div>
-
-
-                <div class='step' data-scrollama-index="25" data-stuff='["step_980_990_1", "step_980_990_2", "step_970_980_3"]'>
-                    <div>
-                        <p>У 80-х роках забудова була спрямована на заповнення прогалин. Так, місто вже зупинилось у своїх межах та почало рости вгору.</p>
-                        <p>В цей час забудували одну з головних магістралей міста — вулицю Прибузьку. До цього часу русло Південного Бугу пролягає значно південніше від сучасного.</p>
-                    </div>
-                </div>
-
-                <div class='step' data-scrollama-index="26" data-stuff='["step_980_990_2", "step_991_1", "step_980_990_1"]'>
-                    <div>
-                        <p>Забудовується вулиця Курчатова від Західно-окружної вулиці до Парку імені Михайла Чекмана. Тут також збудували амбулаторію сімейної медицини. Багатоповерховими будинками забудували і Заріччя. Район «Виставка» набуває сучасного вигляду.</p>
-                        <p>З кінця 1980-х розбудовується багатоповерховий мікрорайон Озерна.</p>
-                    </div>
-                </div>
-
-                <!--<div class='step' data-scrollama-index="27" data-stuff='["step_980_990_3", "step_991_1", "step_980_990_2"]'>-->
-                <!--&lt;!&ndash;<div>&ndash;&gt;-->
-                <!--&lt;!&ndash;<p></p>&ndash;&gt;-->
-                <!--&lt;!&ndash; &ndash;&gt;-->
-                <!--</div>-->
-
-
-                    <div class='step' data-scrollama-index="27" data-stuff='["step_991_1", "step_991_2", "step_980_990_2"]'> <div>
-                        <p>Українську державність Хмельницький зустрів як типове радянське місто — на заміну автентичної одноповерхової садибної забудови звели так звані сталінки, хрущовки та чешки.</p>
-                    </div>
-                </div>
-
-
-                <div class='step' data-scrollama-index="28" data-stuff='["step_991_2", "step_991_3", "none"]'>
-                    <div>
-                        <p>Хмельницький за останні 200 років пережив чимало трагедій та злетів. Із єврейсько-польського міста він перетворився на місто типово українське. Завдячуючи вдалому розташуванню та тому, що у другій половині XIX століття небайдужі мешканці сприяли будівництву залізниці, ми бачимо місто у його сучасних обрисах: хоча й частково спотворених типовою радянською забудовою, проте з вкрапленнями автентичних будівель і як завжди неспішно романтичне.</p>
-                    </div>
-                </div>
-
-
-                <div class='step' id="last" data-scrollama-index="29" data-stuff='["step_991_3", "none", "step_991_2"]'><!--<div>-->
-                    <!--<p></p>-->
-                    <!--</div>-->
-                </div>
+                
 
 
             </div>
@@ -322,55 +443,11 @@
             <a href="https://texty.org.ua/author/denys-hubashov/">Денис Губашов</a>,
             <a href="https://texty.org.ua/author/yevhenija-drozdova/" target="_blank">Євгенія Дроздова</a>.</h3>
 
-        <h3>За допомогу у підготовці візуалізації дякуємо
-            <a href="http://infocentr.khm.gov.ua/">ХМКП "ХМЕЛЬНИЦЬКІНФОЦЕНТР"</a>
-            та сектору охорони культурної спадщини і туризму Хмельницької міської ради,
-            <a href="http://mimh.org.ua/">Музею історії міста Хмельницького</a>
-            та особисто Сергію Єсюніну — провідному науковому співробітнику Хмельницького обласного краєзнавчого музею.</h3>
 
-
-        <div id="partners-logo">
-            <p>Візуалізацію розроблено
-                <a href="http://texty.org.ua/">Texty.org.ua</a>
-                в межах проекту «Ініціатива з розвитку аналітичних центрів», який виконує міжнародний фонд «Відродження» за фінансової підтримки Посольства Швеції в Україні.</p>
-            <div id="logoContainer">
-                <img id="sweden" src="img/sweden.jpg"/>
-                <img id="vidro" src="img/vidro.png"/>
-            </div>
-        </div>
-
-        <section id="created_texty">
-            <div>
-                <a href="https://www.facebook.com/sharer/sharer.php?u=https://texty.org.ua/d/2021/khmelnytskyi_history" class="share-btn">
-                    <i class="fab fa-facebook-f"></i>
-                </a>
-                <a href="https://twitter.com/intent/tweet?text=https://texty.org.ua/d/2021/khmelnytskyi_history" class="share-btn">
-                    <i class="fab fa-twitter"></i>
-                </a>
-                <h3>Створено Текстами</h3>
-            </div>
-            <div>
-                <a href="http://texty.org.ua/" target="_blank"><img src="img/texty_logo.svg" alt="texty.org.ua"></a>
-            </div>
-        </section>
 
         <script src="js/main.js"></script>
 
-        <script type="text/javascript">
-            var _gaq = _gaq || [];
-            _gaq.push(['_setAccount', 'UA-18136548-1']);
-            _gaq.push(['_trackPageview']);
-            (function () {
-                var ga = document.createElement('script');
-                ga.type = 'text/javascript';
-                ga.async = true;
-                ga.src = ('https:' == document.location.protocol ? 'https://' : 'http://') + 'stats.g.doubleclick.net/dc.js';
-                var s = document.getElementsByTagName('script')[0];
-                s.parentNode.insertBefore(ga, s);
-            })();
-        </script>
-
-        <script src="https://texty.org.ua/static/TopProjectsBannerD.js"></script>
+        
 
     </body>
 </html>
