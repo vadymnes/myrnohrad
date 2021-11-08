@@ -1,5 +1,5 @@
 <!DOCTYPE qgis PUBLIC 'http://mrcc.com/qgis.dtd' 'SYSTEM'>
-<qgis version="3.14.0-Pi" saveDateTime="2021-11-08T21:22:00" saveUserFull="User" projectname="" saveUser="User">
+<qgis version="3.14.0-Pi" saveDateTime="2021-11-08T21:23:07" saveUserFull="User" projectname="" saveUser="User">
   <homePath path=""/>
   <title></title>
   <autotransaction active="0"/>
@@ -45,10 +45,10 @@
   <mapcanvas name="theMapCanvas" annotationsVisible="1">
     <units>degrees</units>
     <extent>
-      <xmin>36.50988457256696762</xmin>
-      <ymin>47.69575015772556981</ymin>
-      <xmax>39.33395870569163577</xmax>
-      <ymax>49.34305554647494318</ymax>
+      <xmin>37.13196235275001555</xmin>
+      <ymin>48.27389519503407911</ymin>
+      <xmax>37.48497161939059907</xmax>
+      <ymax>48.47980836862775078</ymax>
     </extent>
     <rotation>0</rotation>
     <destinationsrs>
@@ -212,6 +212,15 @@
         <type>dataset</type>
         <title></title>
         <abstract></abstract>
+        <contact>
+          <name></name>
+          <organization></organization>
+          <position></position>
+          <voice></voice>
+          <fax></fax>
+          <email></email>
+          <role></role>
+        </contact>
         <links/>
         <fees></fees>
         <encoding></encoding>
@@ -228,7 +237,15 @@
             <geographicflag>false</geographicflag>
           </spatialrefsys>
         </crs>
-        <extent/>
+        <extent>
+          <spatial maxz="0" dimensions="2" crs="" minx="0" miny="0" maxy="0" minz="0" maxx="0"/>
+          <temporal>
+            <period>
+              <start></start>
+              <end></end>
+            </period>
+          </temporal>
+        </extent>
       </resourceMetadata>
       <provider encoding="UTF-8">ogr</provider>
       <vectorjoins/>
@@ -279,20 +296,71 @@
         <rotation/>
         <sizescale/>
       </renderer-v2>
-      <customproperties/>
+      <customproperties>
+        <property value="0" key="embeddedWidgets/count"/>
+        <property key="variableNames"/>
+        <property key="variableValues"/>
+      </customproperties>
       <blendMode>0</blendMode>
       <featureBlendMode>0</featureBlendMode>
       <layerOpacity>1</layerOpacity>
+      <SingleCategoryDiagramRenderer diagramType="Histogram" attributeLegend="1">
+        <DiagramCategory height="15" scaleDependency="Area" spacingUnit="MM" direction="0" showAxis="1" spacingUnitScale="3x:0,0,0,0,0,0" lineSizeType="MM" enabled="0" penWidth="0" backgroundColor="#ffffff" diagramOrientation="Up" lineSizeScale="3x:0,0,0,0,0,0" penColor="#000000" scaleBasedVisibility="0" width="15" labelPlacementMethod="XHeight" barWidth="5" rotationOffset="270" backgroundAlpha="255" opacity="1" penAlpha="255" minScaleDenominator="0" minimumSize="0" sizeScale="3x:0,0,0,0,0,0" maxScaleDenominator="1e+08" sizeType="MM" spacing="5">
+          <fontProperties description="MS Shell Dlg 2,7.8,-1,5,50,0,0,0,0,0" style=""/>
+          <axisSymbol>
+            <symbol clip_to_extent="1" force_rhr="0" name="" alpha="1" type="line">
+              <layer class="SimpleLine" pass="0" locked="0" enabled="1">
+                <prop k="capstyle" v="square"/>
+                <prop k="customdash" v="5;2"/>
+                <prop k="customdash_map_unit_scale" v="3x:0,0,0,0,0,0"/>
+                <prop k="customdash_unit" v="MM"/>
+                <prop k="draw_inside_polygon" v="0"/>
+                <prop k="joinstyle" v="bevel"/>
+                <prop k="line_color" v="35,35,35,255"/>
+                <prop k="line_style" v="solid"/>
+                <prop k="line_width" v="0.26"/>
+                <prop k="line_width_unit" v="MM"/>
+                <prop k="offset" v="0"/>
+                <prop k="offset_map_unit_scale" v="3x:0,0,0,0,0,0"/>
+                <prop k="offset_unit" v="MM"/>
+                <prop k="ring_filter" v="0"/>
+                <prop k="use_custom_dash" v="0"/>
+                <prop k="width_map_unit_scale" v="3x:0,0,0,0,0,0"/>
+                <data_defined_properties>
+                  <Option type="Map">
+                    <Option value="" name="name" type="QString"/>
+                    <Option name="properties"/>
+                    <Option value="collection" name="type" type="QString"/>
+                  </Option>
+                </data_defined_properties>
+              </layer>
+            </symbol>
+          </axisSymbol>
+        </DiagramCategory>
+      </SingleCategoryDiagramRenderer>
+      <DiagramLayerSettings zIndex="0" dist="0" placement="1" showAll="1" linePlacementFlags="18" priority="0" obstacle="0">
+        <properties>
+          <Option type="Map">
+            <Option value="" name="name" type="QString"/>
+            <Option name="properties"/>
+            <Option value="collection" name="type" type="QString"/>
+          </Option>
+        </properties>
+      </DiagramLayerSettings>
       <geometryOptions geometryPrecision="0" removeDuplicateNodes="0">
-        <activeChecks type="StringList">
-          <Option value="" type="QString"/>
-        </activeChecks>
-        <checkConfiguration/>
+        <activeChecks/>
+        <checkConfiguration type="Map">
+          <Option name="QgsGeometryGapCheck" type="Map">
+            <Option value="0" name="allowedGapsBuffer" type="double"/>
+            <Option value="false" name="allowedGapsEnabled" type="bool"/>
+            <Option value="" name="allowedGapsLayer" type="QString"/>
+          </Option>
+        </checkConfiguration>
       </geometryOptions>
       <referencedLayers/>
       <referencingLayers/>
       <fieldConfiguration>
-        <field name="osm_id">
+        <field name="id">
           <editWidget type="">
             <config>
               <Option/>
@@ -300,21 +368,28 @@
           </editWidget>
         </field>
         <field name="code">
-          <editWidget type="">
+          <editWidget type="Range">
             <config>
               <Option/>
             </config>
           </editWidget>
         </field>
         <field name="fclass">
-          <editWidget type="">
+          <editWidget type="TextEdit">
             <config>
               <Option/>
             </config>
           </editWidget>
         </field>
         <field name="name">
-          <editWidget type="">
+          <editWidget type="TextEdit">
+            <config>
+              <Option/>
+            </config>
+          </editWidget>
+        </field>
+        <field name="step">
+          <editWidget type="TextEdit">
             <config>
               <Option/>
             </config>
@@ -322,37 +397,48 @@
         </field>
       </fieldConfiguration>
       <aliases>
-        <alias field="osm_id" name="" index="0"/>
+        <alias field="id" name="" index="0"/>
         <alias field="code" name="" index="1"/>
         <alias field="fclass" name="" index="2"/>
         <alias field="name" name="" index="3"/>
+        <alias field="step" name="" index="4"/>
       </aliases>
       <excludeAttributesWMS/>
       <excludeAttributesWFS/>
       <defaults>
-        <default field="osm_id" applyOnUpdate="0" expression=""/>
+        <default field="id" applyOnUpdate="0" expression=""/>
         <default field="code" applyOnUpdate="0" expression=""/>
         <default field="fclass" applyOnUpdate="0" expression=""/>
         <default field="name" applyOnUpdate="0" expression=""/>
+        <default field="step" applyOnUpdate="0" expression=""/>
       </defaults>
       <constraints>
-        <constraint notnull_strength="0" field="osm_id" exp_strength="0" unique_strength="0" constraints="0"/>
+        <constraint notnull_strength="0" field="id" exp_strength="0" unique_strength="0" constraints="0"/>
         <constraint notnull_strength="0" field="code" exp_strength="0" unique_strength="0" constraints="0"/>
         <constraint notnull_strength="0" field="fclass" exp_strength="0" unique_strength="0" constraints="0"/>
         <constraint notnull_strength="0" field="name" exp_strength="0" unique_strength="0" constraints="0"/>
+        <constraint notnull_strength="0" field="step" exp_strength="0" unique_strength="0" constraints="0"/>
       </constraints>
       <constraintExpressions>
-        <constraint field="osm_id" desc="" exp=""/>
+        <constraint field="id" desc="" exp=""/>
         <constraint field="code" desc="" exp=""/>
         <constraint field="fclass" desc="" exp=""/>
         <constraint field="name" desc="" exp=""/>
+        <constraint field="step" desc="" exp=""/>
       </constraintExpressions>
       <expressionfields/>
       <attributeactions>
         <defaultAction value="{00000000-0000-0000-0000-000000000000}" key="Canvas"/>
       </attributeactions>
       <attributetableconfig sortExpression="" sortOrder="0" actionWidgetStyle="dropDown">
-        <columns/>
+        <columns>
+          <column name="code" hidden="0" width="-1" type="field"/>
+          <column name="fclass" hidden="0" width="-1" type="field"/>
+          <column name="name" hidden="0" width="-1" type="field"/>
+          <column name="step" hidden="0" width="-1" type="field"/>
+          <column hidden="1" width="-1" type="actions"/>
+          <column name="id" hidden="0" width="-1" type="field"/>
+        </columns>
       </attributetableconfig>
       <conditionalstyles>
         <rowstyles/>
@@ -363,14 +449,42 @@
       <editforminit/>
       <editforminitcodesource>0</editforminitcodesource>
       <editforminitfilepath></editforminitfilepath>
-      <editforminitcode><![CDATA[]]></editforminitcode>
+      <editforminitcode><![CDATA[# -*- coding: utf-8 -*-
+"""
+QGIS forms can have a Python function that is called when the form is
+opened.
+
+Use this function to add extra logic to your forms.
+
+Enter the name of the function in the "Python Init function"
+field.
+An example follows:
+"""
+from qgis.PyQt.QtWidgets import QWidget
+
+def my_form_open(dialog, layer, feature):
+	geom = feature.geometry()
+	control = dialog.findChild(QWidget, "MyLineEdit")
+]]></editforminitcode>
       <featformsuppress>0</featformsuppress>
       <editorlayout>generatedlayout</editorlayout>
-      <editable/>
-      <labelOnTop/>
+      <editable>
+        <field name="code" editable="1"/>
+        <field name="fclass" editable="1"/>
+        <field name="name" editable="1"/>
+        <field name="osm_id" editable="1"/>
+        <field name="step" editable="1"/>
+      </editable>
+      <labelOnTop>
+        <field name="code" labelOnTop="0"/>
+        <field name="fclass" labelOnTop="0"/>
+        <field name="name" labelOnTop="0"/>
+        <field name="osm_id" labelOnTop="0"/>
+        <field name="step" labelOnTop="0"/>
+      </labelOnTop>
       <dataDefinedFieldProperties/>
       <widgets/>
-      <previewExpression></previewExpression>
+      <previewExpression>"name"</previewExpression>
       <mapTip></mapTip>
     </maplayer>
     <maplayer autoRefreshTime="0" simplifyLocal="1" autoRefreshEnabled="0" hasScaleBasedVisibilityFlag="0" wkbType="MultiLineString" styleCategories="AllStyleCategories" type="vector" refreshOnNotifyEnabled="0" minScale="100000000" refreshOnNotifyMessage="" simplifyMaxScale="1" readOnly="0" maxScale="0" simplifyDrawingTol="1" simplifyDrawingHints="1" geometry="Line" simplifyAlgorithm="0" labelsEnabled="0">

@@ -160,6 +160,12 @@ var linesStyle = {
     opacity: 1
 };
 
+var railStyle = {
+    color: "black",
+    opacity: 0.5,
+    dashArray: '15, 5',
+    dashOffset: '0'
+};
 
 var geojsonMarkerOptions = {
     radius: 4,
@@ -311,6 +317,18 @@ fetch("data/main_infrastructure_lines.geojson")
         let layer_id = "lines";
         let stepColumn = "step";
         let style = linesStyle;
+        let popupColumn = "line";
+
+        scatterToLayers(data, stepColumn, popupColumn, style, layer_id);
+    });
+
+fetch("data/railwayl.geojson")
+    .then(function (response) { return response.json() })
+    .then(function (data) {
+
+        let layer_id = "lines";
+        let stepColumn = "step";
+        let style = railStyle;
         let popupColumn = "line";
 
         scatterToLayers(data, stepColumn, popupColumn, style, layer_id);
