@@ -103,6 +103,15 @@ var polygonsColorStyle = {
     dashArray: '5, 5',
     dashOffset: '0'
 };
+
+var tericonStyle = {
+    weight: 3,
+    opacity: 0.4,
+    fillColor: 'brown',
+    color: 'brown'
+};
+
+
 var pzfColor = {
     weight: 2,
     opacity: 0.5,
@@ -265,7 +274,7 @@ fetch("data/tericons.geojson")
 
         let layer_id = "polygonsC";
         let stepColumn = "step";
-        let style = polygonsColorStyle;
+        let style = tericonStyle;
         let popupColumn = "polygon";
 
         scatterToLayers(data, stepColumn, popupColumn, style, layer_id);
