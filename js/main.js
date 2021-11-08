@@ -3,9 +3,9 @@
 
 
 var default_coordinates = [48.30, 37.30];
-var default_zoom = 13;
+var default_zoom = 11;
 
-var map = L.map('map').setView(default_coordinates, 13);
+var map = L.map('map').setView(default_coordinates, 11);
 
 
 L.tileLayer(
@@ -24,17 +24,57 @@ L.tileLayer(
     }).addTo(map);
 
 map.scrollWheelZoom.disable();
+var canvasRenderer = L.canvas();
 
 const layerGroups = [
-    "novoekonom_step_1", "grod_step_2"
+    "step_800_1", "first_tericon_1", "precity_step", "myrnohrad_city_border1",
+    "myrnohrad_gromada_border1", "road_list", "step_800_850_3",
+    "railway_line", "polygon_problems_obj", "probl_marker_all", "pzf_obj",
+    "step_900_920_1", "step_900_920_2", "step_900_920_3",
+    "step_920_945_1", "step_920_945_2", "step_920_945_3",
+    "step_945_960_1", "step_945_960_2", "step_945_960_3",
+    "step_960_970_1", "step_960_970_2", "step_960_970_3",
+    "step_970_980_1", "step_970_980_2", "step_970_980_3",
+    "step_980_990_1", "step_980_990_2", "step_980_990_3",
+    "step_991_1", "step_991_2", "step_991_3"
+
+
 
 ];
 
 
 /*створюємо шари на всі scrolling steps */
-var novoekonom_step_1 = new L.LayerGroup(),
-    grod_step_2 = new L.LayerGroup();
-
+var step_800_1 = new L.LayerGroup(),
+    first_tericon_1 = new L.LayerGroup(),
+    precity_step = new L.LayerGroup();
+var myrnohrad_city_border1 = new L.LayerGroup(),
+    myrnohrad_gromada_border1 = new L.LayerGroup(),
+    road_list = new L.LayerGroup(),
+    railway_line = new L.LayerGroup();
+var polygon_problems_obj = new L.LayerGroup(),
+probl_marker_all = new L.LayerGroup(),
+    pzf_obj = new L.LayerGroup();
+var step_900_920_1 = new L.LayerGroup(),
+    step_900_920_2 = new L.LayerGroup(),
+    step_900_920_3 = new L.LayerGroup();
+var step_920_945_1 = new L.LayerGroup(),
+    step_920_945_2 = new L.LayerGroup(),
+    step_920_945_3 = new L.LayerGroup();
+var step_945_960_1 = new L.LayerGroup(),
+    step_945_960_2 = new L.LayerGroup(),
+    step_945_960_3 = new L.LayerGroup();
+var step_960_970_1 = new L.LayerGroup(),
+    step_960_970_2 = new L.LayerGroup(),
+    step_960_970_3 = new L.LayerGroup();
+var step_970_980_1 = new L.LayerGroup(),
+    step_970_980_2 = new L.LayerGroup(),
+    step_970_980_3 = new L.LayerGroup();
+var step_980_990_1 = new L.LayerGroup(),
+    step_980_990_2 = new L.LayerGroup(),
+    step_980_990_3 = new L.LayerGroup();
+var step_991_1 = new L.LayerGroup(),
+    step_991_2 = new L.LayerGroup(),
+    step_991_3 = new L.LayerGroup();
 
 
 var pulseLayer = new L.LayerGroup();
@@ -44,6 +84,7 @@ var buildingsColor = "#9d2f32", //"#f14633", //"#9d2f32",
     linesColor = '#718A8C', //"#0089C0", //'#4783fe',
     pointsColor = "#ff9d04",//'#D7A319';
     polygonsStrokeColor = '#CE4066'; //'#374969'
+    greyStrokeColor = '#a09aa6'; //'#374969'
 
 //визначаємо стилі для кожного типу елементів
 var polygonsFillStyle = {
@@ -62,8 +103,36 @@ var polygonsColorStyle = {
     dashArray: '5, 5',
     dashOffset: '0'
 };
+var pzfColor = {
+    weight: 2,
+    opacity: 0.5,
+    fillColor: "green",
+    color: 'green',
+    dashArray: '15, 5',
+    dashOffset: '0'
+};
 
+var greyPolygons = {
+    weight: 1,
+    opacity: 1,
+    fillColor: "transparent",
+    color: greyStrokeColor
+};
 
+var problemColor = {
+    weight: 1,
+    opacity: 0.8,
+    fillColor: '#a09aa6',
+    color: 'black'
+};
+
+var buildingsStyle = {
+    weight: 1,
+    fillColor: buildingsColor,
+    fillOpacity: 0.6,
+    color: buildingsColor,
+    opacity: 1
+};
 
 var linesStyle = {
     color: linesColor,
@@ -71,7 +140,6 @@ var linesStyle = {
 };
 
 
-// стиль для маркерів
 var geojsonMarkerOptions = {
     radius: 4,
     fillColor: pointsColor,
@@ -94,28 +162,80 @@ var toGreyStyle = {
 var mouseoverStyle = { color: "#574144", weight: 3, opacity: 1, fillOpacity: 0.6 };
 
 
+//фільтруємо елементи на різні групи шарів за періодами
+
+function filterByPeriod(data, filter_property, period, popup, style, id_value) {
+    if (id_value === "points") {
+        return L.geoJson(data, {
+            id: id_value,
+            filter: function (feat) { return feat.properties[filter_property] == period },
+            renderer: canvasRenderer,
+            onEachFeature: onEachFeatureClosure("green", 1),
+            pointToLayer: function (feature, latlng) { return L.circleMarker(latlng, geojsonMarkerOptions); },
+            style: function () { return geojsonMarkerOptions }
+
+        });
+
+    } else {
+        return L.geoJson(data, {
+            id: id_value,
+            filter: function (feat) { return feat.properties[filter_property] == period },
+            renderer: canvasRenderer,
+            onEachFeature: onEachFeatureClosure("green", 1),
+
+            style: function () { return style }
+        });
+    }
+}
+
+
 //функція, якою ми розкидаємо всі наші обʼєкти відповідно до зазначеного в них кроку
+
 function scatterToLayers(df, stepColumn, popupColumn, style, layer_id) {
-    filterByPeriod(df, stepColumn, "novoekonom_step", popupColumn, style, layer_id).addTo(novoekonom_step_1);
-    filterByPeriod(df, stepColumn, "grod_step", popupColumn, style, layer_id).addTo(grod_step_2);
+    filterByPeriod(df, stepColumn, "step_-1800_1", popupColumn, style, layer_id).addTo(step_800_1);
+    filterByPeriod(df, stepColumn, "first_tericon", popupColumn, style, layer_id).addTo(first_tericon_1);
+    filterByPeriod(df, stepColumn, "precity_step", popupColumn, style, layer_id).addTo(precity_step);
+    filterByPeriod(df, stepColumn, "myrnohrad_city_border", popupColumn, style, layer_id).addTo(myrnohrad_city_border1);
+    filterByPeriod(df, stepColumn, "myrnohrad_gromada_border", popupColumn, style, layer_id).addTo(myrnohrad_gromada_border1);
+    filterByPeriod(df, stepColumn, "road", popupColumn, style, layer_id).addTo(road_list);
 
+    filterByPeriod(df, stepColumn, "railway", popupColumn, style, layer_id).addTo(railway_line);
+    filterByPeriod(df, stepColumn, "polygon_problems", popupColumn, style, layer_id).addTo(polygon_problems_obj);
+    filterByPeriod(df, stepColumn, "probl_marker", popupColumn, style, layer_id).addTo(probl_marker_all);
+    filterByPeriod(df, stepColumn, "pzf", popupColumn, style, layer_id).addTo(pzf_obj);
 
+    filterByPeriod(df, stepColumn, "step_1900-1920_1", popupColumn, style, layer_id).addTo(step_900_920_1);
+    filterByPeriod(df, stepColumn, "step_1900-1920_2", popupColumn, style, layer_id).addTo(step_900_920_2);
+    filterByPeriod(df, stepColumn, "step_1900-1920_3", popupColumn, style, layer_id).addTo(step_900_920_3);
+
+    filterByPeriod(df, stepColumn, "step_1920-1945_1", popupColumn, style, layer_id).addTo(step_920_945_1);
+    filterByPeriod(df, stepColumn, "step_1920-1945_2", popupColumn, style, layer_id).addTo(step_920_945_2);
+    filterByPeriod(df, stepColumn, "step_1920-1945_3", popupColumn, style, layer_id).addTo(step_920_945_3);
+
+    filterByPeriod(df, stepColumn, "step_1945-1960_1", popupColumn, style, layer_id).addTo(step_945_960_1);
+    filterByPeriod(df, stepColumn, "step_1945-1960_2", popupColumn, style, layer_id).addTo(step_945_960_2);
+    filterByPeriod(df, stepColumn, "step_1945-1960_3", popupColumn, style, layer_id).addTo(step_945_960_3);
+
+    filterByPeriod(df, stepColumn, "step_60-70_1", popupColumn, style, layer_id).addTo(step_960_970_1);
+    filterByPeriod(df, stepColumn, "step_60-70_2", popupColumn, style, layer_id).addTo(step_960_970_2);
+    filterByPeriod(df, stepColumn, "step_60-70_3", popupColumn, style, layer_id).addTo(step_960_970_3);
+
+    filterByPeriod(df, stepColumn, "step_70-80_1", popupColumn, style, layer_id).addTo(step_970_980_1);
+    filterByPeriod(df, stepColumn, "step_70-80_2", popupColumn, style, layer_id).addTo(step_970_980_2);
+    filterByPeriod(df, stepColumn, "step_70-80_3", popupColumn, style, layer_id).addTo(step_970_980_3);
+
+    filterByPeriod(df, stepColumn, "step_80-90_1", popupColumn, style, layer_id).addTo(step_980_990_1);
+    filterByPeriod(df, stepColumn, "step_80-90_2", popupColumn, style, layer_id).addTo(step_980_990_2);
+    filterByPeriod(df, stepColumn, "step_80-90_3", popupColumn, style, layer_id).addTo(step_980_990_3);
+
+    filterByPeriod(df, stepColumn, "step_1990+_1", popupColumn, style, layer_id).addTo(step_991_1);
+    filterByPeriod(df, stepColumn, "step_1990+_2", popupColumn, style, layer_id).addTo(step_991_2);
+    filterByPeriod(df, stepColumn, "step_1990+_3", popupColumn, style, layer_id).addTo(step_991_3);
 
 }
 
+
 fetch("data/precity.geojson")
-    .then(function (response) { return response.json() })
-    .then(function (data) {
-
-        let layer_id = "polygonsC";
-        let stepColumn = "step";
-        let style = polygonsColorStyle;
-        let popupColumn = "name";
-
-        scatterToLayers(data, stepColumn, popupColumn, style, layer_id);
-    });
-
-fetch("data/polygonsData_4326_color.geojson")
     .then(function (response) { return response.json() })
     .then(function (data) {
 
@@ -127,9 +247,86 @@ fetch("data/polygonsData_4326_color.geojson")
         scatterToLayers(data, stepColumn, popupColumn, style, layer_id);
     });
 
-fetch("data/natural_water_osm.geojson")
+fetch("data/tericons.geojson")
     .then(function (response) { return response.json() })
     .then(function (data) {
+
+        let layer_id = "polygonsC";
+        let stepColumn = "step";
+        let style = polygonsColorStyle;
+        let popupColumn = "polygon";
+
+        scatterToLayers(data, stepColumn, popupColumn, style, layer_id);
+    });
+
+fetch("data/myrnohrad_city_border.geojson")
+    .then(function (response) { return response.json() })
+    .then(function (data) {
+
+        let layer_id = "polygonsC";
+        let stepColumn = "step";
+        let style = greyPolygons;
+        let popupColumn = "polygon";
+
+        scatterToLayers(data, stepColumn, popupColumn, style, layer_id);
+    });
+
+fetch("data/myrnohrad_gromada_border.geojson")
+    .then(function (response) { return response.json() })
+    .then(function (data) {
+
+        let layer_id = "polygonsC";
+        let stepColumn = "step";
+        let style = greyPolygons;
+        let popupColumn = "polygon";
+
+        scatterToLayers(data, stepColumn, popupColumn, style, layer_id);
+    });
+
+fetch("data/main_infrastructure_lines.geojson")
+    .then(function (response) { return response.json() })
+    .then(function (data) {
+
+        let layer_id = "lines";
+        let stepColumn = "step";
+        let style = linesStyle;
+        let popupColumn = "line";
+
+        scatterToLayers(data, stepColumn, popupColumn, style, layer_id);
+    });
+
+fetch("data/problems_human_security_polygons.geojson")
+    .then(function (response) { return response.json() })
+    .then(function (data) {
+
+        let layer_id = "polygonsC";
+        let stepColumn = "step";
+        let style = problemColor;
+        let popupColumn = "polygon";
+
+        scatterToLayers(data, stepColumn, popupColumn, style, layer_id);
+    });
+
+fetch("data/pzf_near_myrnohrad.geojson")
+    .then(function (response) { return response.json() })
+    .then(function (data) {
+
+        let layer_id = "polygonsC";
+        let stepColumn = "step";
+        let style = pzfColor;
+        let popupColumn = "polygon";
+
+        scatterToLayers(data, stepColumn, popupColumn, style, layer_id);
+    });
+
+fetch("data/polygonsData_4326_fill.geojson")
+    .then(function (response) { return response.json() })
+    .then(function (data) {
+
+        //data.features.forEach(function(d){
+        // d.properties.name = d.properties.polygonsDataF_27_02_name;
+        // delete d.properties.polygonsDataF_27_02_name;
+        //});
 
         let layer_id = "polygonsF";
         let stepColumn = "step";
@@ -139,7 +336,34 @@ fetch("data/natural_water_osm.geojson")
         scatterToLayers(data, stepColumn, popupColumn, style, layer_id);
     });
 
-fetch("data/problems_human_security.geojson")
+
+fetch("data/osmData_4326.geojson")
+    .then(function (response) { return response.json() })
+    .then(function (data) {
+
+        let layer_id = "building";
+        let stepColumn = "step";
+        let style = buildingsStyle;
+        let popupColumn = "building";
+
+        scatterToLayers(data, stepColumn, popupColumn, style, layer_id);
+    });
+
+
+fetch("data/linesData_4326_2.geojson")
+    .then(function (response) { return response.json() })
+    .then(function (data) {
+
+        let layer_id = "lines";
+        let stepColumn = "step";
+        let style = linesStyle;
+        let popupColumn = "line";
+
+        scatterToLayers(data, stepColumn, popupColumn, style, layer_id);
+    });
+
+
+fetch("data/security_probl_marker.geojson")
     .then(function (response) { return response.json() })
     .then(function (data) {
 
@@ -152,6 +376,44 @@ fetch("data/problems_human_security.geojson")
     });
 
 
+
+//підсвітка кількох будівель одночасно (ДОСИ, Курчатова тощо)
+function loopOnMultiple(currentStep, array) {
+    pulseLayer.clearLayers();
+    array.forEach(function (el) {
+        let thisId = el;
+        eval(currentStep).eachLayer(function (layer) {
+            for (let i = 0; i < layer.getLayers().length; i++) {
+                let current = layer.getLayers()[i].feature.properties.id;
+                if (current.toString() === thisId.toString()) {
+                    const pulsatingIcon = generatePulsatingMarker(10, 'orange');
+                    L.marker(layer.getLayers()[i].getBounds().getCenter(), { icon: pulsatingIcon }).addTo(pulseLayer);
+                    pulseLayer.addTo(map);
+
+                }
+            }
+        });
+    })
+}
+
+
+//підсвітка будівель
+function loopOnBuilding() {
+    let thisId = $(this).data("details")[1];
+    let currentLayer = $(this).data("details")[0];
+    eval(currentLayer).eachLayer(function (layer) {
+        for (let i = 0; i < layer.getLayers().length; i++) {
+            let current = layer.getLayers()[i].feature.properties.id;
+            if (current.toString() === thisId.toString()) {
+                pulseLayer.clearLayers();
+                const pulsatingIcon = generatePulsatingMarker(10, 'orange');
+                L.marker(layer.getLayers()[i].getBounds().getCenter(), { icon: pulsatingIcon }).addTo(pulseLayer);
+                pulseLayer.addTo(map);
+
+            }
+        }
+    });
+}
 
 
 function loopOn() {
@@ -200,6 +462,45 @@ $(".highlight")
     .on("mouseover", loopOn)
     .on("mouseout", loopOut);
 
+$(".highlight-building")
+    .on("mouseover", loopOnBuilding)
+    .on("mouseout", loopOut);
+
+$('.highlight-officer')
+    .on("mouseover", function () {
+        loopOnMultiple("step_900_920_3", ["39450196", "39450197", "130541840", "130541849", "189209006", "130541852", "202318663", "252744668", "587491806"])
+    })
+    .on("mouseout", function () { pulseLayer.clearLayers(); });
+//step_1900-1920_3
+
+$('.highlight-kurchatova')
+    .on("mouseover", function () {
+        loopOnMultiple("step_970_980_1", ["134126155", "134126167", "134126159", "134126154", "134126156"])
+    })
+    .on("mouseout", function () { pulseLayer.clearLayers(); });
+
+$('.highlight-sixteen')
+    .on("mouseover", function () {
+        loopOnMultiple("step_970_980_1", ["191799585", "p000000016"]);
+    })
+    .on("mouseout", function () { pulseLayer.clearLayers(); });
+
+
+const generatePulsatingMarker = function (radius, color) {
+    const cssStyle = `
+    width: ${radius}px;
+    height: ${radius}px;
+    background: ${color};
+    color: ${color};
+    opacity: 0.5;
+    box-shadow: 0 0 0 ${color};
+  `
+    return L.divIcon({
+        html: `<span style="${cssStyle}" class="pulse"/>`,
+        className: ''
+    })
+};
+
 
 
 
@@ -208,17 +509,44 @@ $("#show-1800")
     .on("mouseover", function () { $("#plan_1800").css("display", "flex").hide().fadeIn(500); })
     .on("mouseout", function () { $("#plan_1800").hide(); });
 
-$("#show-dymytrov")
-    .on("mouseover", function () { $("#dymytrov_map").css("display", "flex").hide().fadeIn(500); })
-    .on("mouseout", function () { $("#dymytrov_map").hide(); });
+$("#show-1806")
+    .on("mouseover", function () { $("#plan_1806").css("display", "flex").hide().fadeIn(500); })
+    .on("mouseout", function () { $("#plan_1806").hide(); });
 
-$("#show-population")
-    .on("mouseover", function () { $("#population").css("display", "flex").hide().fadeIn(500); })
-    .on("mouseout", function () { $("#population").hide(); });
+$("#show-1888")
+    .on("mouseover", function () { $("#plan_1888").css("display", "flex").hide().fadeIn(500); })
+    .on("mouseout", function () { $("#plan_1888").hide(); });
 
-$("#show-demography")
-    .on("mouseover", function () { $("#demography").css("display", "flex").hide().fadeIn(500); })
-    .on("mouseout", function () { $("#demography").hide(); });
+$("#show-1944")
+    .on("mouseover", function () { $("#plan_1944").css("display", "flex").hide().fadeIn(500); })
+    .on("mouseout", function () { $("#plan_1944").hide(); });
+
+$("#show-1951")
+    .on("mouseover", function () { $("#plan_1951").css("display", "flex").hide().fadeIn(500); })
+    .on("mouseout", function () { $("#plan_1951").hide(); });
+
+$("#show-1960")
+    .on("mouseover", function () { $("#plan_1960").css("display", "flex").hide().fadeIn(500); })
+    .on("mouseout", function () { $("#plan_1960").hide(); });
+
+$("#show-coat")
+    .on("mouseover", function () { $("#coat").css("display", "flex").hide().fadeIn(500); })
+    .on("mouseout", function () { $("#coat").hide(); });
+
+$("#show-coat2")
+    .on("mouseover", function () { $("#coat2").css("display", "flex").hide().fadeIn(500); })
+    .on("mouseout", function () { $("#coat2").hide(); });
+
+$("#show-diploma")
+    .on("mouseover", function () { $("#diploma").css("display", "flex").show() })
+    .on("mouseout", function () { $("#diploma").hide(); });
+
+$("#show-zamok")
+    .on("mouseover", function () { $("#zamok").css("display", "flex").show() })
+    .on("mouseout", function () { $("#zamok").hide(); });
+
+
+
 
 
 //щоб передати змнну у кожен клік
@@ -235,6 +563,8 @@ function onEachFeatureClosure(defaultColor, weightValue) {
             "<b>" + name + "</b>" + year.replace(".0", '') + "<br>" + '<br> ' + info + "<br>" +
             '</p>';
 
+
+
         layer.bindPopup(popup);
     }
 }
@@ -243,7 +573,7 @@ function onEachFeatureClosure(defaultColor, weightValue) {
 
 
 
-//прибираємо обʼєкти на скрол - функція
+//прибираємо обʼєкти на скрол
 function removeObjectsWhenScrollDown(objArray) {
     for (let l in layerGroups) {
         eval(layerGroups[l]).eachLayer(function (f) {
@@ -259,7 +589,7 @@ function removeObjectsWhenScrollDown(objArray) {
     }
 }
 
-//повертаємо обʼєкти на скрол - функція
+//повертаємо обʼєкти на скрол
 function returnObjectsWhenScrollUp(objArray) {
     for (let l in layerGroups) {
         eval(layerGroups[l]).eachLayer(function (f) {
@@ -277,7 +607,9 @@ function returnObjectsWhenScrollUp(objArray) {
 
 function returnPreviousStyle(layer) {
     var pane = layer.options.id;
-    if (pane === "polygonsC") {
+    if (pane === "building") {
+        layer.setStyle(buildingsStyle);
+    } else if (pane === "polygonsC") {
         layer.setStyle(polygonsColorStyle);
     } else if (pane === "lines") {
         layer.setStyle(linesStyle);
@@ -294,6 +626,18 @@ var graphic = $('#scroll > .scroll__graphic'); //container.select('.scroll__grap
 var text = $('#scroll > .scroll__text'); //container.select('.scroll__text');
 var step = $('#scroll > .scroll__text > .step'); // text.selectAll('.step');
 var scroller = scrollama();
+
+
+//        function handleResize() {
+//            var stepHeight = Math.floor(window.innerHeight * 0.5);
+//            step.css('height', stepHeight + 'px');
+//            var bodyWidth = d3.select('body').node().offsetWidth;
+//            var textWidth = text.node().offsetWidth;
+//            var graphicWidth = bodyWidth - textWidth;
+//            var chartMargin = 32;
+//            var chartWidth = graphic.node().offsetWidth - chartMargin;
+//            scroller.resize();
+//        }
 
 
 // scrollama event handlers
@@ -316,6 +660,16 @@ function handleStepEnter(r) {
     }
 
 
+    // крок 1
+    if (r.index === 1 && r.direction === "down") {
+        removeObjectsWhenScrollDown(["p000000030", "p000000031", "c000000046", "c000000045"]);
+    }
+
+    if (r.index === 1 && r.direction === "up") {
+        returnObjectsWhenScrollUp(["p000000030", "p000000031", "c000000046", "c000000045"]);
+    }
+
+
     // крок 3
     if (r.index === 3 && r.direction === "down") {
         removeObjectsWhenScrollDown(["c000000022"]);
@@ -335,13 +689,12 @@ function handleStepEnter(r) {
     }
 
 
-    // крок 6
-    if (r.index === 6 && r.direction === "down") {
-        removeObjectsWhenScrollDown(["L000000046", "L000000055", "L000000008", "L000000060",
-            "L000000061", "L000000065", "L000000070", "L000000078", "L000000079", "L000000080"]);
+    // крок 7
+    if (r.index === 7 && r.direction === "down") {
+        removeObjectsWhenScrollDown(["road_list"]);
     }
 
-    if (r.index === 6 && r.direction === "up") {
+    if (r.index === 7 && r.direction === "up") {
         returnObjectsWhenScrollUp(["L000000046", "L000000055", "L000000008", "L000000060", "L000000061",
             "L000000065", "L000000070", "L000000078", "L000000079", "L000000080"]);
     }
@@ -467,3 +820,75 @@ function flyOut() {
 }
 
 
+//// не потрібне
+
+
+
+// var mapbox_url = 'https://api.mapbox.com/styles/v1/evgeshadrozdova/ckl1654or031r17mvc4wr7edc/tiles/256/{z}/{x}/{y}?access_token=pk.eyJ1IjoiZXZnZXNoYWRyb3pkb3ZhIiwiYSI6ImNqMjZuaGpkYTAwMXAzMm5zdGVvZ2c0OHYifQ.s8MMs2wW15ZyUfDhTS_cdQ';
+//
+//
+//                mapbox_url, {
+//                    id: 'mapbox.light',
+//                    maxZoom: 22,
+// //жовта
+//                    'https://{s}.tile.thunderforest.com/pioneer/{z}/{x}/{y}.png?apikey={apikey}', {
+//            attribution: '&copy; <a href="http://www.thunderforest.com/">Thunderforest</a>, &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+//                    apikey: 'df31e4fff5414a59929dc29ff3a71cfc',
+//                    maxZoom: 22,
+
+
+//чорна
+//                'https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
+//            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>',
+//            subdomains: 'abcd',
+//            maxZoom: 19,
+
+
+
+
+//якщо потрібно рознести шари на різні pane та різні канваси
+//map.createPane('buildings');
+// var buildingsRenderer = L.canvas({ padding: 0.5, pane: 'buildings' });
+
+
+
+//це якщо треба додати можливість вмикати/вимикати шари
+//var layerControl = L.control.layers().addTo(map);
+//layerControl.addOverlay(buldings_900_921, "buldings_900_921");
+
+
+// плани різних років з тайлів (поки не треба)
+//        var p_800 = L.tileLayer('./tiles/plan_1800/{z}/{x}/{y}.png', {tms: true, opacity: 0.9, attribution: "",  pane: 'oldmaps'});
+//        var p_944 = L.tileLayer('./tiles/plan_1944/{z}/{x}/{y}.png', {tms: true, opacity: 0.9, attribution: "",  pane: 'oldmaps'});
+//        var p_888 = L.tileLayer('./tiles/plan_1888/{z}/{x}/{y}.png', {tms: true, opacity: 0.9, attribution: "",  pane: 'oldmaps'});
+
+
+
+
+
+//        function getColor(d) { return d > 1980 ? 'green' :  d > 1950  ? 'red' :  'blue'; }
+//
+//        function buildingsStyle(feature) {
+//           return {
+//               fillColor: getColor(feature.properties["Data osmData_StartYear"]),
+//               weight: 1,
+//               color: getColor(feature.properties["Data osmData_StartYear"]),
+//               fillOpacity: 0.5  };
+//        }
+
+
+
+
+// міняємо періоди по кліку
+// $(".change_period").on("click", function(){
+//     $(".change_period").removeClass("active");
+//     $(this).addClass("active");
+//     let myarray = $(this).data('stuff');
+//     eval(myarrtoReturnay[0]).addTo(map);
+//
+//     if(myarray[1] != "none"){
+//         eval(myarray[1]).eachLayer(function(layer) {
+//             layer.setStyle(toGreyStyle);
+//         });
+//     }
+// });
