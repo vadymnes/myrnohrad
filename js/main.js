@@ -30,7 +30,7 @@ const layerGroups = [
     "step_800_1", "first_tericon_1", "precity_step", "myrnohrad_city_border1",
     "myrnohrad_gromada_border1", "road_list", "step_800_850_3",
     "railway_line", "polygon_problems_obj", "probl_marker_all", "pzf_obj",
-    "step_900_920_1", "step_900_920_2", "step_900_920_3",
+    "watera_all", "step_900_920_2", "step_900_920_3",
     "step_920_945_1", "step_920_945_2", "step_920_945_3",
     "step_945_960_1", "step_945_960_2", "step_945_960_3",
     "step_960_970_1", "step_960_970_2", "step_960_970_3",
@@ -52,9 +52,9 @@ var myrnohrad_city_border1 = new L.LayerGroup(),
     road_list = new L.LayerGroup(),
     railway_line = new L.LayerGroup();
 var polygon_problems_obj = new L.LayerGroup(),
-probl_marker_all = new L.LayerGroup(),
+    probl_marker_all = new L.LayerGroup(),
     pzf_obj = new L.LayerGroup();
-var step_900_920_1 = new L.LayerGroup(),
+var watera_all = new L.LayerGroup(),
     step_900_920_2 = new L.LayerGroup(),
     step_900_920_3 = new L.LayerGroup();
 var step_920_945_1 = new L.LayerGroup(),
@@ -84,7 +84,7 @@ var buildingsColor = "#9d2f32", //"#f14633", //"#9d2f32",
     linesColor = '#718A8C', //"#0089C0", //'#4783fe',
     pointsColor = "#ff9d04",//'#D7A319';
     polygonsStrokeColor = '#CE4066'; //'#374969'
-    greyStrokeColor = '#a09aa6'; //'#374969'
+greyStrokeColor = '#a09aa6'; //'#374969'
 
 //визначаємо стилі для кожного типу елементів
 var polygonsFillStyle = {
@@ -110,6 +110,13 @@ var pzfColor = {
     color: 'green',
     dashArray: '15, 5',
     dashOffset: '0'
+};
+
+var waterPolColor = {
+    weight: 1,
+    opacity: 0.4,
+    fillColor: "blue",
+    color: 'blue'
 };
 
 var greyPolygons = {
@@ -204,7 +211,7 @@ function scatterToLayers(df, stepColumn, popupColumn, style, layer_id) {
     filterByPeriod(df, stepColumn, "probl_marker", popupColumn, style, layer_id).addTo(probl_marker_all);
     filterByPeriod(df, stepColumn, "pzf", popupColumn, style, layer_id).addTo(pzf_obj);
 
-    filterByPeriod(df, stepColumn, "step_1900-1920_1", popupColumn, style, layer_id).addTo(step_900_920_1);
+    filterByPeriod(df, stepColumn, "watera", popupColumn, style, layer_id).addTo(watera_all);
     filterByPeriod(df, stepColumn, "step_1900-1920_2", popupColumn, style, layer_id).addTo(step_900_920_2);
     filterByPeriod(df, stepColumn, "step_1900-1920_3", popupColumn, style, layer_id).addTo(step_900_920_3);
 
@@ -314,6 +321,18 @@ fetch("data/pzf_near_myrnohrad.geojson")
         let layer_id = "polygonsC";
         let stepColumn = "step";
         let style = pzfColor;
+        let popupColumn = "polygon";
+
+        scatterToLayers(data, stepColumn, popupColumn, style, layer_id);
+    });
+
+fetch("data/watera.geojson")
+    .then(function (response) { return response.json() })
+    .then(function (data) {
+
+        let layer_id = "polygonsC";
+        let stepColumn = "step";
+        let style = waterPolColor;
         let popupColumn = "polygon";
 
         scatterToLayers(data, stepColumn, popupColumn, style, layer_id);
