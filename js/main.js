@@ -162,7 +162,7 @@ var linesStyle = {
 
 var railStyle = {
     color: "black",
-    opacity: 0.5,
+    opacity: 0,
     dashArray: '15, 5',
     dashOffset: '0'
 };
