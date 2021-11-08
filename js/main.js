@@ -30,7 +30,7 @@ const layerGroups = [
     "step_800_1", "first_tericon_1", "precity_step", "myrnohrad_city_border1",
     "myrnohrad_gromada_border1", "road_list", "step_800_850_3",
     "railway_line", "polygon_problems_obj", "probl_marker_all", "pzf_obj",
-    "watera_all", "step_900_920_2", "step_900_920_3",
+    "watera_all", "waterl_all", "step_900_920_3",
     "step_920_945_1", "step_920_945_2", "step_920_945_3",
     "step_945_960_1", "step_945_960_2", "step_945_960_3",
     "step_960_970_1", "step_960_970_2", "step_960_970_3",
@@ -55,7 +55,7 @@ var polygon_problems_obj = new L.LayerGroup(),
     probl_marker_all = new L.LayerGroup(),
     pzf_obj = new L.LayerGroup();
 var watera_all = new L.LayerGroup(),
-    step_900_920_2 = new L.LayerGroup(),
+    waterl_all = new L.LayerGroup(),
     step_900_920_3 = new L.LayerGroup();
 var step_920_945_1 = new L.LayerGroup(),
     step_920_945_2 = new L.LayerGroup(),
@@ -141,6 +141,11 @@ var buildingsStyle = {
     opacity: 1
 };
 
+var waterlStyle = {
+    color: '#7bc8ff',
+    opacity: 0.8
+};
+
 var linesStyle = {
     color: linesColor,
     opacity: 1
@@ -212,7 +217,7 @@ function scatterToLayers(df, stepColumn, popupColumn, style, layer_id) {
     filterByPeriod(df, stepColumn, "pzf", popupColumn, style, layer_id).addTo(pzf_obj);
 
     filterByPeriod(df, stepColumn, "watera", popupColumn, style, layer_id).addTo(watera_all);
-    filterByPeriod(df, stepColumn, "step_1900-1920_2", popupColumn, style, layer_id).addTo(step_900_920_2);
+    filterByPeriod(df, stepColumn, "waterl", popupColumn, style, layer_id).addTo(waterl_all);
     filterByPeriod(df, stepColumn, "step_1900-1920_3", popupColumn, style, layer_id).addTo(step_900_920_3);
 
     filterByPeriod(df, stepColumn, "step_1920-1945_1", popupColumn, style, layer_id).addTo(step_920_945_1);
@@ -334,6 +339,18 @@ fetch("data/watera.geojson")
         let stepColumn = "step";
         let style = waterPolColor;
         let popupColumn = "polygon";
+
+        scatterToLayers(data, stepColumn, popupColumn, style, layer_id);
+    });
+
+fetch("data/waterl.geojson")
+    .then(function (response) { return response.json() })
+    .then(function (data) {
+
+        let layer_id = "lines";
+        let stepColumn = "step";
+        let style = waterlStyle;
+        let popupColumn = "line";
 
         scatterToLayers(data, stepColumn, popupColumn, style, layer_id);
     });
