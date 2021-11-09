@@ -631,11 +631,11 @@ function onEachFeatureClosure(defaultColor, weightValue) {
         let name = feature.properties.name != "Null" ? feature.properties.name : "невідомо";
         let info = feature.properties.info != "Null" ? feature.properties.info : "";
         let picture = feature.properties.photo != "Null" ? "<img style='display: block; width: 90%; margin:10px auto;' src='img/" + feature.properties.photo + "'/>" : "";
-        let year = feature.properties.year != "Null" ? " (" + feature.properties.year + ") " : "";
+        
 
         var popup = picture + '<p>' +
-            //'id:'+feature.properties.id+ " <br> <b>" +
-            "<b>" + name + "</b>" + year.replace(".0", '') + "<br>" + '<br> ' + info + "<br>" +
+            
+            "<b>" + name + "</b>"  + "<br>" + '<br> ' + info + "<br>" +
             '</p>';
 
 
@@ -744,6 +744,14 @@ function handleStepEnter(r) {
         returnObjectsWhenScrollUp(["precity_step"]);
     }
 
+    // крок 2 - прибираємо шахту
+    if (r.index === 2 && r.direction === "down") {
+        removeObjectsWhenScrollDown(["1"]);
+    }
+
+    if (r.index === 2 && r.direction === "up") {
+        returnObjectsWhenScrollUp(["1"]);
+    }
 
     // крок 3
     if (r.index === 3 && r.direction === "down") {
