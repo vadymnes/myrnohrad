@@ -30,7 +30,7 @@ const layerGroups = [
     "step_800_1", "first_tericon_1", "precity_step", "myrnohrad_city_border1",
     "myrnohrad_gromada_border1", "road_list", "step_800_850_3",
     "railway_line", "polygon_problems_obj", "probl_marker_all", "pzf_obj",
-    "watera_all", "waterl_all", "central_mine1",
+    "watera_all", "waterl_all", "central_mine_obj",
     "step_920_945_1", "step_920_945_2", "step_920_945_3",
     "step_945_960_1", "step_945_960_2", "step_945_960_3",
     "step_960_970_1", "step_960_970_2", "step_960_970_3",
@@ -46,6 +46,7 @@ const layerGroups = [
 /*створюємо шари на всі scrolling steps */
 var step_800_1 = new L.LayerGroup(),
     first_tericon_1 = new L.LayerGroup(),
+    central_mine_obj = new L.LayerGroup(),
     precity_step = new L.LayerGroup();
 var myrnohrad_city_border1 = new L.LayerGroup(),
     myrnohrad_gromada_border1 = new L.LayerGroup(),
@@ -55,8 +56,7 @@ var polygon_problems_obj = new L.LayerGroup(),
     probl_marker_all = new L.LayerGroup(),
     pzf_obj = new L.LayerGroup();
 var watera_all = new L.LayerGroup(),
-    waterl_all = new L.LayerGroup(),
-    central_mine1 = new L.LayerGroup();
+    waterl_all = new L.LayerGroup();
 var step_920_945_1 = new L.LayerGroup(),
     step_920_945_2 = new L.LayerGroup(),
     step_920_945_3 = new L.LayerGroup();
@@ -233,7 +233,7 @@ function scatterToLayers(df, stepColumn, popupColumn, style, layer_id) {
 
     filterByPeriod(df, stepColumn, "watera", popupColumn, style, layer_id).addTo(watera_all);
     filterByPeriod(df, stepColumn, "waterl", popupColumn, style, layer_id).addTo(waterl_all);
-    filterByPeriod(df, stepColumn, "central_mine", popupColumn, style, layer_id).addTo(central_mine1);
+    filterByPeriod(df, stepColumn, "central_mine", popupColumn, style, layer_id).addTo(central_mine_obj);
 
     filterByPeriod(df, stepColumn, "step_1920-1945_1", popupColumn, style, layer_id).addTo(step_920_945_1);
     filterByPeriod(df, stepColumn, "step_1920-1945_2", popupColumn, style, layer_id).addTo(step_920_945_2);
