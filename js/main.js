@@ -54,7 +54,7 @@ var myrnohrad_city_border1 = new L.LayerGroup(),
     railway_line = new L.LayerGroup();
 var polygon_problems_obj = new L.LayerGroup(),
     bad_build_all = new L.LayerGroup(),
-    bad_eco_all =  new L.LayerGroup(),
+    bad_eco_all = new L.LayerGroup(),
     pzf_obj = new L.LayerGroup();
 var watera_all = new L.LayerGroup(),
     waterl_all = new L.LayerGroup();
@@ -470,13 +470,27 @@ fetch("data/bad_build.geojson")
         scatterToLayers(data, stepColumn, popupColumn, style, layer_id);
     });
 
-    fetch("data/bad_eco.geojson")
+fetch("data/bad_eco.geojson")
     .then(function (response) { return response.json() })
     .then(function (data) {
 
         let layer_id = "points";
         let stepColumn = "step";
         let style = badEcoColor;
+        let popupColumn = "point";
+
+        scatterToLayers(data, stepColumn, popupColumn, style, layer_id);
+    });
+
+
+    // дані з карти схід екомап
+    fetch("data/cxid_ekomap_data.json")
+    .then(function (response) { return response.json() })
+    .then(function (data) {
+
+        let layer_id = "points";
+        let stepColumn = "step";
+        let style = geojsonMarkerOptions;
         let popupColumn = "point";
 
         scatterToLayers(data, stepColumn, popupColumn, style, layer_id);
@@ -567,28 +581,7 @@ $(".highlight")
     .on("mouseover", loopOn)
     .on("mouseout", loopOut);
 
-$(".highlight-building")
-    .on("mouseover", loopOnBuilding)
-    .on("mouseout", loopOut);
 
-// $('.highlight-officer')
-//     .on("mouseover", function () {
-//         loopOnMultiple("step_900_920_3", ["39450196", "39450197", "130541840", "130541849", "189209006", "130541852", "202318663", "252744668", "587491806"])
-//     })
-//     .on("mouseout", function () { pulseLayer.clearLayers(); });
-//step_1900-1920_3
-
-$('.highlight-kurchatova')
-    .on("mouseover", function () {
-        loopOnMultiple("step_970_980_1", ["134126155", "134126167", "134126159", "134126154", "134126156"])
-    })
-    .on("mouseout", function () { pulseLayer.clearLayers(); });
-
-$('.highlight-sixteen')
-    .on("mouseover", function () {
-        loopOnMultiple("step_970_980_1", ["191799585", "p000000016"]);
-    })
-    .on("mouseout", function () { pulseLayer.clearLayers(); });
 
 
 const generatePulsatingMarker = function (radius, color) {
@@ -607,8 +600,6 @@ const generatePulsatingMarker = function (radius, color) {
 };
 
 
-
-
 //показуємо картинки по наведенню
 $("#show-1800")
     .on("mouseover", function () { $("#plan_1800").css("display", "flex").hide().fadeIn(500); })
@@ -618,42 +609,6 @@ $("#show-1806")
     .on("mouseover", function () { $("#plan_1806").css("display", "flex").hide().fadeIn(500); })
     .on("mouseout", function () { $("#plan_1806").hide(); });
 
-$("#show-1888")
-    .on("mouseover", function () { $("#plan_1888").css("display", "flex").hide().fadeIn(500); })
-    .on("mouseout", function () { $("#plan_1888").hide(); });
-
-$("#show-1944")
-    .on("mouseover", function () { $("#plan_1944").css("display", "flex").hide().fadeIn(500); })
-    .on("mouseout", function () { $("#plan_1944").hide(); });
-
-$("#show-1951")
-    .on("mouseover", function () { $("#plan_1951").css("display", "flex").hide().fadeIn(500); })
-    .on("mouseout", function () { $("#plan_1951").hide(); });
-
-$("#show-1960")
-    .on("mouseover", function () { $("#plan_1960").css("display", "flex").hide().fadeIn(500); })
-    .on("mouseout", function () { $("#plan_1960").hide(); });
-
-$("#show-coat")
-    .on("mouseover", function () { $("#coat").css("display", "flex").hide().fadeIn(500); })
-    .on("mouseout", function () { $("#coat").hide(); });
-
-$("#show-coat2")
-    .on("mouseover", function () { $("#coat2").css("display", "flex").hide().fadeIn(500); })
-    .on("mouseout", function () { $("#coat2").hide(); });
-
-$("#show-diploma")
-    .on("mouseover", function () { $("#diploma").css("display", "flex").show() })
-    .on("mouseout", function () { $("#diploma").hide(); });
-
-$("#show-zamok")
-    .on("mouseover", function () { $("#zamok").css("display", "flex").show() })
-    .on("mouseout", function () { $("#zamok").hide(); });
-
-
-
-
-
 //щоб передати змнну у кожен клік
 function onEachFeatureClosure(defaultColor, weightValue) {
     return function onEachFeature(feature, layer) {
@@ -661,15 +616,11 @@ function onEachFeatureClosure(defaultColor, weightValue) {
         let name = feature.properties.name != "Null" ? feature.properties.name : "невідомо";
         let info = feature.properties.info != "Null" ? feature.properties.info : "";
         let picture = feature.properties.photo != "Null" ? "<img style='display: block; width: 90%; margin:10px auto;' src='img/" + feature.properties.photo + "'/>" : "";
-        
+
 
         var popup = picture + '<p>' +
-            
-            "<b>" + name + "</b>"  + "<br>" + '<br> ' + info + "<br>" +
+            "<b>" + name + "</b>" + "<br>" + '<br> ' + info + "<br>" +
             '</p>';
-
-
-
         layer.bindPopup(popup);
     }
 }
@@ -765,8 +716,8 @@ function handleStepEnter(r) {
     }
 
 
-     // крок 1
-     if (r.index === 1 && r.direction === "down") {
+    // крок 1
+    if (r.index === 1 && r.direction === "down") {
         removeObjectsWhenScrollDown(["1"]);
     }
 
