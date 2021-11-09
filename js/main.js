@@ -29,7 +29,7 @@ var canvasRenderer = L.canvas();
 const layerGroups = [
     "step_800_1", "first_tericon_1", "precity_step", "myrnohrad_city_border1",
     "myrnohrad_gromada_border1", "road_list", "step_800_850_3",
-    "railway_line", "polygon_problems_obj", "probl_marker_all", "pzf_obj",
+    "railway_line", "polygon_problems_obj", "bad_build_all", "pzf_obj",
     "watera_all", "waterl_all", "central_mine_obj",
     "step_920_945_1", "step_920_945_2", "step_920_945_3",
     "step_945_960_1", "step_945_960_2", "step_945_960_3",
@@ -53,7 +53,7 @@ var myrnohrad_city_border1 = new L.LayerGroup(),
     road_list = new L.LayerGroup(),
     railway_line = new L.LayerGroup();
 var polygon_problems_obj = new L.LayerGroup(),
-    probl_marker_all = new L.LayerGroup(),
+    bad_build_all = new L.LayerGroup(),
     pzf_obj = new L.LayerGroup();
 var watera_all = new L.LayerGroup(),
     waterl_all = new L.LayerGroup();
@@ -228,7 +228,7 @@ function scatterToLayers(df, stepColumn, popupColumn, style, layer_id) {
 
     filterByPeriod(df, stepColumn, "railway", popupColumn, style, layer_id).addTo(railway_line);
     filterByPeriod(df, stepColumn, "polygon_problems", popupColumn, style, layer_id).addTo(polygon_problems_obj);
-    filterByPeriod(df, stepColumn, "probl_marker", popupColumn, style, layer_id).addTo(probl_marker_all);
+    filterByPeriod(df, stepColumn, "bad_build", popupColumn, style, layer_id).addTo(bad_build_all);
     filterByPeriod(df, stepColumn, "pzf", popupColumn, style, layer_id).addTo(pzf_obj);
 
     filterByPeriod(df, stepColumn, "watera", popupColumn, style, layer_id).addTo(watera_all);
@@ -438,7 +438,19 @@ fetch("data/linesData_4326_2.geojson")
     });
 
 
-fetch("data/security_probl_marker.geojson")
+// fetch("data/security_probl_marker.geojson")
+//     .then(function (response) { return response.json() })
+//     .then(function (data) {
+
+//         let layer_id = "points";
+//         let stepColumn = "step";
+//         let style = geojsonMarkerOptions;
+//         let popupColumn = "point";
+
+//         scatterToLayers(data, stepColumn, popupColumn, style, layer_id);
+//     });
+
+fetch("data/bad_build.geojson")
     .then(function (response) { return response.json() })
     .then(function (data) {
 
@@ -449,7 +461,6 @@ fetch("data/security_probl_marker.geojson")
 
         scatterToLayers(data, stepColumn, popupColumn, style, layer_id);
     });
-
 
 
 //підсвітка кількох будівель одночасно (ДОСИ, Курчатова тощо)

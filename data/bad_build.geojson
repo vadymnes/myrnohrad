@@ -1,0 +1,19 @@
+{
+"type": "FeatureCollection",
+"name": "bad_build",
+"crs": { "type": "name", "properties": { "name": "urn:ogc:def:crs:OGC:1.3:CRS84" } },
+"features": [
+{ "type": "Feature", "properties": { "name": "Недобудова", "info": null, "step": "bad_build", "photo": null }, "geometry": { "type": "Point", "coordinates": [ 37.2565571, 48.3027314 ] } },
+{ "type": "Feature", "properties": { "name": "Закинуті корпуси", "info": null, "step": "bad_build", "photo": null }, "geometry": { "type": "Point", "coordinates": [ 37.2571203, 48.3014931 ] } },
+{ "type": "Feature", "properties": { "name": "Закинуті корпуси", "info": null, "step": "bad_build", "photo": null }, "geometry": { "type": "Point", "coordinates": [ 37.2571042, 48.3009614 ] } },
+{ "type": "Feature", "properties": { "name": "Закинуті корпуси", "info": null, "step": "bad_build", "photo": null }, "geometry": { "type": "Point", "coordinates": [ 37.2573081, 48.3004761 ] } },
+{ "type": "Feature", "properties": { "name": "Закинута будівля", "info": null, "step": "bad_build", "photo": null }, "geometry": { "type": "Point", "coordinates": [ 37.2896778, 48.3078465 ] } },
+{ "type": "Feature", "properties": { "name": "Закинута будівля", "info": null, "step": "bad_build", "photo": null }, "geometry": { "type": "Point", "coordinates": [ 37.2689006, 48.2808289 ] } },
+{ "type": "Feature", "properties": { "name": "Закинута будівля", "info": null, "step": "bad_build", "photo": null }, "geometry": { "type": "Point", "coordinates": [ 37.2800475, 48.3047098 ] } },
+{ "type": "Feature", "properties": { "name": "Закинута будівля", "info": null, "step": "bad_build", "photo": null }, "geometry": { "type": "Point", "coordinates": [ 37.2636183, 48.2761188 ] } },
+{ "type": "Feature", "properties": { "name": "Закинута будівля", "info": null, "step": "bad_build", "photo": null }, "geometry": { "type": "Point", "coordinates": [ 37.2678635, 48.2795779 ] } },
+{ "type": "Feature", "properties": { "name": "Закинута будівля", "info": null, "step": "bad_build", "photo": null }, "geometry": { "type": "Point", "coordinates": [ 37.2777013, 48.3002298 ] } },
+{ "type": "Feature", "properties": { "name": "Закинута будівля", "info": null, "step": "bad_build", "photo": null }, "geometry": { "type": "Point", "coordinates": [ 37.2565907, 48.3083576 ] } },
+{ "type": "Feature", "properties": { "name": "Закинута будівля", "info": null, "step": "bad_build", "photo": null }, "geometry": { "type": "Point", "coordinates": [ 37.2618735, 48.3087454 ] } }
+]
+}
