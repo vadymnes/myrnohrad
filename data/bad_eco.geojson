@@ -1,0 +1,19 @@
+{
+"type": "FeatureCollection",
+"name": "bad_eco",
+"crs": { "type": "name", "properties": { "name": "urn:ogc:def:crs:OGC:1.3:CRS84" } },
+"features": [
+{ "type": "Feature", "properties": { "name": "Екологічно небезпечна ділянка", "info": null, "step": "bad_eco", "photo": null }, "geometry": { "type": "Point", "coordinates": [ 37.2864358, 48.2713195 ] } },
+{ "type": "Feature", "properties": { "name": "Екологічно небезпечна ділянка", "info": null, "step": "bad_eco", "photo": null }, "geometry": { "type": "Point", "coordinates": [ 37.2818009, 48.2858283 ] } },
+{ "type": "Feature", "properties": { "name": "Екологічно небезпечна ділянка", "info": null, "step": "bad_eco", "photo": null }, "geometry": { "type": "Point", "coordinates": [ 37.2729164, 48.2945656 ] } },
+{ "type": "Feature", "properties": { "name": "Екологічно небезпечна ділянка", "info": null, "step": "bad_eco", "photo": null }, "geometry": { "type": "Point", "coordinates": [ 37.2638376, 48.3127369 ] } },
+{ "type": "Feature", "properties": { "name": "Екологічно небезпечна ділянка", "info": null, "step": "bad_eco", "photo": null }, "geometry": { "type": "Point", "coordinates": [ 37.2333677, 48.3166184 ] } },
+{ "type": "Feature", "properties": { "name": "Екологічно небезпечна ділянка", "info": null, "step": "bad_eco", "photo": null }, "geometry": { "type": "Point", "coordinates": [ 37.2357398, 48.3215367 ] } },
+{ "type": "Feature", "properties": { "name": "Екологічно небезпечна ділянка", "info": null, "step": "bad_eco", "photo": null }, "geometry": { "type": "Point", "coordinates": [ 37.2942941, 48.2764149 ] } },
+{ "type": "Feature", "properties": { "name": "Екологічно небезпечна водойма", "info": null, "step": "bad_eco", "photo": null }, "geometry": { "type": "Point", "coordinates": [ 37.285338, 48.3129035 ] } },
+{ "type": "Feature", "properties": { "name": "Екологічно небезпечна водойма", "info": null, "step": "bad_eco", "photo": null }, "geometry": { "type": "Point", "coordinates": [ 37.2668844, 48.3087363 ] } },
+{ "type": "Feature", "properties": { "name": "Екологічно небезпечна водойма", "info": null, "step": "bad_eco", "photo": null }, "geometry": { "type": "Point", "coordinates": [ 37.257958, 48.3057677 ] } },
+{ "type": "Feature", "properties": { "name": "Екологічно небезпечна водойма", "info": null, "step": "bad_eco", "photo": null }, "geometry": { "type": "Point", "coordinates": [ 37.3004915, 48.2755691 ] } },
+{ "type": "Feature", "properties": { "name": "Екологічно небезпечна водойма", "info": null, "step": "bad_eco", "photo": null }, "geometry": { "type": "Point", "coordinates": [ 37.269044, 48.325389 ] } }
+]
+}

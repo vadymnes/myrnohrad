@@ -43,6 +43,6 @@
 { "type": "Feature", "properties": { "name": "Екологічно небезпечна водойма", "info": null, "step": null }, "geometry": { "type": "Point", "coordinates": [ 37.2668844, 48.3087363 ] } },
 { "type": "Feature", "properties": { "name": "Екологічно небезпечна водойма", "info": null, "step": null }, "geometry": { "type": "Point", "coordinates": [ 37.257958, 48.3057677 ] } },
 { "type": "Feature", "properties": { "name": "Екологічно небезпечна водойма", "info": null, "step": null }, "geometry": { "type": "Point", "coordinates": [ 37.3004915, 48.2755691 ] } },
-{ "type": "Feature", "properties": { "name": "Экологически опасный водоём ", "info": null, "step": null }, "geometry": { "type": "Point", "coordinates": [ 37.269044, 48.325389 ] } }
+{ "type": "Feature", "properties": { "name": "Екологічно небезпечна водойма", "info": null, "step": null }, "geometry": { "type": "Point", "coordinates": [ 37.269044, 48.325389 ] } }
 ]
 }

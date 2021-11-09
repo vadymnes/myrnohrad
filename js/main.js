@@ -29,7 +29,7 @@ var canvasRenderer = L.canvas();
 const layerGroups = [
     "step_800_1", "first_tericon_1", "precity_step", "myrnohrad_city_border1",
     "myrnohrad_gromada_border1", "road_list", "step_800_850_3",
-    "railway_line", "polygon_problems_obj", "bad_build_all", "pzf_obj",
+    "railway_line", "polygon_problems_obj", "bad_build_all", "bad_eco_all", "pzf_obj",
     "watera_all", "waterl_all", "central_mine_obj",
     "step_920_945_1", "step_920_945_2", "step_920_945_3",
     "step_945_960_1", "step_945_960_2", "step_945_960_3",
@@ -54,6 +54,7 @@ var myrnohrad_city_border1 = new L.LayerGroup(),
     railway_line = new L.LayerGroup();
 var polygon_problems_obj = new L.LayerGroup(),
     bad_build_all = new L.LayerGroup(),
+    bad_eco_all =  new L.LayerGroup(),
     pzf_obj = new L.LayerGroup();
 var watera_all = new L.LayerGroup(),
     waterl_all = new L.LayerGroup();
@@ -176,6 +177,15 @@ var geojsonMarkerOptions = {
     fillOpacity: 0.8
 };
 
+var badEcoColor = {
+    radius: 4,
+    fillColor: "green",
+    color: "#000",
+    weight: 1,
+    opacity: 1,
+    fillOpacity: 0.8
+};
+
 
 //сірий стиль, задаємо для шарів, які зараз неактивні
 var toGreyStyle = {
@@ -229,6 +239,7 @@ function scatterToLayers(df, stepColumn, popupColumn, style, layer_id) {
     filterByPeriod(df, stepColumn, "railway", popupColumn, style, layer_id).addTo(railway_line);
     filterByPeriod(df, stepColumn, "polygon_problems", popupColumn, style, layer_id).addTo(polygon_problems_obj);
     filterByPeriod(df, stepColumn, "bad_build", popupColumn, style, layer_id).addTo(bad_build_all);
+    filterByPeriod(df, stepColumn, "bad_eco", popupColumn, style, layer_id).addTo(bad_eco_all);
     filterByPeriod(df, stepColumn, "pzf", popupColumn, style, layer_id).addTo(pzf_obj);
 
     filterByPeriod(df, stepColumn, "watera", popupColumn, style, layer_id).addTo(watera_all);
@@ -462,6 +473,17 @@ fetch("data/bad_build.geojson")
         scatterToLayers(data, stepColumn, popupColumn, style, layer_id);
     });
 
+    fetch("data/bad_eco.geojson")
+    .then(function (response) { return response.json() })
+    .then(function (data) {
+
+        let layer_id = "points";
+        let stepColumn = "step";
+        let style = badEcoColor;
+        let popupColumn = "point";
+
+        scatterToLayers(data, stepColumn, popupColumn, style, layer_id);
+    });
 
 //підсвітка кількох будівель одночасно (ДОСИ, Курчатова тощо)
 function loopOnMultiple(currentStep, array) {
