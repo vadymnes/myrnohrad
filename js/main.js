@@ -725,11 +725,11 @@ function handleStepEnter(r) {
 
     // крок 1
     if (r.index === 1 && r.direction === "down") {
-        removeObjectsWhenScrollDown(["1", "2"]);
+        removeObjectsWhenScrollDown(["precity_step"]);
     }
 
     if (r.index === 1 && r.direction === "up") {
-        returnObjectsWhenScrollUp(["1", "2"]);
+        returnObjectsWhenScrollUp(["precity_step"]);
     }
 
 
