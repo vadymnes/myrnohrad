@@ -725,11 +725,11 @@ function handleStepEnter(r) {
 
     // крок 1
     if (r.index === 1 && r.direction === "down") {
-        removeObjectsWhenScrollDown(["p000000030", "p000000031", "c000000046", "c000000045"]);
+        removeObjectsWhenScrollDown(["1", "2"]);
     }
 
     if (r.index === 1 && r.direction === "up") {
-        returnObjectsWhenScrollUp(["p000000030", "p000000031", "c000000046", "c000000045"]);
+        returnObjectsWhenScrollUp(["1", "2"]);
     }
 
 
