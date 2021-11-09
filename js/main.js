@@ -30,7 +30,7 @@ const layerGroups = [
     "step_800_1", "first_tericon_1", "precity_step", "myrnohrad_city_border1",
     "myrnohrad_gromada_border1", "road_list", "step_800_850_3",
     "railway_line", "polygon_problems_obj", "probl_marker_all", "pzf_obj",
-    "watera_all", "waterl_all", "step_900_920_3",
+    "watera_all", "waterl_all", "central_mine1",
     "step_920_945_1", "step_920_945_2", "step_920_945_3",
     "step_945_960_1", "step_945_960_2", "step_945_960_3",
     "step_960_970_1", "step_960_970_2", "step_960_970_3",
@@ -56,7 +56,7 @@ var polygon_problems_obj = new L.LayerGroup(),
     pzf_obj = new L.LayerGroup();
 var watera_all = new L.LayerGroup(),
     waterl_all = new L.LayerGroup(),
-    step_900_920_3 = new L.LayerGroup();
+    central_mine1 = new L.LayerGroup();
 var step_920_945_1 = new L.LayerGroup(),
     step_920_945_2 = new L.LayerGroup(),
     step_920_945_3 = new L.LayerGroup();
@@ -233,7 +233,7 @@ function scatterToLayers(df, stepColumn, popupColumn, style, layer_id) {
 
     filterByPeriod(df, stepColumn, "watera", popupColumn, style, layer_id).addTo(watera_all);
     filterByPeriod(df, stepColumn, "waterl", popupColumn, style, layer_id).addTo(waterl_all);
-    filterByPeriod(df, stepColumn, "step_1900-1920_3", popupColumn, style, layer_id).addTo(step_900_920_3);
+    filterByPeriod(df, stepColumn, "central_mine", popupColumn, style, layer_id).addTo(central_mine1);
 
     filterByPeriod(df, stepColumn, "step_1920-1945_1", popupColumn, style, layer_id).addTo(step_920_945_1);
     filterByPeriod(df, stepColumn, "step_1920-1945_2", popupColumn, style, layer_id).addTo(step_920_945_2);
@@ -275,6 +275,18 @@ fetch("data/precity.geojson")
     });
 
 fetch("data/tericons.geojson")
+    .then(function (response) { return response.json() })
+    .then(function (data) {
+
+        let layer_id = "polygonsC";
+        let stepColumn = "step";
+        let style = tericonStyle;
+        let popupColumn = "polygon";
+
+        scatterToLayers(data, stepColumn, popupColumn, style, layer_id);
+    });
+
+fetch("data/manmade_mineshaft.geojson")
     .then(function (response) { return response.json() })
     .then(function (data) {
 
@@ -529,11 +541,11 @@ $(".highlight-building")
     .on("mouseover", loopOnBuilding)
     .on("mouseout", loopOut);
 
-$('.highlight-officer')
-    .on("mouseover", function () {
-        loopOnMultiple("step_900_920_3", ["39450196", "39450197", "130541840", "130541849", "189209006", "130541852", "202318663", "252744668", "587491806"])
-    })
-    .on("mouseout", function () { pulseLayer.clearLayers(); });
+// $('.highlight-officer')
+//     .on("mouseover", function () {
+//         loopOnMultiple("step_900_920_3", ["39450196", "39450197", "130541840", "130541849", "189209006", "130541852", "202318663", "252744668", "587491806"])
+//     })
+//     .on("mouseout", function () { pulseLayer.clearLayers(); });
 //step_1900-1920_3
 
 $('.highlight-kurchatova')
@@ -618,7 +630,7 @@ function onEachFeatureClosure(defaultColor, weightValue) {
         layer.on('click', function (e) { });
         let name = feature.properties.name != "Null" ? feature.properties.name : "невідомо";
         let info = feature.properties.info != "Null" ? feature.properties.info : "";
-        let picture = feature.properties.photo != "Null" ? "<img style='display: block; width: 90%; margin:10px auto;' src='img/tips/" + feature.properties.photo + "'/>" : "";
+        let picture = feature.properties.photo != "Null" ? "<img style='display: block; width: 90%; margin:10px auto;' src='img/" + feature.properties.photo + "'/>" : "";
         let year = feature.properties.year != "Null" ? " (" + feature.properties.year + ") " : "";
 
         var popup = picture + '<p>' +
