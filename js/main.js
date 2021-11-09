@@ -229,19 +229,16 @@ function filterByPeriod(data, filter_property, period, popup, style, id_value) {
 //функція, якою ми розкидаємо всі наші обʼєкти відповідно до зазначеного в них кроку
 
 function scatterToLayers(df, stepColumn, popupColumn, style, layer_id) {
-    filterByPeriod(df, stepColumn, "step_-1800_1", popupColumn, style, layer_id).addTo(step_800_1);
     filterByPeriod(df, stepColumn, "first_tericon", popupColumn, style, layer_id).addTo(first_tericon_1);
     filterByPeriod(df, stepColumn, "precity_step", popupColumn, style, layer_id).addTo(precity_step);
     filterByPeriod(df, stepColumn, "myrnohrad_city_border", popupColumn, style, layer_id).addTo(myrnohrad_city_border1);
     filterByPeriod(df, stepColumn, "myrnohrad_gromada_border", popupColumn, style, layer_id).addTo(myrnohrad_gromada_border1);
     filterByPeriod(df, stepColumn, "road", popupColumn, style, layer_id).addTo(road_list);
-
     filterByPeriod(df, stepColumn, "railway", popupColumn, style, layer_id).addTo(railway_line);
     filterByPeriod(df, stepColumn, "polygon_problems", popupColumn, style, layer_id).addTo(polygon_problems_obj);
     filterByPeriod(df, stepColumn, "bad_build", popupColumn, style, layer_id).addTo(bad_build_all);
     filterByPeriod(df, stepColumn, "bad_eco", popupColumn, style, layer_id).addTo(bad_eco_all);
     filterByPeriod(df, stepColumn, "pzf", popupColumn, style, layer_id).addTo(pzf_obj);
-
     filterByPeriod(df, stepColumn, "watera", popupColumn, style, layer_id).addTo(watera_all);
     filterByPeriod(df, stepColumn, "waterl", popupColumn, style, layer_id).addTo(waterl_all);
     filterByPeriod(df, stepColumn, "central_mine", popupColumn, style, layer_id).addTo(central_mine_obj);
@@ -768,13 +765,13 @@ function handleStepEnter(r) {
     }
 
 
-    // крок 1
-    if (r.index === 1 && r.direction === "down") {
-        removeObjectsWhenScrollDown(["precity_step"]);
+     // крок 1
+     if (r.index === 1 && r.direction === "down") {
+        removeObjectsWhenScrollDown(["1"]);
     }
 
     if (r.index === 1 && r.direction === "up") {
-        returnObjectsWhenScrollUp(["precity_step"]);
+        returnObjectsWhenScrollUp(["1"]);
     }
 
     // крок 2 - прибираємо шахту
