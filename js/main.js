@@ -701,6 +701,7 @@ function handleStepEnter(r) {
     // крок 2 - прибираємо шахту
     if (r.index === 2 && r.direction === "down") {
         removeObjectsWhenScrollDown(["1"]);
+        map.flyTo([48.40, 37.40], 15);
     }
 
     if (r.index === 2 && r.direction === "up") {
