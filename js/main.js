@@ -29,17 +29,8 @@ var canvasRenderer = L.canvas();
 const layerGroups = [
     "step_800_1", "first_tericon_1", "precity_step", "myrnohrad_city_border1",
     "myrnohrad_gromada_border1", "road_list", "step_800_850_3",
-    "railway_line", "polygon_problems_obj", "bad_build_all", "bad_eco_all", "pzf_obj",
-    "watera_all", "waterl_all", "central_mine_obj",
-    "step_920_945_1", "step_920_945_2", "step_920_945_3",
-    "step_945_960_1", "step_945_960_2", "step_945_960_3",
-    "step_960_970_1", "step_960_970_2", "step_960_970_3",
-    "step_970_980_1", "step_970_980_2", "step_970_980_3",
-    "step_980_990_1", "step_980_990_2", "step_980_990_3",
-    "step_991_1", "step_991_2", "step_991_3"
-
-
-
+    "railway_line", "polygon_problems_obj", "bad_build_all", "bad_eco_all", "bad_road", "pzf_obj",
+    "watera_all", "waterl_all", "central_mine_obj"
 ];
 
 
@@ -54,6 +45,7 @@ var myrnohrad_city_border1 = new L.LayerGroup(),
     railway_line = new L.LayerGroup();
 var polygon_problems_obj = new L.LayerGroup(),
     bad_build_all = new L.LayerGroup(),
+    bad_road = new L.LayerGroup(),
     bad_eco_all = new L.LayerGroup(),
     pzf_obj = new L.LayerGroup();
 var watera_all = new L.LayerGroup(),
@@ -238,6 +230,7 @@ function scatterToLayers(df, stepColumn, popupColumn, style, layer_id) {
     filterByPeriod(df, stepColumn, "polygon_problems", popupColumn, style, layer_id).addTo(polygon_problems_obj);
     filterByPeriod(df, stepColumn, "bad_build", popupColumn, style, layer_id).addTo(bad_build_all);
     filterByPeriod(df, stepColumn, "bad_eco", popupColumn, style, layer_id).addTo(bad_eco_all);
+    filterByPeriod(df, stepColumn, "bad_road", popupColumn, style, layer_id).addTo(bad_road);
     filterByPeriod(df, stepColumn, "pzf", popupColumn, style, layer_id).addTo(pzf_obj);
     filterByPeriod(df, stepColumn, "watera", popupColumn, style, layer_id).addTo(watera_all);
     filterByPeriod(df, stepColumn, "waterl", popupColumn, style, layer_id).addTo(waterl_all);
@@ -482,6 +475,17 @@ fetch("data/bad_eco.geojson")
         scatterToLayers(data, stepColumn, popupColumn, style, layer_id);
     });
 
+    fetch("data/bad_road.geojson")
+    .then(function (response) { return response.json() })
+    .then(function (data) {
+
+        let layer_id = "points";
+        let stepColumn = "step";
+        let style = badEcoColor;
+        let popupColumn = "point";
+
+        scatterToLayers(data, stepColumn, popupColumn, style, layer_id);
+    });
 
     // дані з карти схід екомап
     fetch("data/cxid_ekomap_data.json")
