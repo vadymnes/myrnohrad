@@ -746,13 +746,13 @@ function handleStepEnter(r) {
     }
 
     // крок 9
-    if (r.index === 9 && r.direction === "down") {
-        removeObjectsWhenScrollDown(["c000000053", "30"]);
-    }
+    // if (r.index === 9 && r.direction === "down") {
+    //     removeObjectsWhenScrollDown(["c000000053", "30"]);
+    // }
 
-    if (r.index === 9 && r.direction === "up") {
-        returnObjectsWhenScrollUp(["c000000053", "30"]);
-    }
+    // if (r.index === 9 && r.direction === "up") {
+    //     returnObjectsWhenScrollUp(["c000000053", "30"]);
+    // }
 
     // крок 13
     if (r.index === 13 && r.direction === "down") {
