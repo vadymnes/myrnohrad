@@ -1,5 +1,5 @@
 <!DOCTYPE qgis PUBLIC 'http://mrcc.com/qgis.dtd' 'SYSTEM'>
-<qgis version="3.14.0-Pi" saveDateTime="2021-11-08T22:06:06" saveUserFull="User" projectname="" saveUser="User">
+<qgis version="3.14.0-Pi" saveDateTime="2021-11-08T22:39:57" saveUserFull="User" projectname="" saveUser="User">
   <homePath path=""/>
   <title></title>
   <autotransaction active="0"/>
@@ -23,7 +23,7 @@
     <layer-tree-layer id="watera_37f1da9f_b621_4e16_87e0_cdb719de66e1" legend_exp="" patch_size="-1,-1" name="watera" source="./data/watera.geojson|layername=watera" legend_split_behavior="0" checked="Qt::Unchecked" providerKey="ogr" expanded="1">
       <customproperties/>
     </layer-tree-layer>
-    <layer-tree-layer id="railwayl_new_7ba0079f_91d4_4726_8579_c231d9bdd4db" legend_exp="" patch_size="-1,-1" name="railwayl_new" source="D:\Games + Trash\TRASH\railwayl_new.shp" legend_split_behavior="0" checked="Qt::Checked" providerKey="ogr" expanded="1">
+    <layer-tree-layer id="railwayl_efd88688_3173_48e1_b85f_55f4f939c837" legend_exp="" patch_size="-1,-1" name="railwayl" source="./data/railwayl.geojson|layername=railwayl" legend_split_behavior="0" checked="Qt::Checked" providerKey="ogr" expanded="1">
       <customproperties/>
     </layer-tree-layer>
     <layer-tree-layer id="main_infrastructure_lines_ca6dd6f0_6cb8_4eec_96e9_bbbfada71cef" legend_exp="" patch_size="-1,-1" name="main_infrastructure_lines" source="./data/main_infrastructure_lines.geojson" legend_split_behavior="0" checked="Qt::Checked" providerKey="ogr" expanded="1">
@@ -40,25 +40,25 @@
       <item>watera_37f1da9f_b621_4e16_87e0_cdb719de66e1</item>
       <item>waterl_2cbaaca3_32ed_445a_82d1_55d0e4f39c5b</item>
       <item>main_infrastructure_lines_ca6dd6f0_6cb8_4eec_96e9_bbbfada71cef</item>
-      <item>railwayl_new_7ba0079f_91d4_4726_8579_c231d9bdd4db</item>
+      <item>railwayl_efd88688_3173_48e1_b85f_55f4f939c837</item>
     </custom-order>
   </layer-tree-group>
   <snapping-settings self-snapping="0" tolerance="12" minScale="0" scaleDependencyMode="0" mode="2" intersection-snapping="0" maxScale="0" enabled="0" unit="1" type="1">
     <individual-layer-settings>
       <layer-setting id="main_infrastructure_lines_ca6dd6f0_6cb8_4eec_96e9_bbbfada71cef" tolerance="12" minScale="0" maxScale="0" enabled="0" type="1" units="1"/>
-      <layer-setting id="railwayl_new_7ba0079f_91d4_4726_8579_c231d9bdd4db" tolerance="12" minScale="0" maxScale="0" enabled="0" type="1" units="1"/>
       <layer-setting id="watera_37f1da9f_b621_4e16_87e0_cdb719de66e1" tolerance="12" minScale="0" maxScale="0" enabled="0" type="1" units="1"/>
       <layer-setting id="waterl_2cbaaca3_32ed_445a_82d1_55d0e4f39c5b" tolerance="12" minScale="0" maxScale="0" enabled="0" type="1" units="1"/>
+      <layer-setting id="railwayl_efd88688_3173_48e1_b85f_55f4f939c837" tolerance="12" minScale="0" maxScale="0" enabled="0" type="1" units="1"/>
     </individual-layer-settings>
   </snapping-settings>
   <relations/>
   <mapcanvas name="theMapCanvas" annotationsVisible="1">
     <units>degrees</units>
     <extent>
-      <xmin>37.20226104926517507</xmin>
-      <ymin>48.27582869324797343</ymin>
-      <xmax>37.29051336592532095</xmax>
-      <ymax>48.32730698664639135</ymax>
+      <xmin>36.8903463728251424</xmin>
+      <ymin>48.09821465721847744</ymin>
+      <xmax>37.59636490610630943</xmax>
+      <ymax>48.51004100440582079</ymax>
     </extent>
     <rotation>0</rotation>
     <destinationsrs>
@@ -84,9 +84,9 @@
         <legendlayerfile isInOverview="0" visible="0" layerid="watera_37f1da9f_b621_4e16_87e0_cdb719de66e1"/>
       </filegroup>
     </legendlayer>
-    <legendlayer drawingOrder="-1" name="railwayl_new" open="true" checked="Qt::Checked" showFeatureCount="0">
+    <legendlayer drawingOrder="-1" name="railwayl" open="true" checked="Qt::Checked" showFeatureCount="0">
       <filegroup hidden="false" open="true">
-        <legendlayerfile isInOverview="0" visible="1" layerid="railwayl_new_7ba0079f_91d4_4726_8579_c231d9bdd4db"/>
+        <legendlayerfile isInOverview="0" visible="1" layerid="railwayl_efd88688_3173_48e1_b85f_55f4f939c837"/>
       </filegroup>
     </legendlayer>
     <legendlayer drawingOrder="-1" name="main_infrastructure_lines" open="true" checked="Qt::Checked" showFeatureCount="0">
@@ -201,10 +201,10 @@
     </maplayer>
     <maplayer autoRefreshTime="0" simplifyLocal="1" autoRefreshEnabled="0" hasScaleBasedVisibilityFlag="0" wkbType="MultiLineString" styleCategories="AllStyleCategories" type="vector" refreshOnNotifyEnabled="0" minScale="100000000" refreshOnNotifyMessage="" simplifyMaxScale="1" readOnly="0" maxScale="0" simplifyDrawingTol="1" simplifyDrawingHints="1" geometry="Line" simplifyAlgorithm="0" labelsEnabled="0">
       <extent>
-        <xmin>37.25794788876172703</xmin>
+        <xmin>37.20987288875003429</xmin>
         <ymin>48.26255012159370494</ymin>
         <xmax>37.37637151980862171</xmax>
-        <ymax>48.30832237445308408</ymax>
+        <ymax>48.33232748287498026</ymax>
       </extent>
       <id>main_infrastructure_lines_ca6dd6f0_6cb8_4eec_96e9_bbbfada71cef</id>
       <datasource>./data/main_infrastructure_lines.geojson</datasource>
@@ -483,17 +483,17 @@ def my_form_open(dialog, layer, feature):
     </maplayer>
     <maplayer autoRefreshTime="0" simplifyLocal="1" autoRefreshEnabled="0" hasScaleBasedVisibilityFlag="0" wkbType="MultiLineString" styleCategories="AllStyleCategories" type="vector" refreshOnNotifyEnabled="0" minScale="100000000" refreshOnNotifyMessage="" simplifyMaxScale="1" readOnly="0" maxScale="0" simplifyDrawingTol="1" simplifyDrawingHints="1" geometry="Line" simplifyAlgorithm="0" labelsEnabled="0">
       <extent>
-        <xmin>37.20987288875003429</xmin>
-        <ymin>48.29086625537499344</ymin>
-        <xmax>37.35234285387110731</xmax>
-        <ymax>48.33232748287498026</ymax>
+        <xmin>37.17996218146784315</xmin>
+        <ymin>48.20374924163379404</ymin>
+        <xmax>37.35047104670969986</xmax>
+        <ymax>48.31126706390624292</ymax>
       </extent>
-      <id>railwayl_new_7ba0079f_91d4_4726_8579_c231d9bdd4db</id>
-      <datasource>D:\Games + Trash\TRASH\railwayl_new.shp</datasource>
+      <id>railwayl_efd88688_3173_48e1_b85f_55f4f939c837</id>
+      <datasource>./data/railwayl.geojson|layername=railwayl</datasource>
       <keywordList>
         <value></value>
       </keywordList>
-      <layername>railwayl_new</layername>
+      <layername>railwayl</layername>
       <srs>
         <spatialrefsys>
           <wkt>GEOGCRS["WGS 84",DATUM["World Geodetic System 1984",ELLIPSOID["WGS 84",6378137,298.257223563,LENGTHUNIT["metre",1]]],PRIMEM["Greenwich",0,ANGLEUNIT["degree",0.0174532925199433]],CS[ellipsoidal,2],AXIS["geodetic latitude (Lat)",north,ORDER[1],ANGLEUNIT["degree",0.0174532925199433]],AXIS["geodetic longitude (Lon)",east,ORDER[2],ANGLEUNIT["degree",0.0174532925199433]],USAGE[SCOPE["unknown"],AREA["World"],BBOX[-90,-180,90,180]],ID["EPSG",4326]]</wkt>
@@ -580,9 +580,9 @@ def my_form_open(dialog, layer, feature):
               <prop k="customdash_unit" v="MM"/>
               <prop k="draw_inside_polygon" v="0"/>
               <prop k="joinstyle" v="bevel"/>
-              <prop k="line_color" v="141,90,153,255"/>
+              <prop k="line_color" v="183,72,75,255"/>
               <prop k="line_style" v="solid"/>
-              <prop k="line_width" v="1.06"/>
+              <prop k="line_width" v="1.26"/>
               <prop k="line_width_unit" v="MM"/>
               <prop k="offset" v="0"/>
               <prop k="offset_map_unit_scale" v="3x:0,0,0,0,0,0"/>
@@ -604,6 +604,9 @@ def my_form_open(dialog, layer, feature):
         <sizescale/>
       </renderer-v2>
       <customproperties>
+        <property key="dualview/previewExpressions">
+          <value>"name"</value>
+        </property>
         <property value="0" key="embeddedWidgets/count"/>
         <property key="variableNames"/>
         <property key="variableValues"/>
@@ -662,7 +665,7 @@ def my_form_open(dialog, layer, feature):
       <referencingLayers/>
       <fieldConfiguration>
         <field name="id">
-          <editWidget type="TextEdit">
+          <editWidget type="Range">
             <config>
               <Option/>
             </config>
@@ -1393,7 +1396,7 @@ def my_form_open(dialog, layer, feature):
     <layer id="watera_37f1da9f_b621_4e16_87e0_cdb719de66e1"/>
     <layer id="waterl_2cbaaca3_32ed_445a_82d1_55d0e4f39c5b"/>
     <layer id="main_infrastructure_lines_ca6dd6f0_6cb8_4eec_96e9_bbbfada71cef"/>
-    <layer id="railwayl_new_7ba0079f_91d4_4726_8579_c231d9bdd4db"/>
+    <layer id="railwayl_efd88688_3173_48e1_b85f_55f4f939c837"/>
   </layerorder>
   <properties>
     <Digitizing>
