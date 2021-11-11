@@ -13,7 +13,9 @@ header {
   display: flex; }
   header div {
     max-width: 60%;
-    margin: auto; }
+    margin: auto;
+    display: grid;
+    justify-items: start; }
     @media (max-width: 800px) {
       header div {
         max-width: 90%; } }
