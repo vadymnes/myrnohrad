@@ -622,7 +622,7 @@ function onEachFeatureClosure(defaultColor, weightValue) {
         let info = feature.properties.info != "Null" ? feature.properties.info : "";
         let picture = feature.properties.photo != "Null" ? "<img style='display: block; width: 90%; margin:10px auto;' src='img/" + feature.properties.photo + "'/>" : "";
 
-        if (picture == null) {
+        if (picture) {
         var popup = '<p>' +
             "<b>" + name + "</b>" + "<br>" + '<br> ' + info + "<br>" +
             '</p>';
