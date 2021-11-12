@@ -289,7 +289,7 @@ fetch("data/leisure_park.geojson")
 
         let layer_id = "polygonsC";
         let stepColumn = "step";
-        let style = polygonsColorStyle;
+        let style = pzfColor;
         let popupColumn = "polygon";
 
         scatterToLayers(data, stepColumn, popupColumn, style, layer_id);
