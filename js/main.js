@@ -30,7 +30,7 @@ const layerGroups = [
     "step_800_1", "first_tericon_1", "precity_step", "myrnohrad_city_border1",
     "myrnohrad_gromada_border1", "road_list", "step_800_850_3",
     "railway_line", "polygon_problems_obj", "bad_build_all", "bad_eco_all", "bad_road", "pzf_obj",
-    "watera_all", "waterl_all", "central_mine_obj", "dnipro_bassin_all", "don_bassin_all"
+    "watera_all", "waterl_all", "central_mine_obj", "dnipro_bassin_all", "don_bassin_all", "park_myrnohrad"
 ];
 
 
@@ -52,7 +52,7 @@ var watera_all = new L.LayerGroup(),
     waterl_all = new L.LayerGroup(),
     dnipro_bassin_all = new L.LayerGroup(),
     don_bassin_all = new L.LayerGroup();
-var step_920_945_1 = new L.LayerGroup(),
+var park_myrnohrad = new L.LayerGroup(),
     step_920_945_2 = new L.LayerGroup(),
     step_920_945_3 = new L.LayerGroup();
 var step_945_960_1 = new L.LayerGroup(),
@@ -244,7 +244,7 @@ function scatterToLayers(df, stepColumn, popupColumn, style, layer_id) {
     filterByPeriod(df, stepColumn, "central_mine", popupColumn, style, layer_id).addTo(central_mine_obj);
     filterByPeriod(df, stepColumn, "dnipro_bassin", popupColumn, style, layer_id).addTo(dnipro_bassin_all);
     filterByPeriod(df, stepColumn, "don_bassin", popupColumn, style, layer_id).addTo(don_bassin_all);
-    filterByPeriod(df, stepColumn, "step_1920-1945_1", popupColumn, style, layer_id).addTo(step_920_945_1);
+    filterByPeriod(df, stepColumn, "park", popupColumn, style, layer_id).addTo(park_myrnohrad);
     filterByPeriod(df, stepColumn, "step_1920-1945_2", popupColumn, style, layer_id).addTo(step_920_945_2);
     filterByPeriod(df, stepColumn, "step_1920-1945_3", popupColumn, style, layer_id).addTo(step_920_945_3);
 
@@ -272,6 +272,18 @@ function scatterToLayers(df, stepColumn, popupColumn, style, layer_id) {
 
 
 fetch("data/precity.geojson")
+    .then(function (response) { return response.json() })
+    .then(function (data) {
+
+        let layer_id = "polygonsC";
+        let stepColumn = "step";
+        let style = polygonsColorStyle;
+        let popupColumn = "polygon";
+
+        scatterToLayers(data, stepColumn, popupColumn, style, layer_id);
+    });
+
+fetch("data/leisure_park.geojson")
     .then(function (response) { return response.json() })
     .then(function (data) {
 
