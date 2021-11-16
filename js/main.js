@@ -30,14 +30,16 @@ const layerGroups = [
     "step_800_1", "first_tericon_1", "precity_step", "myrnohrad_city_border1",
     "myrnohrad_gromada_border1", "road_list", "step_800_850_3",
     "railway_line", "polygon_problems_obj", "bad_build_all", "bad_eco_all", "bad_road", "pzf_obj",
-    "watera_all", "waterl_all", "mines_obj", "dnipro_bassin_all", "don_bassin_all", "park_myrnohrad"
+    "watera_all", "waterl_all", "central_mine_obj", "capitalna_mine_obj", "five_six_mine_obj", "dnipro_bassin_all", "don_bassin_all", "park_myrnohrad"
 ];
 
 
 /*створюємо шари на всі scrolling steps */
 var step_800_1 = new L.LayerGroup(),
     first_tericon_1 = new L.LayerGroup(),
-    mines_obj = new L.LayerGroup(),
+    central_mine_obj = new L.LayerGroup(),
+    capitalna_mine_obj = new L.LayerGroup(),
+    five_six_mine_obj = new L.LayerGroup(),
     precity_step = new L.LayerGroup();
 var myrnohrad_city_border1 = new L.LayerGroup(),
     myrnohrad_gromada_border1 = new L.LayerGroup(),
@@ -241,9 +243,9 @@ function scatterToLayers(df, stepColumn, popupColumn, style, layer_id) {
     filterByPeriod(df, stepColumn, "pzf", popupColumn, style, layer_id).addTo(pzf_obj);
     filterByPeriod(df, stepColumn, "watera", popupColumn, style, layer_id).addTo(watera_all);
     filterByPeriod(df, stepColumn, "waterl", popupColumn, style, layer_id).addTo(waterl_all);
-    filterByPeriod(df, stepColumn, "central_mine", popupColumn, style, layer_id).addTo(mines_obj);
-    filterByPeriod(df, stepColumn, "capitalna_mine", popupColumn, style, layer_id).addTo(mines_obj);
-    filterByPeriod(df, stepColumn, "five_six_mine", popupColumn, style, layer_id).addTo(mines_obj);
+    filterByPeriod(df, stepColumn, "central_mine", popupColumn, style, layer_id).addTo(central_mine_obj);
+    filterByPeriod(df, stepColumn, "capitalna_mine", popupColumn, style, layer_id).addTo(capitalna_mine_obj);
+    filterByPeriod(df, stepColumn, "five_six_mine", popupColumn, style, layer_id).addTo(five_six_mine_obj);
     filterByPeriod(df, stepColumn, "dnipro_bassin", popupColumn, style, layer_id).addTo(dnipro_bassin_all);
     filterByPeriod(df, stepColumn, "don_bassin", popupColumn, style, layer_id).addTo(don_bassin_all);
     filterByPeriod(df, stepColumn, "park", popupColumn, style, layer_id).addTo(park_myrnohrad);
@@ -624,18 +626,11 @@ function onEachFeatureClosure(defaultColor, weightValue) {
         let info = feature.properties.info != "Null" ? feature.properties.info : "";
         let picture = feature.properties.photo != "Null" ? "<img style='display: block; width: 90%; margin:10px auto;' src='img/" + feature.properties.photo + "'/>" : "";
 
-        if (picture) {
-        var popup = '<p>' +
-            "<b>" + name + "</b>" + "<br>" + '<br> ' + info + "<br>" +
-            '</p>';
-        layer.bindPopup(popup);
-    }
-    else {
+
         var popup = picture + '<p>' +
             "<b>" + name + "</b>" + "<br>" + '<br> ' + info + "<br>" +
             '</p>';
         layer.bindPopup(popup);
-    }
     }
 }
 
