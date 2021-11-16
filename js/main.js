@@ -177,6 +177,10 @@ var geojsonMarkerOptions = {
     opacity: 1,
     fillOpacity: 0.8
 };
+var customMarkerOptions = L.icon({
+    iconUrl: 'https://mt.googleapis.com/vt/icon/name=icons/onion/SHARED-mymaps-container_4x.png,icons/onion/1855-rock-collecting_4x.png&highlight=757575&scale=4',
+    iconSize:     [38, 95] // size of the icon
+});
 
 var badEcoColor = {
     radius: 4,
@@ -493,7 +497,7 @@ fetch("data/bad_build.geojson")
 
         let layer_id = "points";
         let stepColumn = "step";
-        let style = geojsonMarkerOptions;
+        let style = customMarkerOptions;
         let popupColumn = "point";
 
         scatterToLayers(data, stepColumn, popupColumn, style, layer_id);
