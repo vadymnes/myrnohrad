@@ -120,7 +120,7 @@ var pzfColor = {
 
 var waterPolColor = {
     weight: 1,
-    opacity: 0.4,
+    opacity: 0.8,
     fillColor: "blue",
     color: 'blue'
 };
@@ -178,8 +178,7 @@ var geojsonMarkerOptions = {
     fillOpacity: 0.8
 };
 var customMarkerOptions = L.icon({
-    iconUrl: 'https://mt.googleapis.com/vt/icon/name=icons/onion/SHARED-mymaps-container_4x.png,icons/onion/1855-rock-collecting_4x.png&highlight=757575&scale=4',
-    iconSize:     [38, 95] // size of the icon
+    iconUrl: 'img/marker/rock.png'
 });
 
 var badEcoColor = {
