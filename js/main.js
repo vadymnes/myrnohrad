@@ -614,13 +614,14 @@ $("#show-1800")
     .on("mouseover", function () { $("#plan_1800").css("display", "flex").hide().fadeIn(500); })
     .on("mouseout", function () { $("#plan_1800").hide(); });
 
+    
 $("#show-population")
     .on("mouseover", function () { $("#population").css("display", "flex").hide().fadeIn(500); })
     .on("mouseout", function () { $("#population").hide(); });
 
-$("#show-1806")
-    .on("mouseover", function () { $("#plan_1806").css("display", "flex").hide().fadeIn(500); })
-    .on("mouseout", function () { $("#plan_1806").hide(); });
+$("#show-twoset")
+    .on("mouseover", function () { $("#twoset").css("display", "flex").hide().fadeIn(500); })
+    .on("mouseout", function () { $("#twoset").hide(); });
 
 //щоб передати змнну у кожен клік
 function onEachFeatureClosure(defaultColor, weightValue) {
