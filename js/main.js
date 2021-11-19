@@ -1,4 +1,3 @@
-
 // Map
 
 
@@ -15,8 +14,7 @@ L.tileLayer(
     //'https://stamen-tiles-{s}.a.ssl.fastly.net/toner-lite/{z}/{x}/{y}{r}.{ext}',
 
     //резервна підложка, якщо mapbox вибере ліміт
-    'https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png',
-    {
+    'https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
         attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>',
         subdomains: 'abcd',
         maxZoom: 19,
@@ -77,9 +75,9 @@ var step_991_1 = new L.LayerGroup(),
 var pulseLayer = new L.LayerGroup();
 
 var buildingsColor = "#9d2f32", //"#f14633", //"#9d2f32",
-    polygonsFillColor = "#A7718D",//"#c9d3b3", //"#899e91", //"#bbcda9", // "#fce0bc", //"#899e91", //"#a79d70",
+    polygonsFillColor = "#A7718D", //"#c9d3b3", //"#899e91", //"#bbcda9", // "#fce0bc", //"#899e91", //"#a79d70",
     linesColor = '#718A8C', //"#0089C0", //'#4783fe',
-    pointsColor = "#ff9d04",//'#D7A319';
+    pointsColor = "#ff9d04", //'#D7A319';
     polygonsStrokeColor = '#CE4066'; //'#374969'
 greyStrokeColor = '#a09aa6'; //'#374969'
 
@@ -209,22 +207,22 @@ function filterByPeriod(data, filter_property, period, popup, style, id_value) {
     if (id_value === "points") {
         return L.geoJson(data, {
             id: id_value,
-            filter: function (feat) { return feat.properties[filter_property] == period },
+            filter: function(feat) { return feat.properties[filter_property] == period },
             renderer: canvasRenderer,
             onEachFeature: onEachFeatureClosure("green", 1),
-            pointToLayer: function (feature, latlng) { return L.circleMarker(latlng, geojsonMarkerOptions); },
-            style: function () { return geojsonMarkerOptions }
+            pointToLayer: function(feature, latlng) { return L.circleMarker(latlng, geojsonMarkerOptions); },
+            style: function() { return geojsonMarkerOptions }
 
         });
 
     } else {
         return L.geoJson(data, {
             id: id_value,
-            filter: function (feat) { return feat.properties[filter_property] == period },
+            filter: function(feat) { return feat.properties[filter_property] == period },
             renderer: canvasRenderer,
             onEachFeature: onEachFeatureClosure("green", 1),
 
-            style: function () { return style }
+            style: function() { return style }
         });
     }
 }
@@ -279,8 +277,8 @@ function scatterToLayers(df, stepColumn, popupColumn, style, layer_id) {
 
 
 fetch("data/precity.geojson")
-    .then(function (response) { return response.json() })
-    .then(function (data) {
+    .then(function(response) { return response.json() })
+    .then(function(data) {
 
         let layer_id = "polygonsC";
         let stepColumn = "step";
@@ -291,8 +289,8 @@ fetch("data/precity.geojson")
     });
 
 fetch("data/leisure_park.geojson")
-    .then(function (response) { return response.json() })
-    .then(function (data) {
+    .then(function(response) { return response.json() })
+    .then(function(data) {
 
         let layer_id = "polygonsC";
         let stepColumn = "step";
@@ -303,8 +301,8 @@ fetch("data/leisure_park.geojson")
     });
 
 fetch("data/tericons.geojson")
-    .then(function (response) { return response.json() })
-    .then(function (data) {
+    .then(function(response) { return response.json() })
+    .then(function(data) {
 
         let layer_id = "polygonsC";
         let stepColumn = "step";
@@ -315,8 +313,8 @@ fetch("data/tericons.geojson")
     });
 
 fetch("data/manmade_mineshaft.geojson")
-    .then(function (response) { return response.json() })
-    .then(function (data) {
+    .then(function(response) { return response.json() })
+    .then(function(data) {
 
         let layer_id = "polygonsC";
         let stepColumn = "step";
@@ -327,8 +325,8 @@ fetch("data/manmade_mineshaft.geojson")
     });
 
 fetch("data/myrnohrad_city_border.geojson")
-    .then(function (response) { return response.json() })
-    .then(function (data) {
+    .then(function(response) { return response.json() })
+    .then(function(data) {
 
         let layer_id = "polygonsC";
         let stepColumn = "step";
@@ -339,8 +337,8 @@ fetch("data/myrnohrad_city_border.geojson")
     });
 
 fetch("data/myrnohrad_gromada_border.geojson")
-    .then(function (response) { return response.json() })
-    .then(function (data) {
+    .then(function(response) { return response.json() })
+    .then(function(data) {
 
         let layer_id = "polygonsC";
         let stepColumn = "step";
@@ -351,8 +349,8 @@ fetch("data/myrnohrad_gromada_border.geojson")
     });
 
 fetch("data/main_infrastructure_lines.geojson")
-    .then(function (response) { return response.json() })
-    .then(function (data) {
+    .then(function(response) { return response.json() })
+    .then(function(data) {
 
         let layer_id = "lines";
         let stepColumn = "step";
@@ -363,8 +361,8 @@ fetch("data/main_infrastructure_lines.geojson")
     });
 
 fetch("data/railwayl.geojson")
-    .then(function (response) { return response.json() })
-    .then(function (data) {
+    .then(function(response) { return response.json() })
+    .then(function(data) {
 
         let layer_id = "lines";
         let stepColumn = "step";
@@ -375,8 +373,8 @@ fetch("data/railwayl.geojson")
     });
 
 fetch("data/problems_human_security_polygons.geojson")
-    .then(function (response) { return response.json() })
-    .then(function (data) {
+    .then(function(response) { return response.json() })
+    .then(function(data) {
 
         let layer_id = "polygonsC";
         let stepColumn = "step";
@@ -386,9 +384,9 @@ fetch("data/problems_human_security_polygons.geojson")
         scatterToLayers(data, stepColumn, popupColumn, style, layer_id);
     });
 
-    fetch("data/river_bassin.geojson")
-    .then(function (response) { return response.json() })
-    .then(function (data) {
+fetch("data/river_bassin.geojson")
+    .then(function(response) { return response.json() })
+    .then(function(data) {
 
         let layer_id = "lines";
         let stepColumn = "step";
@@ -399,8 +397,8 @@ fetch("data/problems_human_security_polygons.geojson")
     });
 
 fetch("data/pzf_near_myrnohrad.geojson")
-    .then(function (response) { return response.json() })
-    .then(function (data) {
+    .then(function(response) { return response.json() })
+    .then(function(data) {
 
         let layer_id = "polygonsC";
         let stepColumn = "step";
@@ -411,8 +409,8 @@ fetch("data/pzf_near_myrnohrad.geojson")
     });
 
 fetch("data/watera.geojson")
-    .then(function (response) { return response.json() })
-    .then(function (data) {
+    .then(function(response) { return response.json() })
+    .then(function(data) {
 
         let layer_id = "polygonsC";
         let stepColumn = "step";
@@ -423,8 +421,8 @@ fetch("data/watera.geojson")
     });
 
 fetch("data/waterl.geojson")
-    .then(function (response) { return response.json() })
-    .then(function (data) {
+    .then(function(response) { return response.json() })
+    .then(function(data) {
 
         let layer_id = "lines";
         let stepColumn = "step";
@@ -435,8 +433,8 @@ fetch("data/waterl.geojson")
     });
 
 fetch("data/polygonsData_4326_fill.geojson")
-    .then(function (response) { return response.json() })
-    .then(function (data) {
+    .then(function(response) { return response.json() })
+    .then(function(data) {
 
         //data.features.forEach(function(d){
         // d.properties.name = d.properties.polygonsDataF_27_02_name;
@@ -453,8 +451,8 @@ fetch("data/polygonsData_4326_fill.geojson")
 
 
 fetch("data/osmData_4326.geojson")
-    .then(function (response) { return response.json() })
-    .then(function (data) {
+    .then(function(response) { return response.json() })
+    .then(function(data) {
 
         let layer_id = "building";
         let stepColumn = "step";
@@ -466,8 +464,8 @@ fetch("data/osmData_4326.geojson")
 
 
 fetch("data/linesData_4326_2.geojson")
-    .then(function (response) { return response.json() })
-    .then(function (data) {
+    .then(function(response) { return response.json() })
+    .then(function(data) {
 
         let layer_id = "lines";
         let stepColumn = "step";
@@ -491,8 +489,8 @@ fetch("data/linesData_4326_2.geojson")
 //     });
 
 fetch("data/bad_build.geojson")
-    .then(function (response) { return response.json() })
-    .then(function (data) {
+    .then(function(response) { return response.json() })
+    .then(function(data) {
 
         let layer_id = "points";
         let stepColumn = "step";
@@ -503,8 +501,8 @@ fetch("data/bad_build.geojson")
     });
 
 fetch("data/bad_eco.geojson")
-    .then(function (response) { return response.json() })
-    .then(function (data) {
+    .then(function(response) { return response.json() })
+    .then(function(data) {
 
         let layer_id = "points";
         let stepColumn = "step";
@@ -514,9 +512,9 @@ fetch("data/bad_eco.geojson")
         scatterToLayers(data, stepColumn, popupColumn, style, layer_id);
     });
 
-    fetch("data/bad_road.geojson")
-    .then(function (response) { return response.json() })
-    .then(function (data) {
+fetch("data/bad_road.geojson")
+    .then(function(response) { return response.json() })
+    .then(function(data) {
 
         let layer_id = "points";
         let stepColumn = "step";
@@ -526,10 +524,10 @@ fetch("data/bad_eco.geojson")
         scatterToLayers(data, stepColumn, popupColumn, style, layer_id);
     });
 
-    // дані з карти схід екомап
-    fetch("data/cxid_ekomap_data.json")
-    .then(function (response) { return response.json() })
-    .then(function (data) {
+// дані з карти схід екомап
+fetch("data/cxid_ekomap_data.json")
+    .then(function(response) { return response.json() })
+    .then(function(data) {
 
         let layer_id = "points";
         let stepColumn = "step";
@@ -546,7 +544,7 @@ fetch("data/bad_eco.geojson")
 function loopOn() {
     let thisId = $(this).data("details")[1];
     let currentLayer = $(this).data("details")[0];
-    eval(currentLayer).eachLayer(function (layer) {
+    eval(currentLayer).eachLayer(function(layer) {
         for (let i = 0; i < layer.getLayers().length; i++) {
             let current = layer.getLayers()[i].feature.properties.id;
             if (current.toString() === thisId.toString()) {
@@ -562,7 +560,7 @@ function loopOut() {
     let steplayer = $(this).closest(".step").data("stuff")[0];
     map.removeLayer(pulseLayer);
     if (steplayer === currentLayer) {
-        eval(currentLayer).eachLayer(function (layer) {
+        eval(currentLayer).eachLayer(function(layer) {
             for (let i = 0; i < layer.getLayers().length; i++) {
                 let current = layer.getLayers()[i].feature.properties.id;
                 if (current.toString() === thisId.toString()) {
@@ -572,7 +570,7 @@ function loopOut() {
 
         });
     } else {
-        eval(currentLayer).eachLayer(function (layer) {
+        eval(currentLayer).eachLayer(function(layer) {
             for (let i = 0; i < layer.getLayers().length; i++) {
                 let current = layer.getLayers()[i].feature.properties.id;
                 if (current.toString() === thisId.toString()) {
@@ -592,7 +590,7 @@ $(".highlight")
 
 
 
-const generatePulsatingMarker = function (radius, color) {
+const generatePulsatingMarker = function(radius, color) {
     const cssStyle = `
     width: ${radius}px;
     height: ${radius}px;
@@ -611,25 +609,25 @@ const generatePulsatingMarker = function (radius, color) {
 
 //показуємо картинки по наведенню
 $("#show-dymytrov")
-    .on("mouseover", function () { $("#dymytrov_map").css("display", "flex").hide().fadeIn(500); })
-    .on("mouseout", function () { $("#dymytrov_map").hide(); });
+    .on("mouseover", function() { $("#dymytrov_map").css("display", "flex").hide().fadeIn(500); })
+    .on("mouseout", function() { $("#dymytrov_map").hide(); });
 $("#show-1800")
-    .on("mouseover", function () { $("#plan_1800").css("display", "flex").hide().fadeIn(500); })
-    .on("mouseout", function () { $("#plan_1800").hide(); });
+    .on("mouseover", function() { $("#plan_1800").css("display", "flex").hide().fadeIn(500); })
+    .on("mouseout", function() { $("#plan_1800").hide(); });
 
-    
+
 $("#show-population")
-    .on("mouseover", function () { $("#population").css("display", "flex").hide().fadeIn(500); })
-    .on("mouseout", function () { $("#population").hide(); });
+    .on("mouseover", function() { $("#population").css("display", "flex").hide().fadeIn(500); })
+    .on("mouseout", function() { $("#population").hide(); });
 
 $("#show-twoset")
-    .on("mouseover", function () { $("#twoset").css("display", "flex").hide().fadeIn(500); })
-    .on("mouseout", function () { $("#twoset").hide(); });
+    .on("mouseover", function() { $("#twoset").css("display", "flex").hide().fadeIn(500); })
+    .on("mouseout", function() { $("#twoset").hide(); });
 
 //щоб передати змнну у кожен клік
 function onEachFeatureClosure(defaultColor, weightValue) {
     return function onEachFeature(feature, layer) {
-        layer.on('click', function (e) { });
+        layer.on('click', function(e) {});
         let name = feature.properties.name != "Null" ? feature.properties.name : "невідомо";
         let info = feature.properties.info != "Null" ? feature.properties.info : "";
         let picture = feature.properties.photo != "Null" ? "<img style='display: block; width: 90%; margin:10px auto;' src='img/" + feature.properties.photo + "'/>" : "";
@@ -649,9 +647,10 @@ function onEachFeatureClosure(defaultColor, weightValue) {
 //прибираємо обʼєкти на скрол
 function removeObjectsWhenScrollDown(objArray) {
     for (let l in layerGroups) {
-        eval(layerGroups[l]).eachLayer(function (f) {
+        eval(layerGroups[l]).eachLayer(function(f) {
             for (let i = 0; i < f.getLayers().length; i++) {
-                let current = f.getLayers()[i].feature.properties.id;
+                debugger
+                let current = f.getLayers()[i].features[0].properties.id;
                 if (objArray.includes(current)) {
                     f.getLayers()[i].setStyle({ opacity: 0, fillOpacity: 0 });
                     //f.getLayers()[i].off('click');
@@ -665,7 +664,7 @@ function removeObjectsWhenScrollDown(objArray) {
 //повертаємо обʼєкти на скрол
 function returnObjectsWhenScrollUp(objArray) {
     for (let l in layerGroups) {
-        eval(layerGroups[l]).eachLayer(function (f) {
+        eval(layerGroups[l]).eachLayer(function(f) {
             for (let i = 0; i < f.getLayers().length; i++) {
                 let current = f.getLayers()[i].feature.properties.id;
                 if (objArray.includes(current)) {
@@ -724,12 +723,12 @@ function handleStepEnter(r) {
     //всі кроки окрім першого та останнього
     if (r.direction === "down" && layerToGrey != 'none') {
         eval(layerToAdd).addTo(map);
-        eval(layerToGrey).eachLayer(function (layer) { layer.setStyle(toGreyStyle); });
+        eval(layerToGrey).eachLayer(function(layer) { layer.setStyle(toGreyStyle); });
     } else if (r.direction === "down" && layerToGrey === 'none') {
         eval(layerToAdd).addTo(map);
     } else if (r.direction === "up" && layerToRemove != 'none') {
         map.removeLayer(eval(layerToRemove));
-        eval(layerToAdd).eachLayer(function (layer) { returnPreviousStyle(layer) });
+        eval(layerToAdd).eachLayer(function(layer) { returnPreviousStyle(layer) });
     }
 
 
@@ -778,7 +777,8 @@ function handleStepEnter(r) {
 
     if (r.index === 7 && r.direction === "up") {
         returnObjectsWhenScrollUp(["L000000046", "L000000055", "L000000008", "L000000060", "L000000061",
-            "L000000065", "L000000070", "L000000078", "L000000079", "L000000080"]);
+            "L000000065", "L000000070", "L000000078", "L000000079", "L000000080"
+        ]);
     }
 
     // крок 8
@@ -874,13 +874,13 @@ function handleContainerExit(response) {
 function init() {
     //handleResize();
     scroller.setup({
-        container: '#scroll',
-        graphic: '.scroll__graphic',
-        text: '.scroll__text',
-        step: '.scroll__text .step',
-        offset: 0.9,
-        debug: false
-    })
+            container: '#scroll',
+            graphic: '.scroll__graphic',
+            text: '.scroll__text',
+            step: '.scroll__text .step',
+            offset: 0.9,
+            debug: false
+        })
         .onStepEnter(handleStepEnter)
         .onContainerEnter(handleContainerEnter)
         .onContainerExit(handleContainerExit);
@@ -889,7 +889,7 @@ function init() {
 init();
 
 
-window.onbeforeunload = function () {
+window.onbeforeunload = function() {
     window.scrollTo(0, 0);
 };
 

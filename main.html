@@ -1,100 +1,102 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
 
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-        <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
-        
-        <link rel="icon" type="image/png" href="https://upload.wikimedia.org/wikipedia/commons/5/54/Myrnohrad_gerb_big.png"/>
-        <title>Мирноград</title>
+<head>
 
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
 
-        <link rel="preconnect" href="https://fonts.gstatic.com">
-        <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400;1,600&family=Viaoda+Libre&display=swap" rel="stylesheet">
-        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
-
-        <link rel="preload" href="libs/namu/NAMU-1930.woff2" as="font" type="font/woff2" crossorigin>
-        <link rel="preload" href="libs/namu/NAMU-Pro.woff2" as="font" type="font/woff2" crossorigin>
-        <link rel="stylesheet" href="libs/leaflet.css"/>
-        <link rel="stylesheet" href="css/styles.css"/>
-        
+    <link rel="icon" type="image/png" href="https://upload.wikimedia.org/wikipedia/commons/5/54/Myrnohrad_gerb_big.png" />
+    <title>Мирноград2</title>
 
 
-        <script src="libs/leaflet.js"></script>
-        <script src="libs/leaflet.ajax.min.js"></script>
-        <script src="libs/leaflet-providers.js"></script>
-        <script src="libs/TileLayer.GeoJSON.js"></script>
-        <script src="libs/jquery-3.3.1.js"></script>
-        <script src="libs/scrollama.min.js"></script>
-    </head>
-    <body>
-        <header>
-            <div>
-                <img src="https://upload.wikimedia.org/wikipedia/commons/5/54/Myrnohrad_gerb_big.png" style="width: 100px; margin-top:15px">
-                <h1>Мирноград1</h1>
-                
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400;1,600&family=Viaoda+Libre&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
+
+    <link rel="preload" href="libs/namu/NAMU-1930.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="preload" href="libs/namu/NAMU-Pro.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="stylesheet" href="libs/leaflet.css" />
+    <link rel="stylesheet" href="css/styles.css" />
+
+
+
+    <script src="libs/leaflet.js"></script>
+    <script src="libs/leaflet.ajax.min.js"></script>
+    <script src="libs/leaflet-providers.js"></script>
+    <script src="libs/TileLayer.GeoJSON.js"></script>
+    <script src="libs/jquery-3.3.1.js"></script>
+    <script src="libs/scrollama.min.js"></script>
+</head>
+
+<body>
+    <header>
+        <div>
+            <img src="https://upload.wikimedia.org/wikipedia/commons/5/54/Myrnohrad_gerb_big.png" style="width: 100px; margin-top:15px">
+            <h1>Мирноград2</h1>
+
+        </div>
+    </header>
+    <section id='scroll' class="desktop-only">
+        <div class='scroll__graphic sticky'>
+            <div id="map-wrapper">
+                <div id="map"></div>
             </div>
-        </header>
-        <section id='scroll' class="desktop-only">
-            <div class='scroll__graphic sticky'>
-                <div id="map-wrapper">
-                    <div id="map"></div>
+        </div>
+        <!--Зображення Новоекономічного та Гродівського рудників-->
+        <div id="twoset" class="plan"><img src="img/two_settlements_hist.jpg" /></div>
+
+        <!--Зображення Димитрова як міста-->
+        <div id="dymytrov_map" class="plan"><img src="img/dymytrov.png" /></div>
+
+        <!--Зміна кількості населення міста-->
+        <div id="population" class="plan"><img src="img/population.png" /></div>
+
+        <!--Графіки по демографії міста-->
+        <div id="demography" class="plan"><img src="img/demography.png" /></div>
+        <div class='scroll__text'>
+
+
+            <div class='step' data-scrollama-index="1" data-stuff='["precity_step"]'>
+                <div>
+                    <p>Місто Мирноград утворилося з двох частин -
+                        <span style="position: relative" class="highlight" data-details='["precity_step", "1"]'>Новоекономічного</span> та
+                        <span style="position: relative" class="highlight" data-details='["precity_step", "2"]'>Гродівського</span> рудників.</br>
+                        <span id="show-twoset" class="show-pic">Дивіться інтерактивну карту - зображення зазначених рудників</span> (при наведенні).
+                    </p>
                 </div>
             </div>
-            <!--Зображення Новоекономічного та Гродівського рудників-->
-            <div id="twoset" class="plan"><img src="img/two_settlements_hist.jpg"/></div>
-
-            <!--Зображення Димитрова як міста-->
-            <div id="dymytrov_map" class="plan"><img src="img/dymytrov.png"/></div>
-
-            <!--Зміна кількості населення міста-->
-            <div id="population" class="plan"><img src="img/population.png"/></div>
-
-            <!--Графіки по демографії міста-->
-            <div id="demography" class="plan"><img src="img/demography.png"/></div>
-            <div class='scroll__text'>
 
 
-                <div class='step' data-scrollama-index="1" data-stuff='["precity_step"]'>
-                    <div>
-                        <p>Місто Мирноград утворилося з двох частин -
-                            <span style="position: relative" class="highlight" data-details='["precity_step", "1"]'>Новоекономічного</span>
-                            та
-                            <span style="position: relative" class="highlight" data-details='["precity_step", "2"]'>Гродівського</span> рудників.</br>
-                            <span id="show-twoset" class="show-pic">Дивіться інтерактивну карту - зображення зазначених рудників</span> (при наведенні).
-                        </p>
-                    </div>
+            <div class='step' data-scrollama-index="2" data-stuff='["central_mine_obj", "five_six_mine_obj"]'>
+                <div>
+                    <p>З 1911 р. було розроблено шахти № 1, 2, 3, 4, що призвело до створення одного з найбільших центрів видобутку вугілля на Донбасі -
+                        <span style="position: relative" class="highlight" data-details='["central_mine_obj"]'>шахти «Новоекономічний»</span> (сьогодні це шахта "Центральна").</br>
+                        Важливим також є функціонування <span style="position: relative" class="highlight" data-details='["five_six_mine_obj"]'>шахти 5/6</span>, яка була відкрита 1916 року.</p>
+                    <!-- Після цього зум на 14 масштаб -->
                 </div>
+            </div>
 
 
-                <div class='step' data-scrollama-index="2" data-stuff='["central_mine_obj", "five_six_mine_obj"]'>
-                    <div>
-                        <p>З 1911 р. було розроблено шахти № 1, 2, 3, 4, що призвело до створення одного з найбільших центрів видобутку вугілля на Донбасі -
-                            <span style="position: relative" class="highlight" data-details='["central_mine_obj"]'>шахти «Новоекономічний»</span> (сьогодні це шахта "Центральна").</br>
-                            Важливим також є функціонування <span style="position: relative" class="highlight" data-details='["five_six_mine_obj"]'>шахти 5/6</span>, яка була відкрита 1916 року.</p>
-                            <!-- Після цього зум на 14 масштаб -->
-                        </div>
+
+            <div class='step' data-scrollama-index="3" data-stuff='["capitalna_mine_obj"]'>
+                <div>
+                    <p>1965 року почалося будівництво найбільшої в Донецькій області <span style="position: relative" class="highlight" data-details='["capitalna_mine_obj"]'>шахти «Червоноармійська-Капітальна»</span>. Ця подія стала ключовою в ідеї об'єднання
+                        міст Новоекономічного та Димитрова.
+                    </p>
                 </div>
+            </div>
 
 
-
-                <div class='step' data-scrollama-index="3" data-stuff='["capitalna_mine_obj"]'>
-                    <div>
-                        <p>1965 року почалося будівництво найбільшої в Донецькій області <span style="position: relative" class="highlight" data-details='["capitalna_mine_obj"]'>шахти «Червоноармійська-Капітальна»</span>. Ця подія стала ключовою в ідеї об'єднання міст Новоекономічного та Димитрова.
-                             </p>
-                    </div>
+            <div class='step' data-scrollama-index="4">
+                <div>
+                    <p>Відтоді місто звалось <span id="show-dymytrov" class="show-pic">Димитров</span>, а в 2016 році було перейменоване на сучасну назву - Мирноград</p>
+                    <p>Детальніше історію міста читайте на <a href="https://dimitrov-rada.gov.ua/city/history.html">порталі</a></p>
                 </div>
+            </div>
 
-                
-                <div class='step' data-scrollama-index="4">
-                    <div>
-                        <p>Відтоді місто звалось <span id="show-dymytrov" class="show-pic">Димитров</span>, а в 2016 році було перейменоване на сучасну назву - Мирноград</p>
-                        <p>Детальніше історію міста читайте на <a href="https://dimitrov-rada.gov.ua/city/history.html">порталі</a></p>
-                    </div>
-                </div>
-
-                <!-- <div class='step' data-scrollama-index="4" data-stuff='["myrnohrad_city_border1", "myrnohrad_gromada_border1"]'>
+            <!-- <div class='step' data-scrollama-index="4" data-stuff='["myrnohrad_city_border1", "myrnohrad_gromada_border1"]'>
                     <div>
                         <p>Межі населеного пункту -
                             <span style="position: relative" class="highlight" data-details='["myrnohrad_city_border1"]'>міста Мирноград</span>
@@ -106,25 +108,24 @@
                 </div> -->
 
 
-                <div class='step_main' data-scrollama-index="5">
-                    <div>
-                        <p>Люди Мирнограду</p>
-                    </div>
+            <div class='step_main' data-scrollama-index="5">
+                <div>
+                    <p>Люди Мирнограду</p>
                 </div>
+            </div>
 
-                <div class='step' data-scrollama-index="6">
-                    <div>
-                        <p>Зараз  населення Мирнограду (за даними на 2020 рік) становить 47 460 осіб</p>
-                        <p>Населення міста
-                            <span id="show-population" class="show-pic">повільно зменшується</span>
-                            (-0,77% зміни населення)</p>
-                        <p>53% населення міста – жінки, а 47% – чоловіки</p>
-                        <p>27% населення міста становить 60+ років</p>
-                        <p>Найнижчий відсоток населення у віковій групі 20-24 роки (4% населення)</p>
-                    </div>
+            <div class='step' data-scrollama-index="6">
+                <div>
+                    <p>Зараз населення Мирнограду (за даними на 2020 рік) становить 47 460 осіб</p>
+                    <p>Населення міста
+                        <span id="show-population" class="show-pic">повільно зменшується</span> (-0,77% зміни населення)</p>
+                    <p>53% населення міста – жінки, а 47% – чоловіки</p>
+                    <p>27% населення міста становить 60+ років</p>
+                    <p>Найнижчий відсоток населення у віковій групі 20-24 роки (4% населення)</p>
                 </div>
+            </div>
 
-                <!-- <div class='step' data-scrollama-index="7" data-stuff='1'>
+            <!-- <div class='step' data-scrollama-index="7" data-stuff='1'>
                     <div>
                         <p>Найбільші роботодавці міста наведені в таблиці нижче.</p>
                         <style type="text/css">
@@ -361,132 +362,128 @@
                     </div>
                 </div> -->
 
-                <div class='step' data-scrollama-index="8" data-stuff='["road_list"]'>
-                    <div>
-                        <p>Автомобільні дороги</p>
-                        <p>Центральною частиною міста проходить автодорога державного значення Покровськ—Костянтинівка
-                            <span class="highlight" data-details='["road_list", "2"]'>Н-32</span>
-                            та дорога місцевого значення
-                            <span class="highlight" data-details='["road_list", "3"]'>Мирноград - Гродівка (О0544)</span>
-                        </p>
-                    </div>
-                </div>
-
-
-                <div class='step' data-scrollama-index="9" data-stuff='["railway_line"]'>
-                    <div>
-                        <p>Залізниця представлена двома гілками</p>
-                        <p>Основна гілка -
-                            <span class="highlight" data-details='["railway_line", "1"]'>Дніпро - Донецьк</span>, проходить по південній межі міста, інша лінія -
-                            <span class="highlight" data-details='["railway_line", "2"]'>Покровськ-Мирноград</span>
-                        </p>
-                        <p>Пасажирського залізничного вокзалу в місті немає, найближчий - в місті Покровськ (20 хв автомобілем від міста)</p>
-                    </div>
-                </div>
-
-
-                <div class='step' data-scrollama-index="10" data-stuff='["polygon_problems_obj"]'>
-                    <div>
-                        Проблеми Мирнограда відображені на карті
-                    </div>
-                </div>
-
-
-                <div class='step' data-scrollama-index="11" data-stuff='["bad_build_all", "bad_eco_all", "bad_road"]'>
-                    <div>
-                        Основні проблеми міста, які були відмічені на карті:</br>
-                        1. <span class="highlight" data-details='["bad_build_all"]'>Закинуті або недобудовані будівлі</span></br>
-                        2. <span class="highlight" data-details='["bad_eco_all"]'>Екологічно небезпечені зони та водойми</span></br>
-                        3. <span class="highlight" data-details='["bad_road"]'>Небезпечні ділянки дороги</span></br>
-                    </div>
-                </div>
-                
-                
-                <!-- Відразу тут відображати парки, терикони, все що по природі шари -->
-                <div class='step_main' data-scrollama-index="12">
-                    <div>
-                        Природа Мирнограду
-                    </div>
-                </div>
-
-
-                <div class='step' data-scrollama-index="13">
-                    <div>
-                        <p>Якість повітря в Мирнограді за допомогою автоматизованих Систем наразі не вимірюється, однак в місті Покровськ встановлений датчик такого роду. Дані спостережень за якістю повітря наведені на знімку нижче
-                            <img style="width: 100%" src="img/saveecobot_pokrovsk_2021_11_02.png"></p>
-
-                    </div>
-                </div>
-
-
-                <div class='step' data-scrollama-index="14" data-stuff='["watera_all", "waterl_all", "dnipro_bassin_all", "don_bassin_all"]'>
-                    <div>
-                        <p>Поблизу міста проходить вододіл між басейнами <span class="highlight" data-details='["dnipro_bassin_all", 2]'>Дніпра</span> та <span class="highlight" data-details='["don_bassin_all", 1]'>Дону</span></p>
-                        КП "КОМПАНIЯ ВОДА ДОНБАСУ" МИРНОГРАДСЬКЕ ВУВКГ М.МИРНОГРАД - cтаном на 2018 рік, це підприємство є 3 в Донецькій області та 14 серед усіх водних підприємств в Україні за кількістю викидів <b>забруднених вод</b> - цей показник становив 3,657 млн куб. 
-                    </div>
-                </div>
-
-
-                <div class='step' data-scrollama-index="15" data-stuff='["park_myrnohrad"]'>
-                    <div>
-                        <p>Рівень покриття деревною рослинністю в Мирноградській тергромаді складає 8,3% від площі громади</p>
-                        <p>Територія громади розташована в степовій зоні, тому важливо не збільшувати покриття території лісовою рослинністю, адже за нинішніх кліматичних умов створення штучних лісових насаджень в степовій зоні України майже неможливе. <a href="https://life.pravda.com.ua/columns/2010/02/8/39249/">Джерело</a>
-                        </p>
-                        <p>Перегляньте природне покриття Мирноградської територіальної громади: https://bit.ly/3C8UNfs</p>
-                    </div>
-                </div>
-
-
-                <div class='step' data-scrollama-index="16" data-stuff='["pzf_obj"]'>
-                    <div>
-                        <p>Природно-заповідний фонд</p>
-                        <p>За даними
-                            <a href="https://pzf.mepr.gov.ua/">Державного кадастру природно-заповідного фонду України</a>, на території Мирноградської територіальної громади не розташований жоден об'єкт природно-заповідного фонду, найближчий об'єкт розташований за 15 км від міста Мирноград -
-                            <a href="https://pzf.mepr.gov.ua/additional-info/2643032771802432530">Ботанічний заказник місцевого значення
-                                <span class="highlight" data-details='["pzf_obj"]'>«Гектова балка»</span>
-                            </a>
-                        </p>
-                        <p>Задля збереження біорізноманіття території та природних або напівприродних ландшафтів важливо забезпечити формування тут об'єктів природно-заповідного фонду місцевого та загальнодержавного значення</p>
-                    </div>
-                </div>
-
-
-                <div class='step' data-scrollama-index="17">
-                    <div>
-                        <p>Однією з найбільших екологічних проблем Мирнограду є затоплення шахт - дивіться у відео
-                            <iframe width="560" height="315" src="https://www.youtube.com/watch?v=fT_8xHLgFzQ" frameborder="0"></iframe>
-                        </p>
-                        <p>Під час підземної розробки корисних копалин виникає постійна потреба
-                            захисту гірничих виробок від затоплення підземними водами. З метою
-                            вирішення цього питання кожна шахта обладнується водовідливним
-                            комплексом, до якого входять водозбірник, насосна камера з водовідливними
-                            установками, напірні трубопроводи, що прокладаються по стовбуру до денної
-                            поверхні.
-                            Наприклад, шахти «Капітальна», «5/6», «Центральна» мають постійний водоприлив від 200 до 600 м3/год кожна. 
-                            </p>
-                    </div>
-                </div>
-
-                <div class='step_main' data-scrollama-index="18">
-                    <div>
-                        Трансформаційна екосистема міста
-                    </div>
+            <div class='step' data-scrollama-index="8" data-stuff='["road_list"]'>
+                <div>
+                    <p>Автомобільні дороги</p>
+                    <p>Центральною частиною міста проходить автодорога державного значення Покровськ—Костянтинівка
+                        <span class="highlight" data-details='["road_list", "2"]'>Н-32</span> та дорога місцевого значення
+                        <span class="highlight" data-details='["road_list", "3"]'>Мирноград - Гродівка (О0544)</span>
+                    </p>
                 </div>
             </div>
-        </section>
 
 
-        <h3>
-            <b>Автори:</b>
-            <a href="https://www.facebook.com/vadymnesuk/">Несук Вадим</a>,
-                                            Оксана Удовик, Аліса Баньковська.</h3>
-        <h4 style="text-align:center">Реалізовано на основі технічних засобів, застосованих в
-            <a href="https://texty.org.ua/d/2021/khmelnytskyi_history/">сторімап міста Хмельницького</a>
-        </h4>
+            <div class='step' data-scrollama-index="9" data-stuff='["railway_line"]'>
+                <div>
+                    <p>Залізниця представлена двома гілками</p>
+                    <p>Основна гілка -
+                        <span class="highlight" data-details='["railway_line", "1"]'>Дніпро - Донецьк</span>, проходить по південній межі міста, інша лінія -
+                        <span class="highlight" data-details='["railway_line", "2"]'>Покровськ-Мирноград</span>
+                    </p>
+                    <p>Пасажирського залізничного вокзалу в місті немає, найближчий - в місті Покровськ (20 хв автомобілем від міста)</p>
+                </div>
+            </div>
 
 
-        <script src="js/main.js"></script>
+            <div class='step' data-scrollama-index="10" data-stuff='["polygon_problems_obj"]'>
+                <div>
+                    Проблеми Мирнограда відображені на карті
+                </div>
+            </div>
 
 
-    </body>
+            <div class='step' data-scrollama-index="11" data-stuff='["bad_build_all", "bad_eco_all", "bad_road"]'>
+                <div>
+                    Основні проблеми міста, які були відмічені на карті:</br>
+                    1. <span class="highlight" data-details='["bad_build_all"]'>Закинуті або недобудовані будівлі</span></br>
+                    2. <span class="highlight" data-details='["bad_eco_all"]'>Екологічно небезпечені зони та водойми</span></br>
+                    3. <span class="highlight" data-details='["bad_road"]'>Небезпечні ділянки дороги</span></br>
+                </div>
+            </div>
+
+
+            <!-- Відразу тут відображати парки, терикони, все що по природі шари -->
+            <div class='step_main' data-scrollama-index="12">
+                <div>
+                    Природа Мирнограду
+                </div>
+            </div>
+
+
+            <div class='step' data-scrollama-index="13">
+                <div>
+                    <p>Якість повітря в Мирнограді за допомогою автоматизованих Систем наразі не вимірюється, однак в місті Покровськ встановлений датчик такого роду. Дані спостережень за якістю повітря наведені на знімку нижче
+                        <img style="width: 100%" src="img/saveecobot_pokrovsk_2021_11_02.png"></p>
+
+                </div>
+            </div>
+
+
+            <div class='step' data-scrollama-index="14" data-stuff='["watera_all", "waterl_all", "dnipro_bassin_all", "don_bassin_all"]'>
+                <div>
+                    <p>Поблизу міста проходить вододіл між басейнами <span class="highlight" data-details='["dnipro_bassin_all", 2]'>Дніпра</span> та <span class="highlight" data-details='["don_bassin_all", 1]'>Дону</span></p>
+                    КП "КОМПАНIЯ ВОДА ДОНБАСУ" МИРНОГРАДСЬКЕ ВУВКГ М.МИРНОГРАД - cтаном на 2018 рік, це підприємство є 3 в Донецькій області та 14 серед усіх водних підприємств в Україні за кількістю викидів <b>забруднених вод</b> - цей показник становив
+                    3,657 млн куб.
+                </div>
+            </div>
+
+
+            <div class='step' data-scrollama-index="15" data-stuff='["park_myrnohrad"]'>
+                <div>
+                    <p>Рівень покриття деревною рослинністю в Мирноградській тергромаді складає 8,3% від площі громади</p>
+                    <p>Територія громади розташована в степовій зоні, тому важливо не збільшувати покриття території лісовою рослинністю, адже за нинішніх кліматичних умов створення штучних лісових насаджень в степовій зоні України майже неможливе. <a href="https://life.pravda.com.ua/columns/2010/02/8/39249/">Джерело</a>
+                    </p>
+                    <p>Перегляньте природне покриття Мирноградської територіальної громади: https://bit.ly/3C8UNfs</p>
+                </div>
+            </div>
+
+
+            <div class='step' data-scrollama-index="16" data-stuff='["pzf_obj"]'>
+                <div>
+                    <p>Природно-заповідний фонд</p>
+                    <p>За даними
+                        <a href="https://pzf.mepr.gov.ua/">Державного кадастру природно-заповідного фонду України</a>, на території Мирноградської територіальної громади не розташований жоден об'єкт природно-заповідного фонду, найближчий об'єкт розташований
+                        за 15 км від міста Мирноград -
+                        <a href="https://pzf.mepr.gov.ua/additional-info/2643032771802432530">Ботанічний заказник місцевого значення
+                                <span class="highlight" data-details='["pzf_obj"]'>«Гектова балка»</span>
+                            </a>
+                    </p>
+                    <p>Задля збереження біорізноманіття території та природних або напівприродних ландшафтів важливо забезпечити формування тут об'єктів природно-заповідного фонду місцевого та загальнодержавного значення</p>
+                </div>
+            </div>
+
+
+            <div class='step' data-scrollama-index="17">
+                <div>
+                    <p>Однією з найбільших екологічних проблем Мирнограду є затоплення шахт - дивіться у відео
+                        <iframe width="560" height="315" src="https://www.youtube.com/watch?v=fT_8xHLgFzQ" frameborder="0"></iframe>
+                    </p>
+                    <p>Під час підземної розробки корисних копалин виникає постійна потреба захисту гірничих виробок від затоплення підземними водами. З метою вирішення цього питання кожна шахта обладнується водовідливним комплексом, до якого входять водозбірник,
+                        насосна камера з водовідливними установками, напірні трубопроводи, що прокладаються по стовбуру до денної поверхні. Наприклад, шахти «Капітальна», «5/6», «Центральна» мають постійний водоприлив від 200 до 600 м3/год кожна.
+                    </p>
+                </div>
+            </div>
+
+            <div class='step_main' data-scrollama-index="18">
+                <div>
+                    Трансформаційна екосистема міста
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <h3>
+        <b>Автори:</b>
+        <a href="https://www.facebook.com/vadymnesuk/">Несук Вадим</a>, Оксана Удовик, Аліса Баньковська.</h3>
+    <h4 style="text-align:center">Реалізовано на основі технічних засобів, застосованих в
+        <a href="https://texty.org.ua/d/2021/khmelnytskyi_history/">сторімап міста Хмельницького</a>
+    </h4>
+
+
+    <script src="js/main.js"></script>
+
+
+</body>
+
 </html>
