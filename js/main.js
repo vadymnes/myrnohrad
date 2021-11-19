@@ -280,7 +280,7 @@ fetch("data/precity.geojson")
     .then(function(response) { return response.json() })
     .then(function(data) {
 
-        let layer_id = "polygonsC";
+        let layer_id = "precity";
         let stepColumn = "step";
         let style = polygonsColorStyle;
         let popupColumn = "polygon";
