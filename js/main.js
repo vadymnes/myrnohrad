@@ -646,6 +646,7 @@ function onEachFeatureClosure(defaultColor, weightValue) {
 
 //прибираємо обʼєкти на скрол
 function removeObjectsWhenScrollDown(objArray) {
+    debugger
     for (let l in layerGroups) {
         eval(layerGroups[l]).eachLayer(function(f) {
             for (let i = 0; i < f.getLayers().length; i++) {
@@ -734,6 +735,7 @@ function handleStepEnter(r) {
 
     // крок 1
     if (r.index === 1 && r.direction === "down") {
+        debugger
         removeObjectsWhenScrollDown([1]);
     }
 
